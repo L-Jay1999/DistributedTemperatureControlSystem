@@ -1,0 +1,5 @@
+{
+    "type": "SetSpeed",
+    "room_id": "1234",
+    "speed_level": 1234
+}
