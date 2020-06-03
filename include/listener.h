@@ -21,6 +21,7 @@ public:
         connect(server, SIGNAL(QTcpServer::newConnection()), this, SLOT(PendConnection()));
     }
 
+    // 调用此方法使 Listener 开始监听，绑定成功则返回 true，否则返回 false
     bool Listen(const quint16 port)
     {
         return server->listen(QHostAddress::LocalHost, port);

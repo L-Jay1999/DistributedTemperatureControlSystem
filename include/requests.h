@@ -46,7 +46,7 @@ protected:
         payload.user_id = user_id_;
         payload.room_id = room_id_;
         payload.target_host = kMasterHostAddr;
-        payload.target_port = kMasterListenerPort;
+        payload.target_port = kMasterListenPort;
         return payload;
     }
 
@@ -67,7 +67,7 @@ public:
         for (int i = 0; i < kRetryAttempt; i++)
         {
             auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
-            if (temp_suc && response.type == RequestType::ACK)
+            if (temp_suc && response.type == RequestType::ACK && response.result)
             {
                 is_suc = true;
                 break;
@@ -82,7 +82,7 @@ protected:
         payload.type = RequestType::SHUTDOWN;
         payload.room_id = room_id_;
         payload.target_host = kMasterHostAddr;
-        payload.target_port = kMasterListenerPort;
+        payload.target_port = kMasterListenPort;
         return payload;
     }
 private:
@@ -103,7 +103,7 @@ public:
         for (int i = 0; i < kRetryAttempt; i++)
         {
             auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
-            if (temp_suc && response.type == RequestType::ACK)
+            if (temp_suc && response.type == RequestType::ACK && response.result)
             {
                 is_suc = true;
                 break;
@@ -119,7 +119,7 @@ protected:
         payload.room_id = room_id_;
         payload.speed_level = speed_level_;
         payload.target_host = kMasterHostAddr;
-        payload.target_port = kMasterListenerPort;
+        payload.target_port = kMasterListenPort;
         return payload;
     }
 private:
@@ -141,7 +141,7 @@ public:
         for (int i = 0; i < kRetryAttempt; i++)
         {
             auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
-            if (temp_suc && response.type == RequestType::ACK)
+            if (temp_suc && response.type == RequestType::ACK && response.result)
             {
                 is_suc = true;
                 break;
@@ -157,7 +157,7 @@ protected:
         payload.room_id = room_id_;
         payload.temperature = temperature_;
         payload.target_host = kMasterHostAddr;
-        payload.target_port = kMasterListenerPort;
+        payload.target_port = kMasterListenPort;
         return payload;
     }
 private:
@@ -179,7 +179,7 @@ public:
         for (int i = 0; i < kRetryAttempt; i++)
         {
             auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
-            if (temp_suc && response.type == RequestType::ACK)
+            if (temp_suc && response.type == RequestType::ACK && response.result)
             {
                 is_suc = true;
                 break;
@@ -195,7 +195,7 @@ protected:
         payload.room_id = room_id_;
         payload.is_open = is_open_;
         payload.target_host = kMasterHostAddr;
-        payload.target_port = kMasterListenerPort;
+        payload.target_port = kMasterListenPort;
         return payload;
     }
 private:
@@ -217,7 +217,7 @@ public:
         for (int i = 0; i < kRetryAttempt; i++)
         {
             auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
-            if (temp_suc && response.type == RequestType::ACK)
+            if (temp_suc && response.type == RequestType::ACK && response.result)
             {
                 is_suc = true;
                 break;
@@ -251,7 +251,7 @@ public:
         for (int i = 0; i < kRetryAttempt; i++)
         {
             auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
-            if (temp_suc && response.type == RequestType::ACK)
+            if (temp_suc && response.type == RequestType::ACK && response.result)
             {
                 is_suc = true;
                 break;
@@ -283,7 +283,7 @@ public:
         for (int i = 0; i < kRetryAttempt; i++)
         {
             auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
-            if (temp_suc && response.type == RequestType::ACK)
+            if (temp_suc && response.type == RequestType::ACK && response.result)
             {
                 is_suc = true;
                 break;
@@ -313,7 +313,7 @@ public:
         for (int i = 0; i < kRetryAttempt; i++)
         {
             auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
-            if (temp_suc && response.type == RequestType::ACK)
+            if (temp_suc && response.type == RequestType::ACK && response.result)
             {
                 is_suc = true;
                 break;
@@ -330,6 +330,38 @@ protected:
     }
 private:
 };
+
+//class TellListenerPortRequest : Request
+//{
+//public:
+//    TellListenerPortRequest(const quint16 port): listener_port(port) {}
+
+//    bool Send()
+//    {
+//        auto payload = BuildPayload();
+//        bool is_suc = false;
+//        for (int i = 0; i < kRetryAttempt; i++)
+//        {
+//            auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
+//            if (temp_suc && response.type == RequestType::ACK && response.result)
+//            {
+//                is_suc = true;
+//                break;
+//            }
+//        }
+//        return is_suc;
+//    }
+//protected:
+//    RequestPayload BuildPayload() override
+//    {
+//        RequestPayload payload{};
+//        payload.type = RequestType::TELL_LISTENER_PORT;
+//        payload.listener_port = listener_port;
+//        return payload;
+//    }
+//private:
+//    quint16 listener_port;
+//};
 
 static inline RequestPayload getAckResponse(const bool result = true)
 {
