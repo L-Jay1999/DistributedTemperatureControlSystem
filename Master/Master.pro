@@ -22,7 +22,9 @@ SOURCES += \
 HEADERS += \
     ../include/common.h \
     ../include/listener.h \
+    ../include/msg_queen.h \
     ../include/request_base.h \
+    ../include/request_controller.h \
     ../include/request_payload.h \
     ../include/requests.h \
     mainwindow.h

@@ -22,8 +22,10 @@ SOURCES += \
 HEADERS += \
     ../include/common.h \
     ../include/listener.h \
+    ../include/msg_queen.h \
     ../include/request.h \
     ../include/request_base.h \
+    ../include/request_controller.h \
     ../include/request_parser.h \
     ../include/request_payload.h \
     ../include/requests.h \

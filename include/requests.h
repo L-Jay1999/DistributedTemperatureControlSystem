@@ -331,6 +331,29 @@ protected:
 private:
 };
 
+static inline RequestPayload getAckResponse(const bool result = true)
+{
+    RequestPayload ack_response;
+    ack_response.type = RequestType::ACK;
+    ack_response.result = result;
+    return ack_response;
+}
 
+static inline RequestPayload getGetRoomTemperatureResponse(const double temperature)
+{
+    RequestPayload response;
+    response.type = RequestType::GET_ROOM_TEMP_RESPONSE;
+    response.temperature = temperature;
+    return response;
+}
+
+static inline RequestPayload getLoginResponse(const bool result, const std::pair<WorkingMode, double> &config = std::pair<WorkingMode, double>{})
+{
+    RequestPayload response;
+    response.type = RequestType::LOGIN_RESPONSE;
+    response.result = result;
+    if (result)
+        response.config = config;
+}
 
 #endif // REQUESTS_H
