@@ -34,6 +34,7 @@ enum class RequestType
     USE_AND_COST,
     SHUTDOWN,
     WIND,
+    // TELL_LISTENER_PORT,
     UB = WIND,
     LB = LOGIN,
     NIL = -1,
@@ -54,7 +55,8 @@ static inline const QString &getTypeStr(const RequestType type)
         {RequestType::SET_TEMP, "SetTemperature"},
         {RequestType::USE_AND_COST, "UseAndCost"},
         {RequestType::SHUTDOWN, "ShutDown"},
-        {RequestType::WIND, "Wind"}
+        {RequestType::WIND, "Wind"},
+        // {RequestType::TELL_LISTENER_PORT, "TellListenerPort"},
     };
     assert(kTypeStr.count(type));
     return kTypeStr.at(type);
@@ -73,6 +75,7 @@ struct RequestPayload
     static constexpr const char *kUseKey = "use";
     static constexpr const char *kCostKey = "cost";
     static constexpr const char *kIsOpenKey = "is_open";
+    // static constexpr const char *kListenerPortKey = "listener_port";
 
     RequestPayload() {}
     RequestPayload(const RequestType request_type) : type(request_type) {}
@@ -106,6 +109,8 @@ struct RequestPayload
             obj.insert(kCostKey, cost.value());
         if (is_open.has_value())
             obj.insert(kIsOpenKey, is_open.value());
+        // if (listener_port.has_value())
+        //     obj.insert(kListenerPortKey, listener_port.value());
         return obj;
     }
 
@@ -138,6 +143,8 @@ struct RequestPayload
             cost = obj.value(kCostKey).toDouble();
         if (obj.contains(kIsOpenKey))
             is_open = obj.value(kIsOpenKey).toBool();
+        // if (obj.contains(kListenerPortKey))
+        //     listener_port = obj.value(kListenerPortKey).toString();
     }
 
     RequestType type{RequestType::NIL};
@@ -151,6 +158,7 @@ struct RequestPayload
     std::optional<double> use{std::nullopt};
     std::optional<double> cost{std::nullopt};
     std::optional<bool> is_open{std::nullopt};
+    // std::optional<QString> listener_port{std::nullopt};
 
     QString target_host{};
     quint16 target_port{};

@@ -7,6 +7,7 @@
 #include <QJsonObject>
 
 #include "request_payload.h"
+#include "common.h"
 
 class Request
 {
@@ -40,8 +41,6 @@ protected:
         socket.disconnectFromHost();
         return response;
     }
-private:
-
 };
 
 #endif // REQUEST_BASE_H

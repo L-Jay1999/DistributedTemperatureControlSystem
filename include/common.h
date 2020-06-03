@@ -3,6 +3,9 @@
 
 #include <QtGlobal>
 
+#include <optional>
+#include <map>
+
 enum class WorkingMode
 {
     COLD = 0,
@@ -17,7 +20,12 @@ enum class SpeedLevel
 };
 
 static constexpr const char *kMasterHostAddr = "localhost";
-static constexpr quint16 kMasterListenerPort = 12345;
+static constexpr quint16 kMasterListenPort = 12345;
 static constexpr int kRetryAttempt = 3;
+static constexpr int kSlaveListenPort = 54321;
+
+// 记录从控机监听端口
+// extern std::map<QString, quint16> slaveListenerPortMap;
+
 
 #endif // COMMON_H
