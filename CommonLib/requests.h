@@ -24,7 +24,7 @@ public:
         auto payload = BuildPayload();
         bool is_parsing_suc = false;
         RequestPayload response{};
-        for (int i = 0; i < kRetryAttempt; i++)
+        for (int i = 0; i < Config::kRetryAttempt; i++)
         {
             auto [is_suc, temp_response] = RequestParser::Parse(SendRequest(payload));
             is_parsing_suc = is_suc;
@@ -45,8 +45,8 @@ protected:
         RequestPayload payload{};
         payload.user_id = user_id_;
         payload.room_id = room_id_;
-        payload.target_host = kMasterHostAddr;
-        payload.target_port = kMasterListenPort;
+        payload.target_host = Config::kMasterHostAddr;
+        payload.target_port = Config::kMasterListenPort;
         return payload;
     }
 
@@ -64,7 +64,7 @@ public:
     {
         auto payload = BuildPayload();
         bool is_suc = false;
-        for (int i = 0; i < kRetryAttempt; i++)
+        for (int i = 0; i < Config::kRetryAttempt; i++)
         {
             auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
             if (temp_suc && response.type == RequestType::ACK && response.result)
@@ -81,8 +81,8 @@ protected:
         RequestPayload payload{};
         payload.type = RequestType::SHUTDOWN;
         payload.room_id = room_id_;
-        payload.target_host = kMasterHostAddr;
-        payload.target_port = kMasterListenPort;
+        payload.target_host = Config::kMasterHostAddr;
+        payload.target_port = Config::kMasterListenPort;
         return payload;
     }
 private:
@@ -100,7 +100,7 @@ public:
     {
         auto payload = BuildPayload();
         bool is_suc = false;
-        for (int i = 0; i < kRetryAttempt; i++)
+        for (int i = 0; i < Config::kRetryAttempt; i++)
         {
             auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
             if (temp_suc && response.type == RequestType::ACK && response.result)
@@ -118,8 +118,8 @@ protected:
         payload.type = RequestType::SET_SPEED;
         payload.room_id = room_id_;
         payload.speed_level = speed_level_;
-        payload.target_host = kMasterHostAddr;
-        payload.target_port = kMasterListenPort;
+        payload.target_host = Config::kMasterHostAddr;
+        payload.target_port = Config::kMasterListenPort;
         return payload;
     }
 private:
@@ -138,7 +138,7 @@ public:
     {
         auto payload = BuildPayload();
         bool is_suc = false;
-        for (int i = 0; i < kRetryAttempt; i++)
+        for (int i = 0; i < Config::kRetryAttempt; i++)
         {
             auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
             if (temp_suc && response.type == RequestType::ACK && response.result)
@@ -156,8 +156,8 @@ protected:
         payload.type = RequestType::SET_TEMP;
         payload.room_id = room_id_;
         payload.temperature = temperature_;
-        payload.target_host = kMasterHostAddr;
-        payload.target_port = kMasterListenPort;
+        payload.target_host = Config::kMasterHostAddr;
+        payload.target_port = Config::kMasterListenPort;
         return payload;
     }
 private:
@@ -176,7 +176,7 @@ public:
     {
         auto payload = BuildPayload();
         bool is_suc = false;
-        for (int i = 0; i < kRetryAttempt; i++)
+        for (int i = 0; i < Config::kRetryAttempt; i++)
         {
             auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
             if (temp_suc && response.type == RequestType::ACK && response.result)
@@ -194,8 +194,8 @@ protected:
         payload.type = RequestType::WIND;
         payload.room_id = room_id_;
         payload.is_open = is_open_;
-        payload.target_host = kMasterHostAddr;
-        payload.target_port = kMasterListenPort;
+        payload.target_host = Config::kMasterHostAddr;
+        payload.target_port = Config::kMasterListenPort;
         return payload;
     }
 private:
@@ -214,7 +214,7 @@ public:
     {
         auto payload = BuildPayload();
         bool is_suc = false;
-        for (int i = 0; i < kRetryAttempt; i++)
+        for (int i = 0; i < Config::kRetryAttempt; i++)
         {
             auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
             if (temp_suc && response.type == RequestType::ACK && response.result)
@@ -248,7 +248,7 @@ public:
     {
         auto payload = BuildPayload();
         bool is_suc = false;
-        for (int i = 0; i < kRetryAttempt; i++)
+        for (int i = 0; i < Config::kRetryAttempt; i++)
         {
             auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
             if (temp_suc && response.type == RequestType::ACK && response.result)
@@ -280,7 +280,7 @@ public:
     {
         auto payload = BuildPayload();
         bool is_suc = false;
-        for (int i = 0; i < kRetryAttempt; i++)
+        for (int i = 0; i < Config::kRetryAttempt; i++)
         {
             auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
             if (temp_suc && response.type == RequestType::ACK && response.result)
@@ -310,7 +310,7 @@ public:
     {
         auto payload = BuildPayload();
         bool is_suc = false;
-        for (int i = 0; i < kRetryAttempt; i++)
+        for (int i = 0; i < Config::kRetryAttempt; i++)
         {
             auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
             if (temp_suc && response.type == RequestType::ACK && response.result)
@@ -340,7 +340,7 @@ private:
 //    {
 //        auto payload = BuildPayload();
 //        bool is_suc = false;
-//        for (int i = 0; i < kRetryAttempt; i++)
+//        for (int i = 0; i < Config.kRetryAttempt; i++)
 //        {
 //            auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
 //            if (temp_suc && response.type == RequestType::ACK && response.result)
