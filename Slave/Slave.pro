@@ -17,13 +17,35 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    userloginwidget.cpp \
+    slavecontrolwindow.cpp \
+    logincontroller.cpp \
+    setspeedcontroller.cpp \
+    settemperaturecontroller.cpp \
+    useandcostcontroller.cpp \
+    getinformationcontroller.cpp \
+    gettemperaturecontroller.cpp \
+    modealtercontroller.cpp \
+    windcontroller.cpp
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    userloginwidget.h \
+    slavecontrolwindow.h \
+    logincontroller.h \
+    setspeedcontroller.h \
+    settemperaturecontroller.h \
+    useandcostcontroller.h \
+    getinformationcontroller.h \
+    gettemperaturecontroller.h \
+    modealtercontroller.h \
+    windcontroller.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    userloginwidget.ui \
+    slavecontrolwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
