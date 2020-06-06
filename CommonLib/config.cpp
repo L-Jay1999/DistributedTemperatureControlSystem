@@ -11,7 +11,7 @@ namespace Config
 {
     static std::optional<quint16> slave_listener_port = std::nullopt;
     static std::map<QString, std::pair<QString, quint16>> roomid_to_address{};
-
+    // 确保线程安全
     static std::shared_mutex slave_port_rw_mutex;
     static std::shared_mutex roomid_to_addr_rw_mutex;
 

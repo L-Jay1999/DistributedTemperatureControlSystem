@@ -1,5 +1,6 @@
 {
     "type": "Login",
     "user_id": "1234",
-    "room_id": "1234"
+    "room_id": "1234",
+    "listen_port": 123456
 }

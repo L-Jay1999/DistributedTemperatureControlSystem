@@ -13,13 +13,6 @@
 
 #include "common.h"
 
-template <typename T>
-inline constexpr int EnumToInt(const T enum_val)
-{
-    static_assert (std::is_enum<T>::value, "Type of T must be enum type.");
-    return static_cast<int>(enum_val);
-}
-
 enum class RequestType
 {
     LOGIN = 0,
@@ -40,28 +33,6 @@ enum class RequestType
     NIL = -1,
 };
 
-static inline const QString &getTypeStr(const RequestType type)
-{
-    static const std::map<RequestType, QString> kTypeStr =
-    {
-        {RequestType::LOGIN, "Login"},
-        {RequestType::LOGIN_RESPONSE, "LoginResponse"},
-        {RequestType::ACK, "Ack"},
-        {RequestType::FORCE_SHUTDOWN, "ForceShutDown"},
-        {RequestType::GET_ROOM_TEMP, "GetRoomTemperature"},
-        {RequestType::GET_ROOM_TEMP_RESPONSE, "GetRoomTemperatureResponse"},
-        {RequestType::SET_MODE, "SetMode"},
-        {RequestType::SET_SPEED, "SetSpeed"},
-        {RequestType::SET_TEMP, "SetTemperature"},
-        {RequestType::USE_AND_COST, "UseAndCost"},
-        {RequestType::SHUTDOWN, "ShutDown"},
-        {RequestType::WIND, "Wind"},
-        // {RequestType::TELL_LISTENER_PORT, "TellListenerPort"},
-    };
-    assert(kTypeStr.count(type));
-    return kTypeStr.at(type);
-}
-
 struct RequestPayload
 {
     static constexpr const char *kTypeKey = "type";
@@ -75,77 +46,37 @@ struct RequestPayload
     static constexpr const char *kUseKey = "use";
     static constexpr const char *kCostKey = "cost";
     static constexpr const char *kIsOpenKey = "is_open";
-    // static constexpr const char *kListenerPortKey = "listener_port";
+    static constexpr const char *kSrcHostKey = "source_host";
+    static constexpr const char *kSrcPortKey = "source_port";
+    static constexpr const char *kTargetHostKey = "target_host";
+    static constexpr const char *kTargetPortKey = "target_port";
+    static constexpr const char *kListenPortKey = "listen_port";
 
     RequestPayload() {}
     RequestPayload(const RequestType request_type) : type(request_type) {}
-    QJsonObject ToQJsonObject() const
-    {
-        QJsonObject obj;
-        obj.insert(kTypeKey, getTypeStr(type));
-        if (result.has_value())
-            obj.insert(kResultKey, result.value());
-        if (temperature.has_value())
-            obj.insert(kTemperatureKey, temperature.value());
-        if (user_id.has_value())
-            obj.insert(kUserIdKey, user_id.value());
-        if (room_id.has_value())
-            obj.insert(kRoomIdKey, room_id.value());
-        if (config.has_value())
-        {
-            QJsonObject config_obj;
-            const auto [default_mode, default_temp] = config.value();
-            config_obj.insert(kModeKey, EnumToInt(default_mode));
-            config_obj.insert(kTemperatureKey, default_temp);
-            obj.insert(kTemperatureKey, config_obj);
-        }
-        if (mode.has_value())
-            obj.insert(kModeKey, EnumToInt(mode.value()));
-        if (speed_level.has_value())
-            obj.insert(kSpeedLevel, EnumToInt(speed_level.value()));
-        if (use.has_value())
-            obj.insert(kUseKey, use.value());
-        if (cost.has_value())
-            obj.insert(kCostKey, cost.value());
-        if (is_open.has_value())
-            obj.insert(kIsOpenKey, is_open.value());
-        // if (listener_port.has_value())
-        //     obj.insert(kListenerPortKey, listener_port.value());
-        return obj;
-    }
+    RequestPayload(const QJsonObject json_obj) { fromQJsonObject(json_obj); }
+    
+    /**
+     * @brief 将对应的 QJsonObject 对象转换为 RequestPayload 并原地存储
+     * 
+     * @param obj 需要转换的 QJsonObject 对象
+     */
+    void fromQJsonObject(const QJsonObject &obj);
 
-    void FromQJsonObject(const QJsonObject &obj)
-    {
-        assert(obj.contains(kTypeKey));
-        type = static_cast<decltype (type)>(obj.value(kTypeKey).toInt());
-        if (obj.contains(kResultKey))
-            result = obj.value(kResultKey).toBool();
-        if (obj.contains(kTemperatureKey))
-            temperature = obj.value(kTemperatureKey).toDouble();
-        if (obj.contains(kUserIdKey))
-            user_id = obj.value(kUserIdKey).toString();
-        if (obj.contains(kRoomIdKey))
-            room_id = obj.value(kRoomIdKey).toString();
-        if (obj.contains(kConfigKey))
-        {
-            const auto &config_obj = obj.value(kConfigKey).toObject();
-            assert(config_obj.contains(kModeKey));
-            assert(config_obj.contains(kTemperatureKey));
-            config = {static_cast<WorkingMode>(config_obj.value(kModeKey).toInt()), config_obj.value(kTemperatureKey).toDouble()};
-        }
-        if (obj.contains(kModeKey))
-            mode = static_cast<decltype (mode)::value_type>(obj.value(kModeKey).toInt());
-        if (obj.contains(kSpeedLevel))
-            speed_level = static_cast<decltype (speed_level)::value_type>(obj.value(kSpeedLevel).toInt());
-        if (obj.contains(kUseKey))
-            use = obj.value(kUseKey).toDouble();
-        if (obj.contains(kCostKey))
-            cost = obj.value(kCostKey).toDouble();
-        if (obj.contains(kIsOpenKey))
-            is_open = obj.value(kIsOpenKey).toBool();
-        // if (obj.contains(kListenerPortKey))
-        //     listener_port = obj.value(kListenerPortKey).toString();
-    }
+    /**
+     * @brief 将 RequestPayload 对象转换为 JSON 字符串
+     * 
+     * @return QString 转换得到的 JSON 字符串
+     */
+    QString toString() const;
+
+    /**
+     * @brief 将 RequestPayload 对象转换为 JSON 二进制序列(Base64编码)
+     * 
+     * @return QString 转换得到的 JSON 二进制序列(Base64编码)
+     */
+    QByteArray toBase64ByteArray() const;
+
 
     RequestType type{RequestType::NIL};
     std::optional<bool> result{std::nullopt};
@@ -158,25 +89,61 @@ struct RequestPayload
     std::optional<double> use{std::nullopt};
     std::optional<double> cost{std::nullopt};
     std::optional<bool> is_open{std::nullopt};
-    // std::optional<QString> listener_port{std::nullopt};
+    std::optional<quint16> listen_port{std::nullopt};
 
+    // 对于发送者只需要填写 target_host 和 target_port 字段，由接收方填写 source_host 和 source_port
+    QString source_host{};
+    quint16 source_port{};
     QString target_host{};
     quint16 target_port{};
+private:
+    /**
+     * @brief 将 RequestPayload 对象转换成 QJsonObject 对象
+     * 
+     * @return QJsonObject 
+     */
+    QJsonObject toQJsonObject() const;
+
+    /**
+     * @brief 根据 type 的类型检查参数是否满足其格式规定
+     * 
+     * @return true 
+     * @return false 
+     */
+    bool CheckParams() const;
 };
 
 class RequestParser
 {
 public:
+    /**
+     * @brief 将收到的以Base64编码的QByteArray解析成RequestPayload
+     * 
+     * @param obj_str 收到的以Base64编码的QByteArray
+     * @return std::pair<bool, RequestPayload> pair<是否解析成功, 若解析成功则为解析结果>
+     */
+    static std::pair<bool, RequestPayload> ParseBase64(const QByteArray &obj_str)
+    {
+        return Parse(QByteArray::fromBase64(obj_str));
+    }
+
+    /**
+     * @brief 将收到的QByteArray解析成RequestPayload
+     * 
+     * @param obj_str 收到的QByteArray
+     * @return std::pair<bool, RequestPayload> pair<是否解析成功, 若解析成功则为解析结果>
+     */
     static std::pair<bool, RequestPayload> Parse(const QByteArray &obj_str)
     {
         RequestPayload payload{};
         bool is_suc = true;
         QJsonParseError json_err;
         QJsonDocument document = QJsonDocument::fromJson(obj_str, &json_err);
+
         if (json_err.error == QJsonParseError::NoError && !document.isNull())
         {
             assert(document.isObject());
-            payload.FromQJsonObject(document.object());
+            payload.fromQJsonObject(document.object());
         }
         else
         {
