@@ -123,4 +123,6 @@ compile_commands.json
 
 # QtCreator local machine specific files for imported projects
 *creator.user*
-doc/request_format/TellListenerPortRequest.json
+
+.vscode
+
