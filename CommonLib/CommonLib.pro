@@ -1,6 +1,8 @@
-QT       += core gui network sql
+QT -= gui
+QT += gui network sql
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+TEMPLATE = lib
+CONFIG += staticlib
 
 CONFIG += c++17
 
@@ -16,17 +18,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    main.cpp \
-    mainwindow.cpp
+    common.cpp \
+    config.cpp \
+    listener.cpp
 
 HEADERS += \
-    mainwindow.h
-
-
-FORMS += \
-    mainwindow.ui
+    common.h \
+    listener.h \
+    msg_queen.h \
+    request_base.h \
+    request_controller.h \
+    request_payload.h \
+    requests.h
 
 # Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
+unix {
+    target.path = $$[QT_INSTALL_PLUGINS]/generic
+}
 !isEmpty(target.path): INSTALLS += target

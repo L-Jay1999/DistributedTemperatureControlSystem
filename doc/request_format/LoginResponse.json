@@ -1,0 +1,9 @@
+{
+    "type": "LoginResponse",
+    "result": true,
+    "config":
+    {
+        "mode": 1234,
+        "temperature": 1234.1234
+    }
+}

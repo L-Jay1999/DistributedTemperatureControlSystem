@@ -1,0 +1,4 @@
+{
+    "type": "GetRoomTemperatureResponse",
+    "temperature": 1234.1234
+}
