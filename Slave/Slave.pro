@@ -17,7 +17,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp \
     userloginwidget.cpp \
     slavecontrolwindow.cpp \
     logincontroller.cpp \
@@ -30,7 +29,6 @@ SOURCES += \
     windcontroller.cpp
 
 HEADERS += \
-    mainwindow.h \
     userloginwidget.h \
     slavecontrolwindow.h \
     logincontroller.h \
@@ -43,7 +41,6 @@ HEADERS += \
     windcontroller.h
 
 FORMS += \
-    mainwindow.ui \
     userloginwidget.ui \
     slavecontrolwindow.ui
 
