@@ -4,6 +4,7 @@
 #include <QtGlobal>
 
 #include <optional>
+#include <random>
 #include <map>
 
 enum class WorkingMode
@@ -19,6 +20,8 @@ enum class SpeedLevel
     HIGH,
 };
 
+int getRandomInt(int low_bound, int up_bound);
+
 class Config
 {
 public:
@@ -27,13 +30,15 @@ public:
     static constexpr int kRetryAttempt = 3;
 
     static quint16 getSlaveListenerPortValue();
-    static void setSlaveListenerPort();
+    static void setSlaveListenerPort(const quint16 port);
     static bool hasSlaveListenerPort();
 
 private:
     static std::optional<quint16> slave_listener_port;
 
 };
+
+
 
 
 #endif // COMMON_H
