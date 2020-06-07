@@ -7,6 +7,7 @@
 #include <random>
 #include <map>
 #include <type_traits>
+#include <thread>
 
 enum class WorkingMode
 {
@@ -53,6 +54,22 @@ inline constexpr int EnumToInt(const T enum_val)
     return static_cast<int>(enum_val);
 }
 
+/**
+ * @brief 获取当前线程ID哈希之后的值
+ * @return 哈希值
+ */
+inline std::size_t getHashedThreadId()
+{
+     return std::hash<std::thread::id>()(std::this_thread::get_id());
+}
+
+/**
+ * @brief 获取指定长度的随机字符串(a-z范围内)
+ * @param length 随机字符串的长度
+ * @return 随机字符串
+ */
+QString getRandomString(int length);
+
 namespace Config {
 
     // 标记主机的地址和端口，用于从控机发送请求给中央空调
@@ -61,24 +78,31 @@ namespace Config {
 
     // 设定传输失败时重传次数
     static constexpr int kRetryAttempt = 3;
+    static constexpr const char *kDBPath = "./mydb.db";
+
+    enum class UserType
+    {
+        MASTER = 0,
+        SLAVE,
+    };
 
     /**
      * @brief 获取 Listener 监听的端口
-     * 
+     * 线程安全
      * @return quint16 监听的端口值
      */
     quint16 getSlaveListenerPortValue();
 
     /**
      * @brief 设定 Listener 监听的端口
-     * 
+     * 线程安全
      * @param port 监听的端口
      */
     void setSlaveListenerPort(const quint16 port);
 
     /**
      * @brief 判断是否设定了 Listener 的端口
-     * 
+     * 线程安全
      * @return true 已设定
      * @return false 未设定，需要至少调用一次 setSlaveListenerPort(port)
      */
@@ -86,7 +110,7 @@ namespace Config {
 
     /**
      * @brief 将从控机与其地址和端口进行对应
-     * 
+     * 线程安全
      * @param room_id 从控机所在房间号
      * @param host_addr 该从控机的地址
      * @param port 该从控机监听的端口
@@ -95,11 +119,33 @@ namespace Config {
 
     /**
      * @brief 返回给定房间号的地址和监听端口
-     * 
+     * 线程安全
      * @param room_id 从控机所在房间号
      * @return std::pair<bool, std::pair<QString, quint16>> 若存在该房间号对应的记录，则返回 {true, {room_id, port}}, 
      * 否则返回 {false, {}}
      */
     std::pair<bool, std::pair<QString, quint16>> getAddress(const QString &room_id);
+
+    /**
+     * @brief 设定当前使用者的类型
+     * 线程安全
+     * @param user_type 使用者的类型，MASTER 和 SLAVE 中的一个
+     */
+    void setUserType(const UserType user_type);
+
+    /**
+     * @brief 获取当前使用者类型
+     * 线程安全
+     * @return std::optional<UserType> 
+     */
+    std::optional<UserType> getUserType();
+
+    /**
+     * @brief 判断是否指定了用户类型
+     * 线程安全
+     * @return true 
+     * @return false 
+     */
+    bool hasUserType();
 };
 #endif // COMMON_H

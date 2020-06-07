@@ -11,9 +11,11 @@ namespace Config
 {
     static std::optional<quint16> slave_listener_port = std::nullopt;
     static std::map<QString, std::pair<QString, quint16>> roomid_to_address{};
+    static std::optional<UserType> user_type = std::nullopt;
     // 确保线程安全
     static std::shared_mutex slave_port_rw_mutex;
     static std::shared_mutex roomid_to_addr_rw_mutex;
+    static std::shared_mutex user_type_rw_mutex;
 
     quint16 getSlaveListenerPortValue()
     {
@@ -46,5 +48,23 @@ namespace Config
         if (auto iter = roomid_to_address.find(room_id); iter != roomid_to_address.end())
             return {true, (*iter).second};
         return {false, {}};
+    }
+
+    void setUserType(const UserType user_type)
+    {
+        std::unique_lock lock(user_type_rw_mutex);
+        Config::user_type = user_type;
+    }
+
+    std::optional<UserType> getUserType()
+    {
+        std::shared_lock lock(user_type_rw_mutex);
+        return user_type;
+    }
+
+    bool hasUserType()
+    {
+        std::shared_lock lock(user_type_rw_mutex);
+        return user_type.has_value();
     }
 } // namespace Config

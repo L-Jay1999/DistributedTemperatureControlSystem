@@ -20,10 +20,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     common.cpp \
     config.cpp \
+    dbaccess.cpp \
     request_payload.cpp
 
 HEADERS += \
     common.h \
+    dbaccess.h \
     listener.h \
     msg_queen.h \
     request_base.h \
