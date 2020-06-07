@@ -20,7 +20,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     common.cpp \
     config.cpp \
-    listener.cpp
+    request_payload.cpp
 
 HEADERS += \
     common.h \
