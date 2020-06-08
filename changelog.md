@@ -4,7 +4,11 @@
 
 ### zyl
 
-
+1. 注意：在使用数据库前调用 `Config::setUserType()` 对当前用户类型进行指定。
+2. 数据库表结构存放在目录 doc/db_def 下。
+3. 增加 `DBAccess` 类用于数据库操作。
+4. 增加 `DBHelper` 命名空间以辅助 `DBAccess` 进行数据库操作。
+5. 在 database_defs.cpp 和 database_defs.h 中对数据库进行定义。
 
 ## 6.7 更新
 
