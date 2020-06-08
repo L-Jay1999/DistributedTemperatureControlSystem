@@ -5,11 +5,6 @@
 #include <vector>
 #include <QSqlQuery>
 
-
-
-
-
-
 namespace DBHelper
 {
     enum class ColTypes
@@ -25,11 +20,15 @@ namespace DBHelper
         ColTypes col_type{ColTypes::INTEGER};
         bool is_primary{false};
         bool is_not_null{false};
+        bool has_default{false};
+        QString default_val{""};
     };
 
-    QString getCreateSQL(const QString table_name, const std::vector<ColPayload> &col_info);
+    QString getCreateSQL(const QString &table_name, const std::vector<ColPayload> &col_info);
 
     QSqlError ExecSQLs(const std::vector<QString> &query_sqls);
+
+    QString getInsertSQL(const QString &table_name, const std::vector<ColPayload> &col_info);
 }
 
 

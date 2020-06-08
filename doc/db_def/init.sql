@@ -15,8 +15,8 @@ create table master.user (
     name text,
     room text not null,
     id text not null,
-    use numeric not null,
-    cost numeric not null,
+    use numeric not null default(0),
+    cost numeric not null default(0),
     primary key (room, id)
 );
 
@@ -35,7 +35,9 @@ create table master.room_request_stat (
     room text not null,
     initial_temperature numeric not null,
     target_temperature numeric not null,
-    wind_level integer not null,
+    start_time integer not null,
+    end_time integer not null,
+    speed_level integer not null,
     cost numeric not null
 )
 

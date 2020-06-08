@@ -38,6 +38,11 @@ bool DBAccess::isConnected() const
     return QSqlDatabase::contains(connection_name);
 }
 
+bool DBAccess::addUser(const QString &room_id, const QString &user_id)
+{
+    return false;
+}
+
 QSqlError DBAccess::init() const
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE", connection_name);
@@ -71,3 +76,5 @@ QSqlError DBAccess::init() const
     error = DBHelper::ExecSQLs(init_sqls);
     return error;
 }
+
+
