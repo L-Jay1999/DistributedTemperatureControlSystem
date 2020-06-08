@@ -19,7 +19,7 @@ namespace DBHelper
         return type_str.at(type);
     }
 
-    QString getCreateSQL(const QString table_name, const std::vector<ColPayload> &col_infos)
+    QString getCreateSQL(const QString &table_name, const std::vector<ColPayload> &col_infos)
     {
         QString sql = "create table";
         sql.append(table_name)
@@ -38,6 +38,8 @@ namespace DBHelper
             }
             if (info.is_not_null)
                 sql.append("not null ");
+            if (info.has_default)
+                sql.append(QString("default(%1)").arg(info.default_val));
             sql.append(",");
         }
 
@@ -64,4 +66,14 @@ namespace DBHelper
         QSqlDatabase::database().commit();
         return q.lastError();
     }
+
+    QString getInsertSQL(const QString &table_name, const std::vector<ColPayload> &col_info)
+    {
+        const QString sql = "insert into %1 values (%2)";
+        QString bind_str;
+        for (const auto info : col_info)
+            bind_str.append("?,");
+        bind_str.remove()
+    }
+
 }
