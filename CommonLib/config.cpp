@@ -67,4 +67,12 @@ namespace Config
         std::shared_lock lock(user_type_rw_mutex);
         return user_type.has_value();
     }
+
+    QString getDBPath()
+    {
+        QString path;
+        if (getUserType().has_value())
+            path = (getUserType().value() == UserType::MASTER) ? "./master.db" : "./slave.db";
+        return path;
+    }
 } // namespace Config

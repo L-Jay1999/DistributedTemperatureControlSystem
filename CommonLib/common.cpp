@@ -19,6 +19,6 @@ QString getRandomString(int length)
 {
     QString res;
     while (res.length() < length)
-        res.append(getRandomInt('a', 'z'));
+        res.append(getRandomInt(static_cast<int>('a'), static_cast<int>('z')));
     return res;
 }

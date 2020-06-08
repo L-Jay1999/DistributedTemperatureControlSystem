@@ -3,6 +3,9 @@
 
 #include <QSqlError>
 
+/**
+ * @brief The DBAccess class 使用前先设置用户类型
+ */
 class DBAccess
 {
 public:

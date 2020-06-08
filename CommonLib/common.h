@@ -73,12 +73,11 @@ QString getRandomString(int length);
 namespace Config {
 
     // 标记主机的地址和端口，用于从控机发送请求给中央空调
-    static constexpr const char *kMasterHostAddr = "localhost";
+    static constexpr auto kMasterHostAddr = "localhost";
     static constexpr quint16 kMasterListenPort = 12345;
 
     // 设定传输失败时重传次数
     static constexpr int kRetryAttempt = 3;
-    static constexpr const char *kDBPath = "./mydb.db";
 
     enum class UserType
     {
@@ -147,5 +146,11 @@ namespace Config {
      * @return false 
      */
     bool hasUserType();
+
+    /**
+     * @brief 获取数据库路径，只有在设置了用户类型后才会返回对应路径，否则返回空字符串
+     * @return 数据库路径
+     */
+    QString getDBPath();
 };
 #endif // COMMON_H
