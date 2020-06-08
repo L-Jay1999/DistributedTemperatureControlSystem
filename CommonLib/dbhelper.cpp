@@ -1,9 +1,13 @@
-#include "dbhelper.h"
-
+#include <QVariant>
 #include <QString>
+#include <QDebug>
+#include <QSqlError>
+
+#include <variant>
 #include <map>
 
-#include <QSqlError>
+#include "common.h"
+#include "dbhelper.h"
 
 namespace DBHelper
 {
@@ -73,7 +77,34 @@ namespace DBHelper
         QString bind_str;
         for (const auto info : col_info)
             bind_str.append("?,");
-        return "";
+        bind_str.remove(bind_str.length() - 1, 1);
+        return sql.arg(table_name).arg(bind_str);
+    }
+
+    QSqlError BindAndExec(QSqlQuery &q, const std::vector<std::variant<QString, double, int, SpeedLevel, qint64>> vals)
+    {
+        QSqlError error;
+        for (auto val : vals)
+        {
+            if (std::holds_alternative<QString>(val))
+                q.addBindValue(std::get<QString>(val));
+            else if (std::holds_alternative<double>(val))
+                q.addBindValue(std::get<double>(val));
+            else if (std::holds_alternative<int>(val))
+                q.addBindValue(std::get<int>(val));
+            else if (std::holds_alternative<SpeedLevel>(val))
+                q.addBindValue(EnumToInt(std::get<SpeedLevel>(val)));
+            else if (std::holds_alternative<qint64>(val))
+                q.addBindValue(std::get<qint64>(val));
+            else
+            {
+                assert(false);
+                qDebug() << "输入的值类型不正确";
+                throw "STOP!";
+            }
+        }
+        q.exec();
+        return q.lastError();
     }
 
 }

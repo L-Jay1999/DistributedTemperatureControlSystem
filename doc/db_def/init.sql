@@ -12,7 +12,6 @@ create table master.log (
 
 -- 认证用
 create table master.user (
-    name text,
     room text not null,
     id text not null,
     use numeric not null default(0),
@@ -40,4 +39,3 @@ create table master.room_request_stat (
     speed_level integer not null,
     cost numeric not null
 )
-
