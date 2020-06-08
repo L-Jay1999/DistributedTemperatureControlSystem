@@ -40,6 +40,10 @@ HEADERS += \
     modealtercontroller.h \
     windcontroller.h
 
+win32 {
+    LIBS += ../lib/CommonLib.lib
+}
+
 FORMS += \
     userloginwidget.ui \
     slavecontrolwindow.ui
