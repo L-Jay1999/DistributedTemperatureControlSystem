@@ -40,7 +40,7 @@ bool DBAccess::isConnected() const
 
 bool DBAccess::addUser(const QString &room_id, const QString &user_id)
 {
-
+    return false;
 }
 
 QSqlError DBAccess::init() const

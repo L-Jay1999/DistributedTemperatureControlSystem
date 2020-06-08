@@ -73,7 +73,7 @@ namespace DBHelper
         QString bind_str;
         for (const auto info : col_info)
             bind_str.append("?,");
-        bind_str.remove()
+        return "";
     }
 
 }
