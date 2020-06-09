@@ -4,7 +4,11 @@
 #include <QWidget>
 #include <QLineEdit>
 #include <QDebug>
+#include <tuple>
+
+#include "../CommonLib/listener.h"
 #include "slavecontrolwindow.h"
+#include "logincontroller.h"
 
 namespace Ui {
 class UserLoginWidget;
@@ -25,6 +29,7 @@ private slots:
 
 private:
     Ui::UserLoginWidget *ui;
+    quint16 _port;
     QLineEdit *_id_input;
     QLineEdit *_room_id_input;
 

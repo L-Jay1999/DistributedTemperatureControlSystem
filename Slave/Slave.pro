@@ -26,7 +26,9 @@ SOURCES += \
     getinformationcontroller.cpp \
     gettemperaturecontroller.cpp \
     modealtercontroller.cpp \
-    windcontroller.cpp
+    windcontroller.cpp \
+    shutdowncontroller.cpp \
+    user.cpp
 
 HEADERS += \
     userloginwidget.h \
@@ -38,7 +40,9 @@ HEADERS += \
     getinformationcontroller.h \
     gettemperaturecontroller.h \
     modealtercontroller.h \
-    windcontroller.h
+    windcontroller.h \
+    shutdowncontroller.h \
+    user.h
 
 win32 {
     LIBS += ../lib/CommonLib.lib
