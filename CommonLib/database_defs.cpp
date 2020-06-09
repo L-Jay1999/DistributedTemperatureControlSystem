@@ -9,7 +9,6 @@ const std::vector<DBHelper::ColPayload> Log::COL_INFO =
 
 const std::vector<DBHelper::ColPayload> MasterUser::COL_INFO =
 {
-    {"name", DBHelper::ColTypes::TEXT, false, false},
     {"room", DBHelper::ColTypes::TEXT, true, true},
     {"id", DBHelper::ColTypes::TEXT, true, true},
     {"use", DBHelper::ColTypes::NUMERIC, false, true, true, "0"},
@@ -34,8 +33,8 @@ const std::vector<DBHelper::ColPayload> MasterRequestStat::COL_INFO =
     {"room", DBHelper::ColTypes::TEXT, false, true},
     {"initial_temperature", DBHelper::ColTypes::NUMERIC, false, true},
     {"target_temperature", DBHelper::ColTypes::NUMERIC, false, true},
-    {"speed_level", DBHelper::ColTypes::INTEGER, false, true},
-    {"cost", DBHelper::ColTypes::NUMERIC, false, true},
     {"start_time", DBHelper::ColTypes::INTEGER, false, true},
     {"end_time", DBHelper::ColTypes::INTEGER, false, true},
+    {"speed_level", DBHelper::ColTypes::INTEGER, false, true},
+    {"cost", DBHelper::ColTypes::NUMERIC, false, true},
 };
