@@ -9,7 +9,9 @@ UserLoginWidget::UserLoginWidget(QWidget *parent) :
     this->setWindowTitle("Login");
     _id_input = ui->_id_input;
     _room_id_input = ui->_room_id_input;
-    Listener *listener = new Listener();
+
+    Listener *listener = new Listener(this);
+    _port = listener->ListenOnRandomPort(1080, 1100);
     Config::setSlaveListenerPort(_port);
 }
 
@@ -31,10 +33,12 @@ void UserLoginWidget::on_confirmbutton_clicked()
     std::tuple<bool, QString, WorkingMode, double>result = logincontroller->Login();
     if(std::get<0>(result)){
         SlaveControlWindow *s = new SlaveControlWindow();
+        User *user = new User(_room_id_input, _id_input);
+        s->setUser(user);
         s->show();
         this->close();
     }
     else{
-
+        qDebug() << std::get<1>(result);
     }
 }

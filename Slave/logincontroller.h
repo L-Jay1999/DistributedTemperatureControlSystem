@@ -19,14 +19,7 @@ private:
     QString _RoomID;
     QString _port;
     bool CheckArgs();
-//    class LoginRequest
-//    {
-//        Config _config;
-//        int _login_res;
-//        int SendRequest();
-//        int getLoginRes();
-//        int getConfig();
-//    }
+
 };
 
 #endif // LOGINCONTROLLER_H

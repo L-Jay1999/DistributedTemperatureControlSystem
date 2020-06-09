@@ -3,5 +3,7 @@
 bool ShutDownController::ShutDown()
 {
     ShutDownRequest *shutdownrequest = new ShutDownRequest(_RoomID);
-    return shutdownrequest->Send();
+    bool result = shutdownrequest->Send();
+    delete shutdownrequest;
+    return result;
 }

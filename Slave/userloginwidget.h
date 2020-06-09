@@ -4,6 +4,8 @@
 #include <QWidget>
 #include <QLineEdit>
 #include <QDebug>
+#include <tuple>
+
 #include "../CommonLib/listener.h"
 #include "slavecontrolwindow.h"
 #include "logincontroller.h"
@@ -27,7 +29,7 @@ private slots:
 
 private:
     Ui::UserLoginWidget *ui;
-    const quint16 _port = 1080;
+    quint16 _port;
     QLineEdit *_id_input;
     QLineEdit *_room_id_input;
 
