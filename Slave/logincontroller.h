@@ -1,22 +1,32 @@
 #ifndef LOGINCONTROLLER_H
 #define LOGINCONTROLLER_H
 #include <QString>
+#include <tuple>
+#include "../CommonLib/requests.h"
 
 class LoginController
 {
 public:
-    LoginController();
-    bool CheckArgs(QString UserID, QString RoomID);
+    LoginController() = delete;
+    LoginController(const QString &UserID, const QString &RoomID, const quint16 &port)
+        : _UserID(UserID), _RoomID(RoomID), _port(port)
+    {}
+    std::tuple<bool, QString, WorkingMode, double> Login();
+
 
 private:
-    class LoginRequest
-    {
-        //Config _config;
-        //int _login_res;
-        int SendRequest();
-        int getLoginRes();
-        int getConfig();
-    }
+    QString _UserID;
+    QString _RoomID;
+    QString _port;
+    bool CheckArgs();
+//    class LoginRequest
+//    {
+//        Config _config;
+//        int _login_res;
+//        int SendRequest();
+//        int getLoginRes();
+//        int getConfig();
+//    }
 };
 
 #endif // LOGINCONTROLLER_H

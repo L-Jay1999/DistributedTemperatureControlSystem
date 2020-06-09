@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QLCDNumber>
 
+#include <../CommonLib/common.h>
+
 namespace Ui {
 class SlaveControlWindow;
 }
@@ -23,6 +25,18 @@ private:
     QLCDNumber *_roomtemperature_lcd;
     QLCDNumber *_usage_lcd;
     QLCDNumber *_cost_lcd;
+    double _temperature;
+    int _windspeed;
+    double _roomtemperature;
+    double _usage;
+    double _cost;
+
+    int WindSpeed(SpeedLevel speedlevel);
+    SpeedLevel WindSpeed(int speedlevel);
+    void Temperature_Up();
+    void Temperature_Down();
+    void WindSpeed_Up();
+    void WindSpeed_Down();
 };
 
 #endif // SLAVECONTROLWINDOW_H

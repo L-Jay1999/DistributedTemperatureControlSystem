@@ -20,3 +20,27 @@ SlaveControlWindow::~SlaveControlWindow()
     delete ui;
     exit(0);
 }
+
+int SlaveControlWindow::WindSpeed(SpeedLevel speedlevel)
+{
+    int level = (int)speedlevel;
+    return level + 1;
+}
+
+SpeedLevel SlaveControlWindow::WindSpeed(int speedlevel)
+{
+    switch (speedlevel) {
+    case 0:
+        return SpeedLevel::LOW;
+        break;
+    case 1:
+        return SpeedLevel::MID;
+        break;
+    case 1:
+        return SpeedLevel::HIGH;
+        break;
+    default:
+        return SpeedLevel::LOW;
+        break;
+    }
+}
