@@ -14,6 +14,7 @@ static const std::map<RequestType, QString> kTypeStr =
         {RequestType::USE_AND_COST, "UseAndCost"},
         {RequestType::SHUTDOWN, "ShutDown"},
         {RequestType::WIND, "Wind"},
+        {RequestType::SCHEDULE, "WindSchedule"},
         // {RequestType::TELL_LISTENER_PORT, "TellListenerPort"},
 };
 
@@ -56,6 +57,8 @@ QJsonObject RequestPayload::toQJsonObject() const
         obj.insert(kIsOpenKey, is_open.value());
     if (listen_port.has_value())
         obj.insert(kListenPortKey, listen_port.value());
+    if (is_in_queue.has_value())
+        obj.insert(kIsInQueueKey, is_in_queue.value());
     obj.insert(kSrcHostKey, source_host);
     obj.insert(kSrcPortKey, source_port);
     obj.insert(kTargetHostKey, target_host);
@@ -102,6 +105,8 @@ void RequestPayload::fromQJsonObject(const QJsonObject &obj)
         source_host = obj.value(kTargetHostKey).toString();
     if (obj.contains(kTargetPortKey))
         source_host = static_cast<quint16>(obj.value(kTargetPortKey).toInt());
+    if (obj.contains(kIsInQueueKey))
+        is_in_queue = obj.value(kIsInQueueKey).toBool();
     assert(CheckParams());
 }
 

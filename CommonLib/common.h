@@ -2,6 +2,7 @@
 #define COMMON_H
 
 #include <QtGlobal>
+#include <QtCore>
 
 #include <optional>
 #include <random>
@@ -85,6 +86,12 @@ namespace Config {
         SLAVE,
     };
 
+    enum class SlaveControllerType
+    {
+        USE_COST = 0,
+        MODE_ALTER,
+    };
+
     /**
      * @brief 获取 Listener 监听的端口
      * 线程安全
@@ -152,5 +159,10 @@ namespace Config {
      * @return 数据库路径
      */
     QString getDBPath();
+
+    void setSlaveControllerPointer(SlaveControllerType type, QObject *controller);
+
+    QObject *getSlaveControllerPointer(SlaveControllerType ctrller_type);
+
 };
 #endif // COMMON_H
