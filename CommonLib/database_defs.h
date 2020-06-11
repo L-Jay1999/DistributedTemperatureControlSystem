@@ -7,35 +7,35 @@
 #include <QString>
 #include <vector>
 
-struct Log
+struct LogContract
 {
     static constexpr auto TITLE = "log";
     static const std::vector<DBHelper::ColPayload> COL_INFO;
     static QString getCreateSql() { return DBHelper::getCreateSQL(TITLE, COL_INFO); }
 };
 
-struct MasterUser
+struct MasterUserContract
 {
     static constexpr auto TITLE = "user";
     static const std::vector<DBHelper::ColPayload> COL_INFO;
     static QString getCreateSql() { return DBHelper::getCreateSQL(TITLE, COL_INFO); }
 };
 
-struct MasterAuth
+struct MasterAuthContract
 {
     static constexpr auto TITLE = "auth";
     static const std::vector<DBHelper::ColPayload> COL_INFO;
     static QString getCreateSql() { return DBHelper::getCreateSQL(TITLE, COL_INFO); }
 };
 
-struct MasterPowerStat
+struct MasterPowerStatContract
 {
     static constexpr auto TITLE = "room_power_stat";
     static const std::vector<DBHelper::ColPayload> COL_INFO;
     static QString getCreateSql() { return DBHelper::getCreateSQL(TITLE, COL_INFO); }
 };
 
-struct MasterRequestStat
+struct MasterRequestStatContract
 {
     static constexpr auto TITLE = "room_power_stat";
     static const std::vector<DBHelper::ColPayload> COL_INFO;

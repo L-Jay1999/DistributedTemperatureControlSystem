@@ -334,6 +334,38 @@ protected:
 private:
 };
 
+class ScheduleInfoRequest : Request
+{
+public:
+    ScheduleInfoRequest(bool is_in_queue) : is_in_queue_(is_in_queue) {}
+
+    bool Send()
+    {
+        auto payload = BuildPayload();
+        bool is_suc = false;
+        for (int i = 0; i < Config::kRetryAttempt; i++)
+        {
+            auto [temp_suc, response] = SendRequest(payload);
+            if (temp_suc && response.type == RequestType::ACK && response.result)
+            {
+                is_suc = true;
+                break;
+            }
+        }
+        return is_suc;
+    }
+protected:
+    RequestPayload BuildPayload() override
+    {
+        RequestPayload payload{};
+        payload.type = RequestType::SCHEDULE;
+        payload.is_in_queue = is_in_queue_;
+        return payload;
+    }
+private:
+    bool is_in_queue_{};
+};
+
 //class TellListenerPortRequest : Request
 //{
 //public:

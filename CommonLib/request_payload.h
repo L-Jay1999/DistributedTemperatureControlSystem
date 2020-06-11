@@ -27,6 +27,7 @@ enum class RequestType
     USE_AND_COST,
     SHUTDOWN,
     WIND,
+    SCHEDULE,
     // TELL_LISTENER_PORT,
     UB = WIND,
     LB = LOGIN,
@@ -35,22 +36,23 @@ enum class RequestType
 
 struct RequestPayload
 {
-    static constexpr const char *kTypeKey = "type";
-    static constexpr const char *kRoomIdKey = "room_id";
-    static constexpr const char *kUserIdKey = "user_id";
-    static constexpr const char *kResultKey = "result";
-    static constexpr const char *kTemperatureKey = "temperature";
-    static constexpr const char *kConfigKey = "config";
-    static constexpr const char *kModeKey = "mode";
-    static constexpr const char *kSpeedLevel = "speed_level";
-    static constexpr const char *kUseKey = "use";
-    static constexpr const char *kCostKey = "cost";
-    static constexpr const char *kIsOpenKey = "is_open";
-    static constexpr const char *kSrcHostKey = "source_host";
-    static constexpr const char *kSrcPortKey = "source_port";
-    static constexpr const char *kTargetHostKey = "target_host";
-    static constexpr const char *kTargetPortKey = "target_port";
-    static constexpr const char *kListenPortKey = "listen_port";
+    static constexpr auto kTypeKey = "type";
+    static constexpr auto kRoomIdKey = "room_id";
+    static constexpr auto kUserIdKey = "user_id";
+    static constexpr auto kResultKey = "result";
+    static constexpr auto kTemperatureKey = "temperature";
+    static constexpr auto kConfigKey = "config";
+    static constexpr auto kModeKey = "mode";
+    static constexpr auto kSpeedLevel = "speed_level";
+    static constexpr auto kUseKey = "use";
+    static constexpr auto kCostKey = "cost";
+    static constexpr auto kIsOpenKey = "is_open";
+    static constexpr auto kSrcHostKey = "source_host";
+    static constexpr auto kSrcPortKey = "source_port";
+    static constexpr auto kTargetHostKey = "target_host";
+    static constexpr auto kTargetPortKey = "target_port";
+    static constexpr auto kListenPortKey = "listen_port";
+    static constexpr auto kIsInQueueKey = "is_in_queue";
 
     RequestPayload() {}
     RequestPayload(const RequestType request_type) : type(request_type) {}
@@ -90,6 +92,7 @@ struct RequestPayload
     std::optional<double> cost{std::nullopt};
     std::optional<bool> is_open{std::nullopt};
     std::optional<quint16> listen_port{std::nullopt};
+    std::optional<bool> is_in_queue{std::nullopt};
 
     // 对于发送者只需要填写 target_host 和 target_port 字段，由接收方填写 source_host 和 source_port
     QString source_host{};
