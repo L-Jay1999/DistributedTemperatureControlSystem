@@ -9,6 +9,7 @@
 #include <map>
 #include <type_traits>
 #include <thread>
+#include <sstream>
 
 enum class WorkingMode
 {
@@ -62,6 +63,17 @@ inline constexpr int EnumToInt(const T enum_val)
 inline std::size_t getHashedThreadId()
 {
      return std::hash<std::thread::id>()(std::this_thread::get_id());
+}
+
+/**
+ * @brief 将当前线程ID转为字符串
+ * @return 线程ID字符串
+ */
+inline QString getThreadIdStr()
+{
+    std::stringstream ss;
+    ss << std::this_thread::get_id();
+    return QString::fromStdString(ss.str());
 }
 
 /**

@@ -13,8 +13,7 @@ lessThan(QT_MINOR_VERSION, 12) {
     }
 }
 else {
-    message($$QT_MINOR_VERSION)
-    CONFIG += C++17
+    CONFIG += c++17
 }
 
 # The following define makes your compiler emit warnings if you use

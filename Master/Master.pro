@@ -2,7 +2,17 @@ QT       += core gui network sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++17
+lessThan(QT_MINOR_VERSION, 12) {
+    contains(QMAKE_COMPILER_DEFINES, __MSC_VER) {
+        QMAKE_CXXFLAGS += /std:c++17
+    }
+    else {
+        QMAKE_CXXFLAGS += -std=c++17
+    }
+}
+else {
+    CONFIG += c++17
+}
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings

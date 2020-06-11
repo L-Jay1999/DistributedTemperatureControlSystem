@@ -1,12 +1,5 @@
 #include "database_defs.h"
 
-const std::vector<DBHelper::ColPayload> LogContract::COL_INFO =
-{
-    {"time", DBHelper::ColTypes::INTEGER, false, true},
-    {"level", DBHelper::ColTypes::INTEGER, false, true},
-    {"content", DBHelper::ColTypes::TEXT, false, true},
-};
-
 const std::vector<DBHelper::ColPayload> MasterUserContract::COL_INFO =
 {
     {"room", DBHelper::ColTypes::TEXT, true, true},

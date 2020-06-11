@@ -236,8 +236,6 @@ QSqlError DBAccess::init() const
     // 检查表是否已存在，若不存在则创建表
     if (Config::getUserType().value() == Config::UserType::MASTER)
     {
-        if (!tables.contains(LogContract::TITLE))
-            init_sqls.push_back(LogContract::getCreateSql());
         if (!tables.contains(MasterUserContract::TITLE))
             init_sqls.push_back(MasterUserContract::getCreateSql());
         if (!tables.contains(MasterAuthContract::TITLE))
@@ -246,11 +244,6 @@ QSqlError DBAccess::init() const
             init_sqls.push_back(MasterPowerStatContract::getCreateSql());
         if (!tables.contains(MasterRequestStatContract::TITLE))
             init_sqls.push_back(MasterRequestStatContract::getCreateSql());
-    }
-    else if (Config::getUserType().value() == Config::UserType::SLAVE)
-    {
-        if (!tables.contains(LogContract::TITLE))
-            init_sqls.push_back(LogContract::getCreateSql());
     }
 
     error = DBHelper::ExecSQLs(init_sqls);
