@@ -7,13 +7,6 @@
 #include <QString>
 #include <vector>
 
-struct LogContract
-{
-    static constexpr auto TITLE = "log";
-    static const std::vector<DBHelper::ColPayload> COL_INFO;
-    static QString getCreateSql() { return DBHelper::getCreateSQL(TITLE, COL_INFO); }
-};
-
 struct MasterUserContract
 {
     static constexpr auto TITLE = "user";
