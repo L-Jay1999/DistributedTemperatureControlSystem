@@ -18,7 +18,7 @@ static const std::map<RequestType, QString> kTypeStr =
         // {RequestType::TELL_LISTENER_PORT, "TellListenerPort"},
 };
 
-static inline const QString &getTypeStr(const RequestType type)
+const QString &getTypeStr(const RequestType type)
 {
     assert(kTypeStr.count(type));
     return kTypeStr.at(type);
@@ -122,6 +122,61 @@ inline QByteArray RequestPayload::toBase64ByteArray() const
 
 bool RequestPayload::CheckParams() const
 {
-    // TODO
-    return true;
+    switch (type)
+    {
+    case RequestType::LOGIN:
+        if (user_id.has_value() && room_id.has_value()
+                && listen_port.has_value())
+            return true;
+        break;
+    case RequestType::LOGIN_RESPONSE:
+        if (result.has_value())
+            if (!result.value() || (result.value() && config.has_value()))
+                return true;
+        break;
+    case RequestType::ACK:
+        if (result.has_value())
+            return true;
+        break;
+    case RequestType::FORCE_SHUTDOWN:
+        return true;
+        break;
+    case RequestType::GET_ROOM_TEMP:
+        return true;
+        break;
+    case RequestType::GET_ROOM_TEMP_RESPONSE:
+        if (temperature.has_value())
+            return true;
+        break;
+    case RequestType::SET_MODE:
+        if (mode.has_value())
+            return true;
+        break;
+    case RequestType::SET_SPEED:
+        if (room_id.has_value() && speed_level.has_value())
+            return true;
+        break;
+    case RequestType::SET_TEMP:
+        if (temperature.has_value() && room_id.has_value())
+            return true;
+        break;
+    case RequestType::USE_AND_COST:
+        if (use.has_value() && cost.has_value())
+            return true;
+        break;
+    case RequestType::SHUTDOWN:
+        if (room_id.has_value())
+            return true;
+        break;
+    case RequestType::WIND:
+        if (is_open.has_value() && room_id.has_value())
+            return true;
+        break;
+    case RequestType::SCHEDULE:
+        if (is_in_queue.has_value())
+            return true;
+        break;
+    default:break;
+    }
+    return false;
 }
