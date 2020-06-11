@@ -1,5 +1,21 @@
 # 更新日志
 
+## 6.9 更新
+
+### ljy
+
+1. 补全各个Controller
+2. Slave控制界面调整、补全相关槽函数
+3. 建议保存以下全局Controller，另：Master那边收消息的Controller应该也要保存
+    - `UseandCostController` 对应用例5.5
+    - `ModeAlterController` 对应用例5.10.2
+
+### zyl
+
+1. 实现数据库
+2. 为数据库接口提供注释说明
+3. 更新数据库表结构
+
 ## 6.8 更新
 
 ### zyl
