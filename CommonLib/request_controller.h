@@ -27,13 +27,32 @@ public:
         if (!is_parsing_suc)
         {
             auto fail_response = getAckResponse(false);
+            fail_response.target_host = host_addr;
+            fail_response.target_port = host_port;
+            fail_response.source_host = request_parsed.target_host;
+            fail_response.source_port = request_parsed.target_port;
             return fail_response.toBase64ByteArray();
         }
         else
         {
             switch (request_parsed.type)
             {
-                // ......
+            // Slave to Master
+            case RequestType::LOGIN:break;
+            case RequestType::SET_SPEED:break;
+            case RequestType::SET_TEMP:break;
+            case RequestType::SHUTDOWN:break;
+            case RequestType::WIND:break;
+            // Master to Slave
+            case RequestType::FORCE_SHUTDOWN:break;
+            case RequestType::GET_ROOM_TEMP:break;
+            case RequestType::SET_MODE:break;
+            case RequestType::USE_AND_COST:break;
+            case RequestType::SCHEDULE:break;
+            default:
+                qDebug() << getTypeStr(request_parsed.type);
+                assert(false);
+                throw getTypeStr(request_parsed.type);
             }
         }
 

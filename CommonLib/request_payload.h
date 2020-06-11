@@ -34,6 +34,8 @@ enum class RequestType
     NIL = -1,
 };
 
+const QString &getTypeStr(const RequestType type);
+
 struct RequestPayload
 {
     static constexpr auto kTypeKey = "type";

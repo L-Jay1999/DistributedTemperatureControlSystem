@@ -36,7 +36,13 @@ public:
             }
         }
         if (is_parsing_suc)
-            return {is_parsing_suc, std::get<0>(response_payload.config.value()), std::get<1>(response_payload.config.value())};
+        {
+            if (response_payload.type == RequestType::LOGIN_RESPONSE)
+                return {is_parsing_suc, std::get<0>(response_payload.config.value()), std::get<1>(response_payload.config.value())};
+            else
+                return {is_parsing_suc, WorkingMode(), double()};
+        }
+
         return {is_parsing_suc, WorkingMode(), double()};
     }
 
@@ -365,38 +371,6 @@ protected:
 private:
     bool is_in_queue_{};
 };
-
-//class TellListenerPortRequest : Request
-//{
-//public:
-//    TellListenerPortRequest(const quint16 port): listener_port(port) {}
-
-//    bool Send()
-//    {
-//        auto payload = BuildPayload();
-//        bool is_suc = false;
-//        for (int i = 0; i < Config.kRetryAttempt; i++)
-//        {
-//            auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
-//            if (temp_suc && response.type == RequestType::ACK && response.result)
-//            {
-//                is_suc = true;
-//                break;
-//            }
-//        }
-//        return is_suc;
-//    }
-//protected:
-//    RequestPayload BuildPayload() override
-//    {
-//        RequestPayload payload{};
-//        payload.type = RequestType::TELL_LISTENER_PORT;
-//        payload.listener_port = listener_port;
-//        return payload;
-//    }
-//private:
-//    quint16 listener_port;
-//};
 
 static inline RequestPayload getAckResponse(const bool result = true)
 {

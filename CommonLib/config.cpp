@@ -77,7 +77,7 @@ namespace Config
     {
         QString path;
         if (getUserType().has_value())
-            path = (getUserType().value() == UserType::MASTER) ? "./master.db" : "./slave.db";
+            path = (getUserType().value() == UserType::MASTER) ? kMasterDBPath : kSlaveDBPath;
         return path;
     }
 
