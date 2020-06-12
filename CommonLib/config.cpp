@@ -90,7 +90,8 @@ namespace Config
     void setSlaveControllerPointer(SlaveControllerType type, QObject *controller)
     {
         std::unique_lock lock(slave_ctrller_ptr_rw_mutex);
-        slave_ctrller_ptr.at(type) = controller;
+        // slave_ctrller_ptr.at(type) = controller;
+        slave_ctrller_ptr[type] = controller;
     }
 
     QObject *getSlaveControllerPointer(SlaveControllerType ctrller_type)
