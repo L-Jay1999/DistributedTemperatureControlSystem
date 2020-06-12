@@ -1,4 +1,4 @@
-#include "powersupplywidget.h"
+﻿#include "powersupplywidget.h"
 #include "ui_powersupplywidget.h"
 
 PowerSupplyWidget::PowerSupplyWidget(QWidget *parent) :
@@ -27,7 +27,7 @@ void PowerSupplyWidget::cancel()
 
 void PowerSupplyWidget::clicked_on()
 {
-    QString text = "启动中央空调";
+    QString text = "Open Master";
     ocd = new OperationConfirmationDialog;
     ocd->setText(text);
     int res = ocd->exec();
@@ -39,7 +39,7 @@ void PowerSupplyWidget::clicked_on()
 
 void PowerSupplyWidget::clicked_off()
 {
-    QString text = "关闭中央空调";
+    QString text = "Close Master";
     ocd = new OperationConfirmationDialog;
     ocd->setText(text);
     int res = ocd->exec();
@@ -51,10 +51,16 @@ void PowerSupplyWidget::clicked_off()
 
 void PowerSupplyWidget::StartSystem()
 {
-    ui->label_power->setText("开启");
+//    ui->label_power->setText("开启");
+    ui->label_power->setText("Open");
 }
 
 void PowerSupplyWidget::ShutDownSystem()
 {
-    ui->label_power->setText("关闭");
+    ui->label_power->setText("Close");
+}
+
+QString PowerSupplyWidget::getText()
+{
+    return this->text;
 }

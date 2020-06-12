@@ -72,7 +72,7 @@ namespace Log
             stream << temp.arg(time.toString("yy/MM/dd hh:mm:ss"))
                           .arg(getLogLevelStr(level))
                           .arg(getThreadIdStr())
-                          .arg(log) << Qt::endl;
+                          .arg(log);
         }
         else
         {

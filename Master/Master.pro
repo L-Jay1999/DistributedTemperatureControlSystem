@@ -4,8 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network sql
-
+QT += core gui network sql
+Config += console
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 lessThan(QT_MINOR_VERSION, 12) {
@@ -43,7 +43,8 @@ SOURCES += \
     managercontrolpanel.cpp \
     manager.cpp \
     powersupplywidget.cpp \
-    operationconfirmationdialog.cpp
+    operationconfirmationdialog.cpp \
+    parameterwidget.cpp
 
 HEADERS += \
     managerlogincontroller.h \
@@ -52,11 +53,14 @@ HEADERS += \
     managercontrolpanel.h \
     manager.h \
     powersupplywidget.h \
-    operationconfirmationdialog.h
+    operationconfirmationdialog.h \
+    parameterwidget.h
+
 
 FORMS += \
     managerloginwidget.ui \
     standbywidget.ui \
     managercontrolpanel.ui \
     powersupplywidget.ui \
-    operationconfirmationdialog.ui
+    operationconfirmationdialog.ui \
+    parameterwidget.ui

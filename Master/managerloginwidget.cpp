@@ -7,7 +7,7 @@ ManagerLoginWidget::ManagerLoginWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
-    this->setWindowTitle("管理员认证");
+    this->setWindowTitle("Manager Confirm");
     this->setFixedSize(this->width(),this->height());
     ui->label_error->clear();
     ui->label_error->setAlignment(Qt::AlignHCenter);
