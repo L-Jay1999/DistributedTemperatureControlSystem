@@ -36,8 +36,6 @@ SOURCES += \
     log.cpp \
     request_payload.cpp
 
-DESTDIR += ../lib
-
 HEADERS += \
     common.h \
     database_defs.h \
