@@ -9,6 +9,8 @@ public:
     User(const QString &RoomID, const QString &UserID) : _RoomID(RoomID), _UserID(UserID) {}
     QString getRoomID() const;
     QString getUserID() const;
+    double getUsage() const;
+    double getCost() const;
 
 private:
     QString _RoomID;

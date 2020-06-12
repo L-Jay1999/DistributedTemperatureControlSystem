@@ -12,7 +12,19 @@ SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
     _windspeed_lcd = ui->_windspeed_lcd;
     _usage_lcd = ui->_usage_lcd;
 
-    _temperature_lcd->display(36.2);
+    _temperature = 25.0;
+    _temperature_lcd->display(_temperature);
+
+    _windspeed = 1;
+    _windspeed_lcd->display(_windspeed);
+
+    _sensor = new Sensor(25.0);
+    _roomtemperature = _sensor->GetTemperature(_temperature);
+    _roomtemperature_lcd->display(_roomtemperature);
+
+    _timer = new QTimer(this);
+    connect(_timer, SIGNAL(timeout()), this, SLOT(GetRoomTemperature()));
+    _timer->start(5000);
 }
 
 SlaveControlWindow::~SlaveControlWindow()
@@ -48,18 +60,25 @@ SpeedLevel SlaveControlWindow::WindSpeed(int speedlevel)
 void SlaveControlWindow::setUser(User *value)
 {
     _user = value;
+    _usage = _user->getUsage();
+    _cost = _user->getCost();
+    _usage_lcd->display(_usage);
+    _cost_lcd->display(_cost);
 }
 
 void SlaveControlWindow::on_shutdownbtn_clicked()
 {
-    ShutDownController *shutdowncontroller = new ShutDownController(_user->getRoomID());
-    if(shutdowncontroller->ShutDown()){
-        // todo
-    }
-    else{
-        // todo
-    }
-    delete shutdowncontroller;
+//    ShutDownController *shutdowncontroller = new ShutDownController(_user->getRoomID());
+//    if(shutdowncontroller->ShutDown()){
+//        // todo
+//        qDebug() << "ShutDown"
+//    }
+//    else{
+//        // todo
+//        qDebug() << "ShutDown Fail!"
+//    }
+//    delete shutdowncontroller;
+    exit(0);
 }
 
 void SlaveControlWindow::on_windspeedbtn_clicked()
@@ -70,19 +89,20 @@ void SlaveControlWindow::on_windspeedbtn_clicked()
     else{
         _windspeed += 1;
     }
-    SetSpeedController *setspeedcontroller = new SetSpeedController(_user->getRoomID(), WindSpeed(_windspeed));
-    if(setspeedcontroller->Set()){
-        _windspeed_lcd->display(_windspeed);
-    }
-    else{
-        if(_windspeed == 1){
-            _windspeed = 3;
-        }
-        else{
-            _windspeed -= 1;
-        }
-    }
-    delete setspeedcontroller;
+//    SetSpeedController *setspeedcontroller = new SetSpeedController(_user->getRoomID(), WindSpeed(_windspeed));
+//    if(setspeedcontroller->Set()){
+//        _windspeed_lcd->display(_windspeed);
+//    }
+//    else{
+//        if(_windspeed == 1){
+//            _windspeed = 3;
+//        }
+//        else{
+//            _windspeed -= 1;
+//        }
+//    }
+//    delete setspeedcontroller;
+    _windspeed_lcd->display(_windspeed);
 }
 
 void SlaveControlWindow::on_uptemperaturebtn_clicked()
@@ -90,14 +110,15 @@ void SlaveControlWindow::on_uptemperaturebtn_clicked()
     if(_temperature >= 40.0)
         return;
     _temperature += 0.5;
-    SetTemperatureController *settemperaturecontroller = new SetTemperatureController(_user->getRoomID(), _temperature);
-    if(settemperaturecontroller->Set()){
-        _temperature_lcd->display(_temperature);
-    }
-    else{
-        _temperature -= 0.5;
-    }
-    delete settemperaturecontroller;
+//    SetTemperatureController *settemperaturecontroller = new SetTemperatureController(_user->getRoomID(), _temperature);
+//    if(settemperaturecontroller->Set()){
+//        _temperature_lcd->display(_temperature);
+//    }
+//    else{
+//        _temperature -= 0.5;
+//    }
+//    delete settemperaturecontroller;
+    _temperature_lcd->display(_temperature);
 }
 
 void SlaveControlWindow::on_downtemperaturebtn_clicked()
@@ -105,12 +126,19 @@ void SlaveControlWindow::on_downtemperaturebtn_clicked()
     if(_temperature <= 20.0)
         return;
     _temperature -= 0.5;
-    SetTemperatureController *settemperaturecontroller = new SetTemperatureController(_user->getRoomID(), _temperature);
-    if(settemperaturecontroller->Set()){
-        _temperature_lcd->display(_temperature);
-    }
-    else{
-        _temperature += 0.5;
-    }
-    delete settemperaturecontroller;
+//    SetTemperatureController *settemperaturecontroller = new SetTemperatureController(_user->getRoomID(), _temperature);
+//    if(settemperaturecontroller->Set()){
+//        _temperature_lcd->display(_temperature);
+//    }
+//    else{
+//        _temperature += 0.5;
+//    }
+//    delete settemperaturecontroller;
+    _temperature_lcd->display(_temperature);
+}
+
+void SlaveControlWindow::GetRoomTemperature()
+{
+    _roomtemperature = _sensor->GetTemperature(_temperature);
+    _roomtemperature_lcd->display(_roomtemperature);
 }

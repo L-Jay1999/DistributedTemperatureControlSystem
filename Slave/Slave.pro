@@ -38,7 +38,8 @@ SOURCES += \
     modealtercontroller.cpp \
     windcontroller.cpp \
     shutdowncontroller.cpp \
-    user.cpp
+    user.cpp \
+    sensor.cpp
 
 HEADERS += \
     userloginwidget.h \
@@ -52,7 +53,8 @@ HEADERS += \
     modealtercontroller.h \
     windcontroller.h \
     shutdowncontroller.h \
-    user.h
+    user.h \
+    sensor.h
 
 
 FORMS += \
