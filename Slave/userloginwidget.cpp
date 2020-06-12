@@ -29,16 +29,21 @@ void UserLoginWidget::on_confirmbutton_clicked()
 {
     qDebug() << _id_input->text();
     qDebug() << _room_id_input->text();
-    LoginController *logincontroller = new LoginController(_id_input->text(), _room_id_input->text(), _port);
-    std::tuple<bool, QString, WorkingMode, double>result = logincontroller->Login();
-    if(std::get<0>(result)){
-        SlaveControlWindow *s = new SlaveControlWindow();
-        User *user = new User(_room_id_input, _id_input);
-        s->setUser(user);
-        s->show();
-        this->close();
-    }
-    else{
-        qDebug() << std::get<1>(result);
-    }
+//    LoginController *logincontroller = new LoginController(_id_input->text(), _room_id_input->text(), _port);
+//    std::tuple<bool, QString, WorkingMode, double>result = logincontroller->Login();
+//    if(std::get<0>(result)){
+//        SlaveControlWindow *s = new SlaveControlWindow();
+//        User *user = new User(_room_id_input, _id_input);
+//        s->setUser(user);
+//        s->show();
+//        this->close();
+//    }
+//    else{
+//        qDebug() << std::get<1>(result);
+//    }
+    SlaveControlWindow *s = new SlaveControlWindow();
+    User *user = new User(_room_id_input->text(), _id_input->text());
+    s->setUser(user);
+    s->show();
+    this->close();
 }
