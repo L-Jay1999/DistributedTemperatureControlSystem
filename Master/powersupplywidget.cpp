@@ -34,6 +34,7 @@ void PowerSupplyWidget::clicked_on()
     if(res == QDialog::Accepted)
     {
         StartSystem();
+        this->power = "open";
     }
 }
 
@@ -46,6 +47,7 @@ void PowerSupplyWidget::clicked_off()
     if(res == QDialog::Accepted)
     {
         ShutDownSystem();
+        this->power = "close";
     }
 }
 
@@ -60,7 +62,7 @@ void PowerSupplyWidget::ShutDownSystem()
     ui->label_power->setText("Close");
 }
 
-QString PowerSupplyWidget::getText()
+QString PowerSupplyWidget::getPower()
 {
-    return this->text;
+    return power;
 }

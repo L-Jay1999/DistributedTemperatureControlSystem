@@ -16,11 +16,11 @@ public:
     explicit PowerSupplyWidget(QWidget *parent = 0);
     ~PowerSupplyWidget();
 public:
-    QString getText();
+    QString getPower();
 private:
     Ui::PowerSupplyWidget *ui;
     OperationConfirmationDialog *ocd;
-    QString text;
+    QString power = "close";
 private slots:
     void cancel();
     void StartSystem();

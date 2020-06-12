@@ -25,7 +25,8 @@ private:
     QString mode;
 private slots:
     void logout();//登出
-    void reshow();//回显
+    void reshow_power();//回显
+    void reshow_mode();
     void switch_to_power();//切换到电源控制
     void switch_to_parameter();//切换到参数设置
     void switch_to_log();//切换到日志

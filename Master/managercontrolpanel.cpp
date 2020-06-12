@@ -29,18 +29,41 @@ void ManagerControlPanel::logout()
     pw->close();
 }
 
-void ManagerControlPanel::reshow()
+void ManagerControlPanel::reshow_power()
 {
+
+//    ui->label_mode->setText(pw->getMode());
+//    ui->label_power->setText(psw->getPower());
+    this->power = psw->getPower();
+//    this->mode = pw->getMode();
+    qDebug() << "getPower:" << psw->getPower();
+//    qDebug() << "getMode:" << pw->getMode();
+        ui->label_power->setText(this->power);
     this->show();
-    ui->label_mode->setText(pw->getMode());
+
 }
+
+void ManagerControlPanel::reshow_mode()
+{
+
+//    ui->label_mode->setText(pw->getMode());
+//    ui->label_power->setText(psw->getPower());
+//    this->power = psw->getPower();
+    this->mode = pw->getMode();
+//    qDebug() << "getPower:" << psw->getPower();
+    qDebug() << "getMode:" << pw->getMode();
+    ui->label_mode->setText(this->mode);
+    this->show();
+
+}
+
 
 void ManagerControlPanel::switch_to_power()
 {
     psw = new PowerSupplyWidget;
     psw->show();
     this->hide();
-    connect(psw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
+    connect(psw,SIGNAL(cancel_signal()),this,SLOT(reshow_power()));//连接返回信号与回显
 }
 
 void ManagerControlPanel::switch_to_parameter()
@@ -48,10 +71,9 @@ void ManagerControlPanel::switch_to_parameter()
     pw = new ParameterWidget;
     pw->show();
     this->hide();
-    connect(pw,SIGNAL(cancel_signal()), this, SLOT(reshow()));
-    connect(pw, SIGNAL(confirm_signal()), this, SLOT(reshow()));
-    qDebug() << "getMode:" << pw->getMode();
-    ui->label_mode->setText(pw->getMode());
+    connect(pw,SIGNAL(cancel_signal()), this, SLOT(reshow_mode()));
+    connect(pw, SIGNAL(confirm_signal()), this, SLOT(reshow_mode()));
+//    ui->label_mode->setText(pw->getMode());
 }
 
 void ManagerControlPanel::switch_to_log()

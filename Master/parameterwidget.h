@@ -20,8 +20,8 @@ public:
 
 private:
     Ui::ParameterWidget *ui;
-    int temperature;
-    QString mode;
+    int temperature = 0;
+    QString mode = "cold";
 
 
 private slots:
