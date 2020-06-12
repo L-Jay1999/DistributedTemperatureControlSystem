@@ -38,10 +38,10 @@ private slots:
 
     void on_downtemperaturebtn_clicked();
 
-    void GetRoomTemperature();
 
 public slots:
     void GetUseandCost();
+    void GetRoomTemperature();
 
 private:
     Ui::SlaveControlWindow *ui;
