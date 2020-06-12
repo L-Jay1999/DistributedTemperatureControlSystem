@@ -3,6 +3,6 @@
 bool ShutDownController::ShutDown()
 {
     ShutDownRequest shutdownrequest(_RoomID);
-    bool result = shutdownrequest->Send();
+    bool result = shutdownrequest.Send();
     return result;
 }

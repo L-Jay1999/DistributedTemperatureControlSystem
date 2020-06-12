@@ -44,6 +44,7 @@ public slots:
     void GetUseandCost();
     void GetRoomTemperature();
     void GetMode(WorkingMode mode);
+    void reachTargetDegree();
 
 private:
     Ui::SlaveControlWindow *ui;

@@ -1,74 +1,132 @@
 #include "sensor.h"
 
+#include <QObject>
+
+#include <map>
+#include <mutex>
+
+const std::map<SpeedLevel, double> Sensor::kTempChangePerSecWind =
+{
+    {SpeedLevel::LOW, 1.0 / 25.0},
+    {SpeedLevel::MID, 1.0 / 20.0},
+    {SpeedLevel::HIGH, 1.0 / 15.0},
+};
+
+static std::mutex sensor_set_mtx;
+static std::mutex sensor_update_mtx;
+static constexpr double epsilon = 1e-3;
+
+
 Sensor::Sensor(QObject *parent) : QObject(parent)
 {
-    _timer = new QTimer(this);
-    _timer->setInterval(_interval[3]);
-    _timer->start();
-
-    _elapsedtimer = new QElapsedTimer();
-    _elapsedtimer->start();
-//    connect(_timer, SIGNAL(timeout()), this, SLOT(SendTemperature()));
+    connect(this, SIGNAL(reachTargetDegree()), parent, SLOT(reachTargetDegree()));
+    connect(&_timer, SIGNAL(timeout()), this, SLOT(TimerUp()));
+    _last_update_time = QDateTime::currentMSecsSinceEpoch();
+    _timer.start(kDefaultTimerInterval);
 }
 
 double Sensor::GetTemperature()
 {
-    return _degree;
+    return _current_degree;
 }
 
 void Sensor::setTargetDegree(double target_degree)
 {
+    std::lock_guard lock(sensor_set_mtx);
+    _timer.stop();
+    UpdateTemperature();
     _target_degree = target_degree;
 }
 
-void Sensor::setWindSpeed(int windspeed)
+void Sensor::setWindSpeed(SpeedLevel windspeed)
 {
-
-//    _timer->setInterval(_interval[windspeed-1]);
-//    _timer->start();
-    _timer->stop();
-    if(UpdateTemperature())
-        _elapsedtimer->restart();
-    _windspeed = windspeed;
-    _timer->start(_interval[windspeed-1]);
+    std::lock_guard lock(sensor_set_mtx);
+    _timer.stop();
+    UpdateTemperature();
+    _speed = windspeed;
 }
 
 void Sensor::setIsWind(bool is_wind)
 {
-
-    _timer->stop();
-    if(UpdateTemperature())
-        _elapsedtimer->restart();
+    std::lock_guard lock(sensor_set_mtx);
+    _timer.stop();
+    UpdateTemperature();
     _is_wind = is_wind;
-    if(!is_wind){
-        _timer->start(_interval[3]);
+}
+
+void Sensor::setWorkingMode(WorkingMode mode)
+{
+    std::lock_guard lock(sensor_set_mtx);
+    _timer.stop();
+    UpdateTemperature();
+    _mode = mode;
+}
+
+void Sensor::StartTimer()
+{
+    if (_is_wind)
+    {
+        double diff = std::fabs(_current_degree - _target_degree);
+
+        if (diff < kTempChangePerSecWind.at(_speed))
+            _timer.start(diff / kTempChangePerSecWind.at(_speed) * 1000.0);
+        else
+            _timer.start(kDefaultTimerInterval);
     }
-    else{
-        _timer->start(_interval[_windspeed-1]);
+    else
+    {
+        double diff = std::fabs(_current_degree - _room_init_degree);
+
+        if (diff < kTempChangePerSecRoom)
+            _timer.start(diff / kTempChangePerSecRoom * 1000.0);
+        else
+            _timer.start(kDefaultTimerInterval);
     }
 }
 
-bool Sensor::UpdateTemperature()
+void Sensor::UpdateTemperature()
 {
-    // todo
-    int res = _elapsedtimer->elapsed()/_timer->interval();
-    if(_is_wind){
-        if(_degree == _target_degree){
-            _timer->stop();
-            return false;
+    std::lock_guard lock(sensor_update_mtx);
+    qint64 now = QDateTime::currentMSecsSinceEpoch();
+    double diff_sec = (now - _last_update_time) / 1000.0;
+    double degree_diff;
+    if (_is_wind)
+    {
+        degree_diff = kTempChangePerSecWind.at(_speed) * diff_sec;
+        if (_mode == WorkingMode::COLD)
+        {
+            _current_degree -= degree_diff;
+            if (_current_degree <= _target_degree + epsilon)
+            {
+                emit reachTargetDegree();
+                _current_degree = _target_degree;
+            }
         }
-        else if(_degree < _target_degree){
-            _degree += _d;
-        }
-        else{
-            _degree -= _d;
+        else
+        {
+            _current_degree += degree_diff;
+            if (_current_degree >= _target_degree - epsilon)
+            {
+                emit reachTargetDegree();
+                _current_degree = _target_degree;
+            }
         }
     }
-    else{
-        if(res){
-            _degree += _d * res;
-            return true;
+    else
+    {
+        degree_diff = kTempChangePerSecRoom * diff_sec;
+        if (std::abs(_room_init_degree - _current_degree) > epsilon)
+        {
+            if (_current_degree < _room_init_degree)
+                _current_degree += degree_diff;
+            else
+                _current_degree -= degree_diff;
         }
-        return false;
     }
+}
+
+void Sensor::TimerUp()
+{
+    UpdateTemperature();
+    StartTimer();
 }

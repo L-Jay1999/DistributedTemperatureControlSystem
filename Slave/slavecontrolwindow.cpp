@@ -170,7 +170,7 @@ void SlaveControlWindow::on_windspeedbtn_clicked()
 //        }
 //    }
     _windspeed_lcd->display(_windspeed);
-    _sensor->setWindSpeed(_windspeed);
+    _sensor->setWindSpeed(WindSpeed(_windspeed));
 }
 
 void SlaveControlWindow::on_uptemperaturebtn_clicked()
@@ -236,6 +236,9 @@ void SlaveControlWindow::GetMode(WorkingMode mode)
             }
         }
     }
+void SlaveControlWindow::reachTargetDegree()
+{
+    // TODO 停止送风请求
 }
 
 void SlaveControlWindow::GetUseandCost()
