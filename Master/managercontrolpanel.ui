@@ -31,7 +31,7 @@
      </widget>
     </item>
     <item row="3" column="1">
-     <widget class="QPushButton" name="pushButton_config">
+     <widget class="QPushButton" name="pushButton_parameter">
       <property name="text">
        <string>参数设置</string>
       </property>
@@ -47,7 +47,7 @@
     <item row="3" column="0">
      <widget class="QPushButton" name="pushButton_power">
       <property name="text">
-       <string>电源开关</string>
+       <string>电源控制</string>
       </property>
      </widget>
     </item>
@@ -61,7 +61,7 @@
     <item row="0" column="0">
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>空调状态：</string>
+       <string>电源状态：</string>
       </property>
      </widget>
     </item>

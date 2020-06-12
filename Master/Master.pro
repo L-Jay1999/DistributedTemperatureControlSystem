@@ -4,9 +4,21 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+lessThan(QT_MINOR_VERSION, 12) {
+    contains(QMAKE_COMPILER_DEFINES, __MSC_VER) {
+        QMAKE_CXXFLAGS += /std:c++17
+    }
+    else {
+        QMAKE_CXXFLAGS += -std=c++17
+    }
+}
+else {
+    CONFIG += c++17
+}
 
 TARGET = DistributedTemperatureControlSystem
 TEMPLATE = app
@@ -29,16 +41,22 @@ SOURCES += \
     managerloginwidget.cpp \
     standbywidget.cpp \
     managercontrolpanel.cpp \
-    manager.cpp
+    manager.cpp \
+    powersupplywidget.cpp \
+    operationconfirmationdialog.cpp
 
 HEADERS += \
     managerlogincontroller.h \
     managerloginwidget.h \
     standbywidget.h \
     managercontrolpanel.h \
-    manager.h
+    manager.h \
+    powersupplywidget.h \
+    operationconfirmationdialog.h
 
 FORMS += \
     managerloginwidget.ui \
     standbywidget.ui \
-    managercontrolpanel.ui
+    managercontrolpanel.ui \
+    powersupplywidget.ui \
+    operationconfirmationdialog.ui

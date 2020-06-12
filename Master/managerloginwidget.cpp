@@ -8,6 +8,7 @@ ManagerLoginWidget::ManagerLoginWidget(QWidget *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
     this->setWindowTitle("管理员认证");
+    this->setFixedSize(this->width(),this->height());
     ui->label_error->clear();
     ui->label_error->setAlignment(Qt::AlignHCenter);
     ui->lineEdit_password->setEchoMode(QLineEdit::Password);//设置密码输入框
@@ -19,10 +20,16 @@ ManagerLoginWidget::~ManagerLoginWidget()
 {
     delete ui;
 }
+void ManagerLoginWidget::Login()
+{
+    mlc = new ManagerLoginController(ui->lineEdit_account->text(),ui->lineEdit_password->text());//生成一个登陆控制器
+    login_res = mlc->ManagerLogin();//发送认证请求
+    delete mlc;
+}
+
 void ManagerLoginWidget::confirm()
 {
-    mlc = new ManagerLoginController(ui->lineEdit_account,ui->lineEdit_password, 123);//生成一个登陆控制器
-    login_res = mlc->ManagerLogin();//发送认证请求
+    Login();
     if(std::get<0>(login_res) == true)//认证成功
     {
         emit certified_signal();

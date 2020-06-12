@@ -3,23 +3,20 @@
 
 #include <QString>
 #include <tuple>
-#include "../CommonLib/requests.h"
 
 class ManagerLoginController
 {
 public:
     ManagerLoginController() = delete;
-    ManagerLoginController(const QString &Account, const QString &Password, const quint16 &port)
-        : _Account(Account), _Password(Password), _port(port)
-    {}
+    ManagerLoginController(const QString &Account, const QString &Password)
+        : _Account(Account), _Password(Password){}
     std::tuple<bool, QString> ManagerLogin();
 
 
 private:
-    QString _Account;
-    QString _Password;
-    QString _port;
-    bool CheckArgs();
+    QString _Account;//输入账号
+    QString _Password;//输入密码
+    bool CheckArgs();//格式检查
 
 };
 
