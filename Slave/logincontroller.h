@@ -17,7 +17,7 @@ public:
 private:
     QString _UserID;
     QString _RoomID;
-    QString _port;
+    quint16 _port;
     bool CheckArgs();
 
 };
