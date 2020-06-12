@@ -4,19 +4,21 @@
 std::tuple<bool, QString> ManagerLoginController::ManagerLogin()
 {
     if(CheckArgs()){
-        ManagerLoginRequest *managerloginrequest = new ManagerLoginRequest(_Account, _Password, _port);//建立请求
-        bool result = managerloginrequest->Send();//发送请求
+        //bool result = db.hasManager(_Account,_Password);
+        bool result = true;
         if(result){
-            delete loginrequest;
-            return {true, "认证成功"};
+            return (std::tuple<bool,QString>){true, "Succeed"};
         }
         else{
-            delete loginrequest;
-            return {false, "密码错误或账号不存在"};
+            return (std::tuple<bool,QString>){false, "Incorrect password or account doesn't exist."};
         }
     }
     else{
-        return {false, "输入格式错误"};
+        return (std::tuple<bool,QString>){false, "Input format error."};
     }
 }
 
+bool ManagerLoginController::CheckArgs()
+{
+    return true;
+}

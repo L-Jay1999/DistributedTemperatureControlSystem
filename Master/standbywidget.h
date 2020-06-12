@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "managerloginwidget.h"
 #include "managercontrolpanel.h"
+
 namespace Ui {
 class StandbyWidget;
 }
@@ -26,5 +27,4 @@ private slots:
     void switch_to_panel();//认证成功，切换到控制面板
 signals:
 };
-
 #endif // STANDBYWIDGET_H
