@@ -110,12 +110,12 @@ void RequestPayload::fromQJsonObject(const QJsonObject &obj)
     assert(CheckParams());
 }
 
-inline QString RequestPayload::toString() const
+QString RequestPayload::toString() const
 {
     return QString(QJsonDocument(toQJsonObject()).toJson());
 }
 
-inline QByteArray RequestPayload::toBase64ByteArray() const
+QByteArray RequestPayload::toBase64ByteArray() const
 {
     return QJsonDocument(toQJsonObject()).toJson().toBase64();
 }
