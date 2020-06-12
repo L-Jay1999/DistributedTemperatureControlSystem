@@ -19,3 +19,13 @@ double User::getCost() const
 {
     return _cost;
 }
+
+void User::setUsage(double usage)
+{
+    _usage = usage;
+}
+
+void User::setCost(double cost)
+{
+    _cost = cost;
+}

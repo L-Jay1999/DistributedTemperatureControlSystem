@@ -25,6 +25,12 @@ SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
     _timer = new QTimer(this);
     connect(_timer, SIGNAL(timeout()), this, SLOT(GetRoomTemperature()));
     _timer->start(5000);
+
+    _useandcostcontroller = new UseAndCostController(this);
+    _useandcostcontroller->setUser(_user);
+//    Config::setSlaveControllerPointer(Config::SlaveControllerType::USE_COST, _useandcostcontroller);
+//    connect(_useandcostcontroller, SIGNAL(UseandCostChanged()), this, SLOT(GetUseandCost()));
+    qDebug() << "slavecontrolwindow create";
 }
 
 SlaveControlWindow::~SlaveControlWindow()
@@ -141,4 +147,12 @@ void SlaveControlWindow::GetRoomTemperature()
 {
     _roomtemperature = _sensor->GetTemperature(_temperature);
     _roomtemperature_lcd->display(_roomtemperature);
+}
+
+void SlaveControlWindow::GetUseandCost()
+{
+    _usage = _user->getUsage();
+    _cost = _user->getCost();
+    _usage_lcd->display(_usage);
+    _cost_lcd->display(_cost);
 }

@@ -11,12 +11,14 @@ public:
     QString getUserID() const;
     double getUsage() const;
     double getCost() const;
+    void setUsage(double usage);
+    void setCost(double cost);
 
 private:
     QString _RoomID;
     QString _UserID;
-    double _usage;
-    double _cost;
+    double _usage = 1.0;
+    double _cost = 1.0;
 };
 
 #endif // USER_H

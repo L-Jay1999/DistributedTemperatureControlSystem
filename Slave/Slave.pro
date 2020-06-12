@@ -27,12 +27,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
+    useandcostcontroller.cpp \
     userloginwidget.cpp \
     slavecontrolwindow.cpp \
     logincontroller.cpp \
     setspeedcontroller.cpp \
     settemperaturecontroller.cpp \
-    useandcostcontroller.cpp \
     getinformationcontroller.cpp \
     gettemperaturecontroller.cpp \
     modealtercontroller.cpp \
@@ -42,12 +42,12 @@ SOURCES += \
     sensor.cpp
 
 HEADERS += \
+    useandcostcontroller.h \
     userloginwidget.h \
     slavecontrolwindow.h \
     logincontroller.h \
     setspeedcontroller.h \
     settemperaturecontroller.h \
-    useandcostcontroller.h \
     getinformationcontroller.h \
     gettemperaturecontroller.h \
     modealtercontroller.h \
