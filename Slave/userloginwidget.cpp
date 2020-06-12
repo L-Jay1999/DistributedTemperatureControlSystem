@@ -1,5 +1,6 @@
 #include "userloginwidget.h"
 #include "ui_userloginwidget.h"
+#include "startupwindow.h"
 
 UserLoginWidget::UserLoginWidget(QWidget *parent) :
     QWidget(parent),
@@ -22,7 +23,11 @@ UserLoginWidget::~UserLoginWidget()
 
 void UserLoginWidget::on_quitbutton_clicked()
 {
-    exit(0);
+    Config::clearSlaveListenerPort();
+    assert(!Config::hasSlaveListenerPort());
+    StartUpWindow *start_up = new StartUpWindow();
+    start_up->show();
+    close();
 }
 
 void UserLoginWidget::on_confirmbutton_clicked()

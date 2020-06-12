@@ -1,5 +1,6 @@
 #include "slavecontrolwindow.h"
 #include "ui_slavecontrolwindow.h"
+#include "startupwindow.h"
 
 SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -128,16 +129,24 @@ void SlaveControlWindow::setUser(User *value)
 
 void SlaveControlWindow::on_shutdownbtn_clicked()
 {
-//    ShutDownController shutdowncontroller(_user->getRoomID());
-//    if(shutdowncontroller.ShutDown()){
-//        // todo
-//        qDebug() << "ShutDown"
+//    ShutDownController shutdown_controller(_user->getRoomID());
+//    if(shutdown_controller.ShutDown()){
+//        StartUpWindow *start_up_window = new StartUpWindow();
+//        start_up_window->show();
+//        Config::clearSlaveListenerPort();
+//        // 设定 sensor 不再送风
+//        close();
+//        qDebug() << "ShutDown";
 //    }
 //    else{
-//        // todo
-//        qDebug() << "ShutDown Fail!"
+//        // todo 弹窗表示无法连接到中央空调
+//        qDebug() << "ShutDown Fail!";
 //    }
-    exit(0);
+
+     StartUpWindow *start_up_window = new StartUpWindow();
+     start_up_window->show();
+     Config::clearSlaveListenerPort();
+     close();
 }
 
 void SlaveControlWindow::on_windspeedbtn_clicked()

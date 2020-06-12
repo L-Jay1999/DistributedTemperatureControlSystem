@@ -35,6 +35,12 @@ namespace Config
         slave_listener_port = port;
     }
 
+    void clearSlaveListenerPort()
+    {
+        std::unique_lock lock(slave_port_rw_mutex);
+        slave_listener_port.reset();
+    }
+
     bool hasSlaveListenerPort()
     {
         std::shared_lock lock(slave_port_rw_mutex);

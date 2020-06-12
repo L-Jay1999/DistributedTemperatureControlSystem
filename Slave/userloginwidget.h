@@ -17,7 +17,6 @@ class UserLoginWidget;
 class UserLoginWidget : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit UserLoginWidget(QWidget *parent = 0);
     ~UserLoginWidget();
