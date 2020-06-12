@@ -13,6 +13,7 @@
 #include "settemperaturecontroller.h"
 #include "useandcostcontroller.h"
 #include "windcontroller.h"
+#include "modealtercontroller.h"
 #include "../CommonLib/common.h"
 
 namespace Ui {
@@ -42,13 +43,15 @@ private slots:
 public slots:
     void GetUseandCost();
     void GetRoomTemperature();
+    void GetMode(WorkingMode mode);
 
 private:
     Ui::SlaveControlWindow *ui;
     User *_user;
     Sensor *_sensor;
-    QTimer *_timer;
+//    QTimer *_timer;
     UseAndCostController *_useandcostcontroller;
+    ModeAlterController *_modealtercontroller;
 
     QLCDNumber *_temperature_lcd;
     QLCDNumber *_windspeed_lcd;
@@ -69,14 +72,14 @@ private:
 
     double _upperbound;
     double _lowerbound;
-    const int _interval[3] = {25000, 20000, 15000};
+//    const int _interval[3] = {25000, 20000, 15000};
 
     int WindSpeed(SpeedLevel speedlevel);
     SpeedLevel WindSpeed(int speedlevel);
     void ModeDisplay();
     void WindDisplay();
     void UpdateBound();
-    void SetInterval();
+//    void SetInterval();
 
 };
 

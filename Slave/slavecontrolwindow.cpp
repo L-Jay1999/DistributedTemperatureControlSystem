@@ -25,9 +25,12 @@ SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
 //    _roomtemperature = _sensor->GetTemperature(_temperature);
 //    _roomtemperature_lcd->display(_roomtemperature);
 
-    _timer = new QTimer(this);
-    connect(_timer, SIGNAL(timeout()), this, SLOT(GetRoomTemperature()));
-    _timer->start(5000);
+//    _timer = new QTimer(this);
+//    connect(_timer, SIGNAL(timeout()), this, SLOT(GetRoomTemperature()));
+//    _timer->start(5000);
+
+    _modealtercontroller = new ModeAlterController(this);
+    connect(_modealtercontroller, SIGNAL(ModeChanged(WorkingMode)), this, SLOT(GetMode(WorkingMode)));
 
     qDebug() << "slavecontrolwindow create";
 }
@@ -88,17 +91,27 @@ void SlaveControlWindow::UpdateBound()
     if(_mode == WorkingMode::COLD){
         _upperbound = 25.0;
         _lowerbound = 18.0;
+        if(_temperature > 25.0){
+            _temperature = 25.0;
+            _temperature_lcd->display(_temperature);
+            _sensor->setTargetDegree(_temperature);
+        }
     }
     else{
         _upperbound = 30.0;
         _lowerbound = 25.0;
+        if(_temperature < 25.0){
+            _temperature = 25.0;
+            _temperature_lcd->display(_temperature);
+            _sensor->setTargetDegree(_temperature);
+        }
     }
 }
 
-void SlaveControlWindow::SetInterval()
-{
-    _timer->setInterval(_interval[_windspeed-1]);
-}
+//void SlaveControlWindow::SetInterval()
+//{
+//    _timer->setInterval(_interval[_windspeed-1]);
+//}
 
 void SlaveControlWindow::setUser(User *value)
 {
@@ -187,6 +200,33 @@ void SlaveControlWindow::GetRoomTemperature()
 {
     _roomtemperature = _sensor->GetTemperature();
     _roomtemperature_lcd->display(_roomtemperature);
+}
+
+void SlaveControlWindow::GetMode(WorkingMode mode)
+{
+    if(mode == _mode){
+        return;
+    }
+    else{
+        if(mode == WorkingMode::HOT){
+            if(_temperature <= _roomtemperature)
+                return;
+            else{
+                _mode = mode;
+                UpdateBound();
+                ModeDisplay();
+            }
+        }
+        else{
+            if(_temperature >= _roomtemperature)
+                return;
+            else{
+                _mode = mode;
+                UpdateBound();
+                ModeDisplay();
+            }
+        }
+    }
 }
 
 void SlaveControlWindow::GetUseandCost()
