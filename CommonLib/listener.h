@@ -55,12 +55,12 @@ public:
         return is_listen_suc;
     }
 
-    virtual ~Listener() {}
+    ~Listener() {}
 
 private:
     QTcpServer *server;
 public slots:
-    void Handleonnection()
+    void HandleConnection()
     {
         QTcpSocket *connection = server->nextPendingConnection();
         if (connection)
