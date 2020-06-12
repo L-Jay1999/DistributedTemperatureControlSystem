@@ -13,13 +13,11 @@ public:
     {}
     std::tuple<bool, QString, WorkingMode, double> Login();
 
-
 private:
     QString _UserID;
     QString _RoomID;
     quint16 _port;
     bool CheckArgs();
-
 };
 
 #endif // LOGINCONTROLLER_H

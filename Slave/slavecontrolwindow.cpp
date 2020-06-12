@@ -236,6 +236,7 @@ void SlaveControlWindow::GetMode(WorkingMode mode)
             }
         }
     }
+}
 void SlaveControlWindow::reachTargetDegree()
 {
     // TODO 停止送风请求

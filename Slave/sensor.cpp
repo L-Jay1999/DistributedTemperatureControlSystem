@@ -36,6 +36,7 @@ void Sensor::setTargetDegree(double target_degree)
     _timer.stop();
     UpdateTemperature();
     _target_degree = target_degree;
+    StartTimer();
 }
 
 void Sensor::setWindSpeed(SpeedLevel windspeed)
@@ -44,6 +45,7 @@ void Sensor::setWindSpeed(SpeedLevel windspeed)
     _timer.stop();
     UpdateTemperature();
     _speed = windspeed;
+    StartTimer();
 }
 
 void Sensor::setIsWind(bool is_wind)
@@ -52,6 +54,7 @@ void Sensor::setIsWind(bool is_wind)
     _timer.stop();
     UpdateTemperature();
     _is_wind = is_wind;
+    StartTimer();
 }
 
 void Sensor::setWorkingMode(WorkingMode mode)
@@ -60,6 +63,7 @@ void Sensor::setWorkingMode(WorkingMode mode)
     _timer.stop();
     UpdateTemperature();
     _mode = mode;
+    StartTimer();
 }
 
 void Sensor::StartTimer()
@@ -127,6 +131,7 @@ void Sensor::UpdateTemperature()
 
 void Sensor::TimerUp()
 {
+    _timer.stop();
     UpdateTemperature();
     StartTimer();
 }
