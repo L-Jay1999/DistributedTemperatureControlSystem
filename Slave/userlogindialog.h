@@ -18,7 +18,7 @@ class UserLoginDialog : public QDialog
     Q_OBJECT
     Q_ENUM(WorkingMode)
 public:
-    explicit UserLoginDialog(SlaveControlWindow *parent = nullptr);
+    explicit UserLoginDialog(QWidget *parent = nullptr);
     ~UserLoginDialog();
 
 signals:

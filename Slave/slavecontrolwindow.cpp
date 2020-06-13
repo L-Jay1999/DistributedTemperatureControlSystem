@@ -14,6 +14,7 @@ SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
     _mode_text = ui->_mode_text;
     _wind_text = ui->_wind;
 
+    _wind_text->clear();
     ShutDownDisplays();
 //    _temperature_lcd->display(_temperature);
 
@@ -21,7 +22,7 @@ SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
 //    _windspeed_lcd->display(_windspeed);
 
 //    WindDisplay();
-//    _sensor = new Sensor(this);
+    _sensor = new Sensor(this);
 //    _sensor->setTargetDegree(_temperature);
 //    _sensor->setWindSpeed(WindSpeed(_windspeed));
 //    _sensor->setWorkingMode(_mode);
@@ -172,7 +173,9 @@ void SlaveControlWindow::on_shutdownbtn_clicked()
 //            // TODO handle connection fails
 //        }
         ShutDownDisplays();
+        _wind_text->clear();
         _is_open = false;
+        _sensor->setIsWind(false);
     }
     else
     {
@@ -183,6 +186,11 @@ void SlaveControlWindow::on_shutdownbtn_clicked()
             _temperature_lcd->display(_temperature);
             _windspeed_lcd->display(_windspeed);
             _roomtemperature_lcd->display(_sensor->GetTemperature());
+            _wind_text->setText("送风中");
+            _sensor->setIsWindWithoutUpdate(true);
+            _sensor->setTargetDegreeWithoutUpdate(_temperature);
+            _sensor->setWindSpeed(WindSpeed(_windspeed));
+            _sensor->setWorkingMode(_mode);
             _is_open = true;
         }
     }
@@ -231,7 +239,7 @@ void SlaveControlWindow::on_uptemperaturebtn_clicked()
 //        _temperature -= 1.0;
 //    }
     _temperature_lcd->display(_temperature);
-    _sensor->setTargetDegree(_temperature);
+    _sensor->setTargetDegreeWithoutUpdate(_temperature);
     SendWind();
 }
 
@@ -251,7 +259,7 @@ void SlaveControlWindow::on_downtemperaturebtn_clicked()
 //        _temperature += 1.0;
 //    }
     _temperature_lcd->display(_temperature);
-    _sensor->setTargetDegree(_temperature);
+    _sensor->setTargetDegreeWithoutUpdate(_temperature);
     SendWind();
 }
 
@@ -320,8 +328,28 @@ void SlaveControlWindow::reachTargetDegree()
     if(result){
         _is_wind = false;
     }
-//    _sensor->setIsWind(_is_wind);
+    _sensor->setIsWindWithoutUpdate(_is_wind);
     WindDisplay();
+}
+
+void SlaveControlWindow::higherThanTargetDegreePlusOne()
+{
+    if (_is_open)
+    {
+        // WindController windcontroller(true, _user->getRoomID());
+        // bool result = windcontroller.Send();
+        bool result = true;
+        if (result)
+        {
+            _sensor->setIsWindWithoutUpdate(true);
+            _is_wind = true;
+            WindDisplay();
+        }
+        else
+        {
+            // TODO handle false condition
+        }
+    }
 }
 
 void SlaveControlWindow::SetLoginUser(const QString &room_id, const QString &user_id, WorkingMode mode, double init_temp)

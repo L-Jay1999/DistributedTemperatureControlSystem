@@ -16,6 +16,11 @@ public:
 
     double GetTemperature();
 
+    void setIsWindWithoutUpdate(bool is_wind);
+
+
+    void setTargetDegreeWithoutUpdate(double target_degree);
+
     void setTargetDegree(double target_degree);
 
     void setWindSpeed(SpeedLevel windspeed);
@@ -28,7 +33,8 @@ private:
     void StartTimer();
 
     void UpdateTemperature();
-
+    std::recursive_mutex sensor_set_mtx{};
+    std::recursive_mutex sensor_update_mtx{};
     static const std::map<SpeedLevel, double> kTempChangePerSecWind;
     static constexpr double kTempChangePerSecRoom = 1.0 / 10.0;
     static constexpr int kDefaultTimerInterval = 1000;
@@ -45,7 +51,7 @@ private:
 
 signals:
     void reachTargetDegree();
-
+    void higherThanTargetDegreePlusOne();
 public slots:
     void TimerUp();
 };

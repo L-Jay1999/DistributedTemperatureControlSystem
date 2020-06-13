@@ -15,7 +15,6 @@
 #include "useandcostcontroller.h"
 #include "windcontroller.h"
 #include "modealtercontroller.h"
-#include "startupwindow.h"
 #include "userlogindialog.h"
 #include "../CommonLib/common.h"
 
@@ -47,6 +46,7 @@ public slots:
     void GetRoomTemperature();
     void GetMode(WorkingMode mode);
     void reachTargetDegree();
+    void higherThanTargetDegreePlusOne();
     void SetLoginUser(const QString &room_id, const QString &_id, WorkingMode mode, double init_temp);
 
 private:

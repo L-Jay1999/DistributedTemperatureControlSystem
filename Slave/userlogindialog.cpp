@@ -6,9 +6,11 @@
 
 #include "../CommonLib/listener.h"
 
+
+
 #include <QMessageBox>
 
-UserLoginDialog::UserLoginDialog(SlaveControlWindow *parent) :
+UserLoginDialog::UserLoginDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::UserLoginDialog)
 {
@@ -21,7 +23,9 @@ UserLoginDialog::UserLoginDialog(SlaveControlWindow *parent) :
     auto port = _listener->ListenOnRandomPort(1080, 1100);
     Config::setSlaveListenerPort(port);
 
-    connect(this, &UserLoginDialog::LoginSuccess, parent, &SlaveControlWindow::SetLoginUser);
+    // connect(this, &UserLoginDialog::LoginSuccess, dynamic_cast<SlaveControlWindow*>(parent), &SlaveControlWindow::SetLoginUser);
+    connect(this, SIGNAL(LoginSuccess(const QString &, const QString &, WorkingMode, double)),
+            dynamic_cast<SlaveControlWindow*>(parent), SLOT(SetLoginUser(const QString &, const QString &, WorkingMode, double)));
 }
 
 UserLoginDialog::~UserLoginDialog()
@@ -40,6 +44,7 @@ void UserLoginDialog::on_quitbutton_clicked()
 
 void UserLoginDialog::on_confirmbutton_clicked()
 {
+    using namespace std::chrono_literals;
     qDebug() << _id_input->text();
     qDebug() << _room_id_input->text();
     // LoginController logincontroller(_id_input->text(), _room_id_input->text(), Config::getSlaveListenerPortValue());
@@ -52,6 +57,7 @@ void UserLoginDialog::on_confirmbutton_clicked()
     if(is_suc)
     {
         emit LoginSuccess(_room_id_input->text(), _id_input->text(), init_mode, init_temp);
+        std::this_thread::sleep_for(200ms);
         emit accept();
         this->close();
     }
