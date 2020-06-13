@@ -2,7 +2,7 @@
 #define SHUTDOWNCONTROLLER_H
 #include <QString>
 
-#include <../CommonLib/requests.h>
+#include "requests.h"
 
 class ShutDownController
 {

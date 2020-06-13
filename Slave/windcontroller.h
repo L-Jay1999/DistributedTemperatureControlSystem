@@ -1,11 +1,20 @@
 #ifndef WINDCONTROLLER_H
 #define WINDCONTROLLER_H
 
+#include <QString>
+
+#include "requests.h"
 
 class WindController
 {
 public:
-    WindController();
+    WindController() = delete;
+    WindController(const bool open, const QString &RoomID) : _open(open), _RoomID(RoomID) {}
+    bool Send();
+
+private:
+    bool _open;
+    QString _RoomID;
 };
 
 #endif // WINDCONTROLLER_H

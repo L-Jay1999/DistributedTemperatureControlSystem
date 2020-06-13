@@ -1,10 +1,8 @@
 #include "useandcostcontroller.h"
 
-UseAndCostController::UseAndCostController(QObject *parent) : QObject(parent)
+UseAndCostController::UseAndCostController(QObject *parent, User *user) : QObject(parent), _user(user)
 {
-//    QTimer *timer = new QTimer(this);
-//    connect(timer, SIGNAL(timeout()), this, SLOT(test()));
-//    timer->start(5000);
+
 }
 
 void UseAndCostController::setUseandCost(double use, double cost)
@@ -12,11 +10,6 @@ void UseAndCostController::setUseandCost(double use, double cost)
     _user->setCost(cost);
     _user->setUsage(use);
     emit UseandCostChanged();
-}
-
-void UseAndCostController::setUser(User *user)
-{
-    _user = user;
 }
 
 void UseAndCostController::test()
