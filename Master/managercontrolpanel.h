@@ -1,10 +1,11 @@
-﻿#ifndef MANAGERCONTROLPANEL_H
+#ifndef MANAGERCONTROLPANEL_H
 #define MANAGERCONTROLPANEL_H
 
 #include <QWidget>
 #include "powersupplywidget.h"
 #include "parameterwidget.h"
 #include "monitorwidget.h"
+#include "usermanagementwidget.h"
 
 namespace Ui {
 class ManagerControlPanel;
@@ -20,19 +21,24 @@ public:
 
 private:
     Ui::ManagerControlPanel *ui;
-    PowerSupplyWidget *psw;//电源开关面板
+    QString _mode, _account, _power, _rate;
+
+    PowerSupplyWidget *psw;//电源控制面板
+    UserManagementWidget *umw;//用户管理面板
     ParameterWidget *pw;//参数设置面板
     MonitorWidget *mw;
     QString power;
     QString mode;
 private slots:
-    void logout();//登出
-    void reshow_power();//回显
+    void logout();                  //登出
+    void reshow_power();                  //回显
     void reshow_mode();
-    void switch_to_power();//切换到电源控制
-    void switch_to_parameter();//切换到参数设置
-    void switch_to_log();//切换到日志
-    void switch_to_monitor();//切换到监控
+    void reshow_user();
+    void switch_to_power();         //切换到电源控制
+    void switch_to_parameter();     //切换到参数设置
+    void switch_to_log();           //切换到日志
+    void switch_to_monitor();       //切换到监控
+    void switch_to_user();          //切换到用户管理
 signals:
     void logout_signal();
 };

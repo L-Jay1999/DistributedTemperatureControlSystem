@@ -6,7 +6,7 @@ OperationConfirmationDialog::OperationConfirmationDialog(QWidget *parent) :
     ui(new Ui::OperationConfirmationDialog)
 {
     ui->setupUi(this);
-    setWindowTitle("Operation confirm");
+    setWindowTitle("操作确认");
     setAttribute(Qt::WA_DeleteOnClose);
 }
 
@@ -17,7 +17,8 @@ OperationConfirmationDialog::~OperationConfirmationDialog()
 
 void OperationConfirmationDialog::setText(QString text)
 {
-    text = "We're going to operate:\n\n" + text + "\n\nConfirm?";
+    text = "将执行操作:\n\n" + text + "\n\n是否确认？";
     ui->textEdit->setText(text);
+    ui->textEdit->setReadOnly(true);//设置为只读
 }
 

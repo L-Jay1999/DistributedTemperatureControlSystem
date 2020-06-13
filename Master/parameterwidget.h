@@ -1,4 +1,4 @@
-﻿#ifndef PARAMETERWIDGET_H
+#ifndef PARAMETERWIDGET_H
 #define PARAMETERWIDGET_H
 
 #include <QWidget>
@@ -24,6 +24,7 @@ private:
     int temperature = 0;
     QString mode = "cold";
     WorkingMode _mode;
+
 
 
 private slots:

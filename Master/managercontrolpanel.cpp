@@ -9,11 +9,12 @@ ManagerControlPanel::ManagerControlPanel(QWidget *parent) :
     setAttribute(Qt::WA_DeleteOnClose);
     this->setWindowTitle("控制面板");
     this->setFixedSize(this->width(),this->height());
-    connect(ui->pushButton_logout,&QPushButton::clicked,    this,&ManagerControlPanel::logout);//登出按钮
-    connect(ui->pushButton_power,&QPushButton::clicked,     this,&ManagerControlPanel::switch_to_power);//电源控制按钮
-    connect(ui->pushButton_parameter,&QPushButton::clicked, this,&ManagerControlPanel::switch_to_parameter);//参数设置按钮
-    connect(ui->pushButton_log,&QPushButton::clicked,       this,&ManagerControlPanel::switch_to_log);//运行日志按钮
-    connect(ui->pushButton_monitor,&QPushButton::clicked,   this,&ManagerControlPanel::switch_to_monitor);//监控信息按钮
+    connect(ui->pushButton_logout,&QPushButton::clicked,    this,&ManagerControlPanel::logout);             //管理员登出
+    connect(ui->pushButton_power,&QPushButton::clicked,     this,&ManagerControlPanel::switch_to_power);    //电源控制
+    connect(ui->pushButton_parameter,&QPushButton::clicked, this,&ManagerControlPanel::switch_to_parameter);//参数设置
+    connect(ui->pushButton_log,&QPushButton::clicked,       this,&ManagerControlPanel::switch_to_log);      //运行日志
+    connect(ui->pushButton_monitor,&QPushButton::clicked,   this,&ManagerControlPanel::switch_to_monitor);  //监控信息
+    connect(ui->pushButton_user,&QPushButton::clicked,      this,&ManagerControlPanel::switch_to_user);     //用户管理
 }
 
 ManagerControlPanel::~ManagerControlPanel()
@@ -41,6 +42,11 @@ void ManagerControlPanel::reshow_power()
         ui->label_power->setText(this->power);
     this->show();
 
+}
+
+void ManagerControlPanel::reshow_user()
+{
+    this->show();
 }
 
 void ManagerControlPanel::reshow_mode()
@@ -87,4 +93,12 @@ void ManagerControlPanel::switch_to_monitor()
     mw->resize(960, 640);
     mw->setWindowTitle(QString::fromUtf8("房间监控状况"));
     mw->show();
+}
+
+void ManagerControlPanel::switch_to_user()
+{
+    umw = new UserManagementWidget;
+    umw->show();
+    this->hide();
+    connect(umw,SIGNAL(cancel_signal()),this,SLOT(reshow_user()));//连接返回信号与回显
 }
