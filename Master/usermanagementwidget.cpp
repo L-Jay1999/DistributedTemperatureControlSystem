@@ -7,14 +7,14 @@ UserManagementWidget::UserManagementWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowTitle("用户管理");
+    setFixedSize(this->width(),this->height());
     ui->textEdit->setReadOnly(true);
-    ui->dateTimeEdit->setDateTime(QDateTime::currentDateTime());
-    ui->dateTimeEdit->setCalendarPopup(true);
     connect(ui->pushButton_add,&QPushButton::clicked,this,&UserManagementWidget::Add);
     connect(ui->pushButton_delete,&QPushButton::clicked,this,&UserManagementWidget::Delete);
     connect(ui->pushButton_refresh,&QPushButton::clicked,this,&UserManagementWidget::Refresh);
     connect(ui->pushButton_close,&QPushButton::clicked,this,&UserManagementWidget::Close);
     connect(ui->pushButton_clear,&QPushButton::clicked,this,&UserManagementWidget::Clear);
+    ui->textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
 }
 
@@ -27,30 +27,34 @@ void UserManagementWidget::Add()
 {
     _RoomID = ui->lineEdit_roomid->text();
     _UserID = ui->lineEdit_userid->text();
-    _EffDateTime = ui->dateTimeEdit->dateTime();
-    _CurDateTime = QDateTime::currentDateTime();
-    int tRet = _EffDateTime.toTime_t() - _CurDateTime.toTime_t();
-    if(tRet > 0)
-    {
-        //调用UserInfoControl::AddUser()，并根据response设置提示信息，若成功，则调用一次Refresh
-        _PromptText = "添加成功";
-    }else
-    {
-        _PromptText = "添加失败：非法的有效日期";
-    }
+    //调用UserInfoControl::AddUser()，并根据response设置提示信息
+    //_response = UserInfoControl::AddUser(_RoomID,_UserID);
+    _response = (std::tuple<bool,QString>){true,"添加成功"};
     pd = new PromptDialog;
-    pd->setText(_PromptText);
+    pd->setText(std::get<1>(_response));
     pd->exec();
+    Refresh();
 }
 
 void UserManagementWidget::Delete()
 {
-
+    _RoomID = ui->lineEdit_roomid->text();
+    _UserID = ui->lineEdit_userid->text();
+    //调用UserInfoControl::DeleteUser()，并根据response设置提示信息
+    //_response = UserInfoControl::DeleteUser(_RoomID,_UserID);
+    _response = (std::tuple<bool,QString>){true,"删除失败"};
+    pd = new PromptDialog;
+    pd->setText(std::get<1>(_response));
+    pd->exec();
+    Refresh();
 }
 
 void UserManagementWidget::Refresh()
 {
-
+    //调用UserInfoControl::GetUserList()获得当前房客信息
+    //_UserList = UserInfoControl::GetUserList();
+    //_UserList
+    ui->textEdit->setText(_UserList);
 }
 
 void UserManagementWidget::Clear()

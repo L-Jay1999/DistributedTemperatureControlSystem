@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QDateTime>
+#include <tuple>
 #include "promptdialog.h"
 
 namespace Ui {
@@ -29,8 +30,7 @@ private:
     QString _RoomID;            //房间ID
     QString _UserID;            //用户ID
     QDateTime _EffDateTime;     //有效时间
-    QDateTime _CurDateTime;     //系统时间
-    QString _PromptText;        //提示信息
+    std::tuple<bool, QString> _response;
 
 signals:
     void cancel_signal();
