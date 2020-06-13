@@ -6,6 +6,7 @@
 #include <QDebug>
 
 #include "user.h"
+#include "common.h"
 
 class UseAndCostController : public QObject
 {

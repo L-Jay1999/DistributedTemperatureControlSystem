@@ -12,7 +12,6 @@ class Sensor : public QObject
     Q_OBJECT
 public:
     explicit Sensor(QObject *parent = nullptr);
-//    Sensor(const double degree = 25.0) : _degree(degree) {}
 
     double GetTemperature();
 

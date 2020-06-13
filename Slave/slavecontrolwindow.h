@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QLabel>
 #include <memory>
+#include <QTextBrowser>
 
 #include "user.h"
 #include "sensor.h"
@@ -16,6 +17,7 @@
 #include "windcontroller.h"
 #include "modealtercontroller.h"
 #include "userlogindialog.h"
+#include "gettemperaturecontroller.h"
 #include "common.h"
 
 namespace Ui {
@@ -48,6 +50,8 @@ public slots:
     void reachTargetDegree();
     void higherThanTargetDegreePlusOne();
     void SetLoginUser(const QString &room_id, const QString &_id, WorkingMode mode, double init_temp);
+    void WindControlFromM(bool is_in_queue);
+    void TextAppend(QString s);
 
 private:
     Ui::SlaveControlWindow *ui;
@@ -56,6 +60,7 @@ private:
     QTimer *_timer;
     UseAndCostController *_useandcostcontroller;
     ModeAlterController *_modealtercontroller;
+    GetTemperatureController *_gettemperaturecontroller;
 
     QLCDNumber *_temperature_lcd;
     QLCDNumber *_windspeed_lcd;
@@ -64,6 +69,7 @@ private:
     QLCDNumber *_cost_lcd;
     QLabel *_mode_text;
     QLabel *_wind_text;
+    QTextBrowser *_textbrowser;
 
     double _temperature{};
     int _windspeed{};

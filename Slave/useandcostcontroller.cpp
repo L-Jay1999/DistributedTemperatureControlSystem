@@ -2,7 +2,8 @@
 
 UseAndCostController::UseAndCostController(QObject *parent, User *user) : QObject(parent), _user(user)
 {
-
+    Config::setSlaveControllerPointer(Config::SlaveControllerType::USE_COST, this);
+    connect(this, SIGNAL(UseandCostChanged()), parent, SLOT(GetUseandCost()));
 }
 
 void UseAndCostController::setUseandCost(double use, double cost)

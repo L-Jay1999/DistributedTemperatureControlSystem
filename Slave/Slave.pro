@@ -33,13 +33,13 @@ SOURCES += \
     logincontroller.cpp \
     setspeedcontroller.cpp \
     settemperaturecontroller.cpp \
-    getinformationcontroller.cpp \
     gettemperaturecontroller.cpp \
     modealtercontroller.cpp \
     windcontroller.cpp \
     shutdowncontroller.cpp \
     user.cpp \
-    sensor.cpp
+    sensor.cpp \
+    windcontrollerfromm.cpp
 
 HEADERS += \
     useandcostcontroller.h \
@@ -48,13 +48,13 @@ HEADERS += \
     logincontroller.h \
     setspeedcontroller.h \
     settemperaturecontroller.h \
-    getinformationcontroller.h \
     gettemperaturecontroller.h \
     modealtercontroller.h \
     windcontroller.h \
     shutdowncontroller.h \
     user.h \
-    sensor.h
+    sensor.h \
+    windcontrollerfromm.h
 
 
 FORMS += \
