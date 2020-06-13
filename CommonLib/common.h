@@ -103,7 +103,17 @@ namespace Config {
         USE_COST = 0,
         MODE_ALTER,
         GET_TEMPERATURE,
-        FORCE_SHUTDOWN
+        FORCE_SHUTDOWN,
+        WIND_SCHEDULE,
+    };
+
+    enum class MasterControllerType
+    {
+        LOGIN = 0,
+        SET_SPEED,
+        SET_TEMP,
+        SHUTDOWN,
+        WIND_REQUEST
     };
 
     /**
@@ -180,6 +190,10 @@ namespace Config {
     void setSlaveControllerPointer(SlaveControllerType type, QObject *controller);
 
     QObject *getSlaveControllerPointer(SlaveControllerType ctrller_type);
+
+    void setMasterControllerPointer(MasterControllerType type, QObject *controller);
+
+    QObject *getMasterControllerPointer(MasterControllerType ctrller_type);
 
     void setTimeOutMsec(int timeout_ms);
 

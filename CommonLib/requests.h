@@ -51,6 +51,7 @@ protected:
     RequestPayload BuildPayload() override
     {
         RequestPayload payload{};
+        payload.type = RequestType::LOGIN;
         payload.user_id = user_id_;
         payload.room_id = room_id_;
         payload.target_host = Config::kMasterHostAddr;

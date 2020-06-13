@@ -34,6 +34,7 @@ SOURCES += \
     dbaccess.cpp \
     dbhelper.cpp \
     log.cpp \
+    request_controller.cpp \
     request_payload.cpp
 
 HEADERS += \
