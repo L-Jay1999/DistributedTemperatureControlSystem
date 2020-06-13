@@ -29,7 +29,7 @@ SOURCES += \
     main.cpp \
     startupwindow.cpp \
     useandcostcontroller.cpp \
-    userloginwidget.cpp \
+    userlogindialog.cpp \
     slavecontrolwindow.cpp \
     logincontroller.cpp \
     setspeedcontroller.cpp \
@@ -45,7 +45,7 @@ SOURCES += \
 HEADERS += \
     startupwindow.h \
     useandcostcontroller.h \
-    userloginwidget.h \
+    userlogindialog.h \
     slavecontrolwindow.h \
     logincontroller.h \
     setspeedcontroller.h \
@@ -61,7 +61,7 @@ HEADERS += \
 
 FORMS += \
     startupwindow.ui \
-    userloginwidget.ui \
+    userlogindialog.ui \
     slavecontrolwindow.ui
 
 # Default rules for deployment.

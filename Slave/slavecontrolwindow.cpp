@@ -2,6 +2,8 @@
 #include "ui_slavecontrolwindow.h"
 #include "startupwindow.h"
 
+#include "userlogindialog.h"
+
 SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::SlaveControlWindow)
@@ -15,14 +17,14 @@ SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
     _mode_text = ui->_mode_text;
     _wind_text = ui->_wind;
 
-    _temperature = 25.0;
-    _temperature_lcd->display(_temperature);
+//    _temperature = 25.0;
+//    _temperature_lcd->display(_temperature);
 
-    _windspeed = 1;
-    _windspeed_lcd->display(_windspeed);
-
+//    _windspeed = 1;
+//    _windspeed_lcd->display(_windspeed);
+    ShutDownDisplays();
     _sensor = new Sensor(this);
-    connect(_sensor, SIGNAL(TemperatureChanged()), this, SLOT(GetRoomTemperature()));
+//    connect(_sensor, SIGNAL(TemperatureChanged()), this, SLOT(GetRoomTemperature()));
 //    _roomtemperature = _sensor->GetTemperature(_temperature);
 //    _roomtemperature_lcd->display(_roomtemperature);
 
@@ -109,6 +111,15 @@ void SlaveControlWindow::UpdateBound()
     }
 }
 
+void SlaveControlWindow::ShutDownDisplays()
+{
+    _temperature_lcd->display(88.88);
+    _windspeed_lcd->display(8);
+    _roomtemperature_lcd->display(88.88);
+    _usage_lcd->display(88.88);
+    _cost_lcd->display(88.88);
+}
+
 //void SlaveControlWindow::SetInterval()
 //{
 //    _timer->setInterval(_interval[_windspeed-1]);
@@ -143,14 +154,39 @@ void SlaveControlWindow::on_shutdownbtn_clicked()
 //        qDebug() << "ShutDown Fail!";
 //    }
 
-     StartUpWindow *start_up_window = new StartUpWindow();
-     start_up_window->show();
-     Config::clearSlaveListenerPort();
-     close();
+//     StartUpWindow *start_up_window = new StartUpWindow();
+//     start_up_window->show();
+//     Config::clearSlaveListenerPort();
+//     close();
+    if (_is_open)
+    {
+//        ShutDownController shut_down(_user->getRoomID());
+//        if (!shut_down.ShutDown())
+//        {
+//            // TODO handle connection fails
+//        }
+        ShutDownDisplays();
+        _is_open = false;
+    }
+    else
+    {
+        UserLoginDialog *log_in_dialog = new UserLoginDialog(this);
+        if (log_in_dialog->exec() == QDialog::Accepted)
+        {
+            _windspeed = WindSpeed(SpeedLevel::LOW);
+            _temperature_lcd->display(_temperature);
+            _windspeed_lcd->display(_windspeed);
+            _roomtemperature_lcd->display(_sensor->GetTemperature());
+            _is_open = true;
+        }
+    }
 }
 
 void SlaveControlWindow::on_windspeedbtn_clicked()
 {
+    if (!_is_open)
+        return;
+
     if(_windspeed == 3){
         _windspeed = 1;
     }
@@ -175,6 +211,9 @@ void SlaveControlWindow::on_windspeedbtn_clicked()
 
 void SlaveControlWindow::on_uptemperaturebtn_clicked()
 {
+    if (!_is_open)
+        return;
+
     if(_temperature >= _upperbound)
         return;
     _temperature += 1.0;
@@ -191,6 +230,9 @@ void SlaveControlWindow::on_uptemperaturebtn_clicked()
 
 void SlaveControlWindow::on_downtemperaturebtn_clicked()
 {
+    if (!_is_open)
+        return;
+
     if(_temperature <= _lowerbound)
         return;
     _temperature -= 1.0;
@@ -237,9 +279,17 @@ void SlaveControlWindow::GetMode(WorkingMode mode)
         }
     }
 }
+
 void SlaveControlWindow::reachTargetDegree()
 {
     // TODO 停止送风请求
+}
+
+void SlaveControlWindow::SetLoginUser(const QString &room_id, const QString &user_id, WorkingMode mode, double init_temp)
+{
+    setUser(new User(room_id, user_id));
+    _mode = mode;
+    _temperature = init_temp;
 }
 
 void SlaveControlWindow::GetUseandCost()
