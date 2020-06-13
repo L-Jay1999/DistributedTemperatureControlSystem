@@ -14,10 +14,11 @@ static const std::map<RequestType, QString> kTypeStr =
         {RequestType::USE_AND_COST, "UseAndCost"},
         {RequestType::SHUTDOWN, "ShutDown"},
         {RequestType::WIND, "Wind"},
+        {RequestType::SCHEDULE, "WindSchedule"},
         // {RequestType::TELL_LISTENER_PORT, "TellListenerPort"},
 };
 
-static inline const QString &getTypeStr(const RequestType type)
+const QString &getTypeStr(const RequestType type)
 {
     assert(kTypeStr.count(type));
     return kTypeStr.at(type);
@@ -56,6 +57,8 @@ QJsonObject RequestPayload::toQJsonObject() const
         obj.insert(kIsOpenKey, is_open.value());
     if (listen_port.has_value())
         obj.insert(kListenPortKey, listen_port.value());
+    if (is_in_queue.has_value())
+        obj.insert(kIsInQueueKey, is_in_queue.value());
     obj.insert(kSrcHostKey, source_host);
     obj.insert(kSrcPortKey, source_port);
     obj.insert(kTargetHostKey, target_host);
@@ -102,21 +105,78 @@ void RequestPayload::fromQJsonObject(const QJsonObject &obj)
         source_host = obj.value(kTargetHostKey).toString();
     if (obj.contains(kTargetPortKey))
         source_host = static_cast<quint16>(obj.value(kTargetPortKey).toInt());
+    if (obj.contains(kIsInQueueKey))
+        is_in_queue = obj.value(kIsInQueueKey).toBool();
     assert(CheckParams());
 }
 
-inline QString RequestPayload::toString() const
+QString RequestPayload::toString() const
 {
     return QString(QJsonDocument(toQJsonObject()).toJson());
 }
 
-inline QByteArray RequestPayload::toBase64ByteArray() const
+QByteArray RequestPayload::toBase64ByteArray() const
 {
     return QJsonDocument(toQJsonObject()).toJson().toBase64();
 }
 
 bool RequestPayload::CheckParams() const
 {
-    // TODO
-    return true;
+    switch (type)
+    {
+    case RequestType::LOGIN:
+        if (user_id.has_value() && room_id.has_value()
+                && listen_port.has_value())
+            return true;
+        break;
+    case RequestType::LOGIN_RESPONSE:
+        if (result.has_value())
+            if (!result.value() || (result.value() && config.has_value()))
+                return true;
+        break;
+    case RequestType::ACK:
+        if (result.has_value())
+            return true;
+        break;
+    case RequestType::FORCE_SHUTDOWN:
+        return true;
+        break;
+    case RequestType::GET_ROOM_TEMP:
+        return true;
+        break;
+    case RequestType::GET_ROOM_TEMP_RESPONSE:
+        if (temperature.has_value())
+            return true;
+        break;
+    case RequestType::SET_MODE:
+        if (mode.has_value())
+            return true;
+        break;
+    case RequestType::SET_SPEED:
+        if (room_id.has_value() && speed_level.has_value())
+            return true;
+        break;
+    case RequestType::SET_TEMP:
+        if (temperature.has_value() && room_id.has_value())
+            return true;
+        break;
+    case RequestType::USE_AND_COST:
+        if (use.has_value() && cost.has_value())
+            return true;
+        break;
+    case RequestType::SHUTDOWN:
+        if (room_id.has_value())
+            return true;
+        break;
+    case RequestType::WIND:
+        if (is_open.has_value() && room_id.has_value())
+            return true;
+        break;
+    case RequestType::SCHEDULE:
+        if (is_in_queue.has_value())
+            return true;
+        break;
+    default:break;
+    }
+    return false;
 }

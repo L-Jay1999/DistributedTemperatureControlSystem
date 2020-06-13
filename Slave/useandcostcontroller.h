@@ -1,11 +1,27 @@
 #ifndef USEANDCOSTCONTROLLER_H
 #define USEANDCOSTCONTROLLER_H
 
+#include <QObject>
+#include <QTimer>
+#include <QDebug>
 
-class UseAndCostController
+#include "user.h"
+
+class UseAndCostController : public QObject
 {
+    Q_OBJECT
 public:
-    UseAndCostController();
+    explicit UseAndCostController(QObject *parent = nullptr, User *user = new User("", ""));
+    void setUseandCost(double use, double cost);
+
+private:
+    User *_user;
+
+signals:
+    void UseandCostChanged();
+
+public slots:
+    void test();
 };
 
 #endif // USEANDCOSTCONTROLLER_H

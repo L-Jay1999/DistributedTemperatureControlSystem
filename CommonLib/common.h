@@ -2,12 +2,14 @@
 #define COMMON_H
 
 #include <QtGlobal>
+#include <QtCore>
 
 #include <optional>
 #include <random>
 #include <map>
 #include <type_traits>
 #include <thread>
+#include <sstream>
 
 enum class WorkingMode
 {
@@ -64,6 +66,17 @@ inline std::size_t getHashedThreadId()
 }
 
 /**
+ * @brief 将当前线程ID转为字符串
+ * @return 线程ID字符串
+ */
+inline QString getThreadIdStr()
+{
+    std::stringstream ss;
+    ss << std::this_thread::get_id();
+    return QString::fromStdString(ss.str());
+}
+
+/**
  * @brief 获取指定长度的随机字符串(a-z范围内)
  * @param length 随机字符串的长度
  * @return 随机字符串
@@ -83,6 +96,24 @@ namespace Config {
     {
         MASTER = 0,
         SLAVE,
+    };
+
+    enum class SlaveControllerType
+    {
+        USE_COST = 0,
+        MODE_ALTER,
+        GET_TEMPERATURE,
+        FORCE_SHUTDOWN,
+        WIND_SCHEDULE,
+    };
+
+    enum class MasterControllerType
+    {
+        LOGIN = 0,
+        SET_SPEED,
+        SET_TEMP,
+        SHUTDOWN,
+        WIND_REQUEST
     };
 
     /**
@@ -105,6 +136,9 @@ namespace Config {
      * @return true 已设定
      * @return false 未设定，需要至少调用一次 setSlaveListenerPort(port)
      */
+
+    void clearSlaveListenerPort();
+
     bool hasSlaveListenerPort();
 
     /**
@@ -152,5 +186,18 @@ namespace Config {
      * @return 数据库路径
      */
     QString getDBPath();
+
+    void setSlaveControllerPointer(SlaveControllerType type, QObject *controller);
+
+    QObject *getSlaveControllerPointer(SlaveControllerType ctrller_type);
+
+    void setMasterControllerPointer(MasterControllerType type, QObject *controller);
+
+    QObject *getMasterControllerPointer(MasterControllerType ctrller_type);
+
+    void setTimeOutMsec(int timeout_ms);
+
+    int getTimeOutMSec();
+
 };
 #endif // COMMON_H

@@ -20,7 +20,7 @@ class Listener : public QObject
 public:
     Listener(QObject *parent = nullptr) : QObject(parent), server(new QTcpServer(this))
     {
-        connect(server, SIGNAL(QTcpServer::newConnection()), this, SLOT(HandleConnection()));
+        connect(server, SIGNAL(newConnection()), this, SLOT(HandleConnection()));
     }
 
     /**
@@ -55,12 +55,12 @@ public:
         return is_listen_suc;
     }
 
-    virtual ~Listener() {}
+    ~Listener() {}
 
 private:
     QTcpServer *server;
 public slots:
-    void Handleonnection()
+    void HandleConnection()
     {
         QTcpSocket *connection = server->nextPendingConnection();
         if (connection)

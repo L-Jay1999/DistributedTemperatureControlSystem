@@ -20,30 +20,38 @@ public:
         : user_id_(user_id), room_id_(room_id), listen_port_(listen_port)
     {}
 
-    std::tuple<bool, WorkingMode, double> Send()
+    std::tuple<ErrorPack, bool, WorkingMode, double> Send()
     {
         auto payload = BuildPayload();
-        bool is_parsing_suc = false;
-        RequestPayload response_payload{};
-        for (int i = 0; i < Config::kRetryAttempt; i++)
+
+        auto [errs, response] = SendRequest(payload);
+        if (errs.hasError())
         {
-            auto [is_suc, temp_payload] = SendRequest(payload);
-            is_parsing_suc = is_suc;
-            if (is_parsing_suc)
+            return {errs, {}, {}, {}};
+        }
+        else
+        {
+            if (response.type == RequestType::LOGIN_RESPONSE)
             {
-                response_payload = temp_payload;
-                break;
+                if (response.result)
+                    return {errs, true, std::get<0>(response.config.value()), std::get<1>(response.config.value())};
+                else
+                    return {errs, false, {}, {}};
+            }
+            else
+            {
+                errs.has_parsing_error = true;
+                errs.parsing_err_type = ParsingErrType::INVALID_DATA;
+                return {errs, {}, {}, {}};
             }
         }
-        if (is_parsing_suc)
-            return {is_parsing_suc, std::get<0>(response_payload.config.value()), std::get<1>(response_payload.config.value())};
-        return {is_parsing_suc, WorkingMode(), double()};
     }
 
 protected:
     RequestPayload BuildPayload() override
     {
         RequestPayload payload{};
+        payload.type = RequestType::LOGIN;
         payload.user_id = user_id_;
         payload.room_id = room_id_;
         payload.target_host = Config::kMasterHostAddr;
@@ -63,20 +71,26 @@ class ShutDownRequest : Request
 public:
     ShutDownRequest(const QString &room_id) : room_id_(room_id) {}
 
-    bool Send()
+    std::pair<ErrorPack, bool> Send()
     {
         auto payload = BuildPayload();
-        bool is_suc = false;
-        for (int i = 0; i < Config::kRetryAttempt; i++)
+
+        auto [errs, response] = SendRequest(payload);
+        if (errs.hasError())
         {
-            auto [temp_suc, response] = SendRequest(payload);
-            if (temp_suc && response.type == RequestType::ACK && response.result)
+            return {errs, {}};
+        }
+        else
+        {
+            if (response.type == RequestType::ACK)
+                return {errs, response.result.value()};
+            else
             {
-                is_suc = true;
-                break;
+                errs.has_parsing_error = true;
+                errs.parsing_err_type = ParsingErrType::INVALID_DATA;
+                return {errs, {}};
             }
         }
-        return is_suc;
     }
 protected:
     RequestPayload BuildPayload() override
@@ -99,20 +113,26 @@ public:
         : room_id_(room_id), speed_level_(speed_level)
     {}
 
-    bool Send()
+    std::pair<ErrorPack, bool> Send()
     {
         auto payload = BuildPayload();
-        bool is_suc = false;
-        for (int i = 0; i < Config::kRetryAttempt; i++)
+
+        auto [errs, response] = SendRequest(payload);
+        if (errs.hasError())
         {
-            auto [temp_suc, response] = SendRequest(payload);
-            if (temp_suc && response.type == RequestType::ACK && response.result)
+            return {errs, {}};
+        }
+        else
+        {
+            if (response.type == RequestType::ACK)
+                return {errs, response.result.value()};
+            else
             {
-                is_suc = true;
-                break;
+                errs.has_parsing_error = true;
+                errs.parsing_err_type = ParsingErrType::INVALID_DATA;
+                return {errs, {}};
             }
         }
-        return is_suc;
     }
 protected:
     RequestPayload BuildPayload() override
@@ -137,20 +157,26 @@ public:
         : room_id_(room_id), temperature_(temperature)
     {}
 
-    bool Send()
+    std::pair<ErrorPack, bool> Send()
     {
         auto payload = BuildPayload();
-        bool is_suc = false;
-        for (int i = 0; i < Config::kRetryAttempt; i++)
+
+        auto [errs, response] = SendRequest(payload);
+        if (errs.hasError())
         {
-            auto [temp_suc, response] = SendRequest(payload);
-            if (temp_suc && response.type == RequestType::ACK && response.result)
+            return {errs, {}};
+        }
+        else
+        {
+            if (response.type == RequestType::ACK)
+                return {errs, response.result.value()};
+            else
             {
-                is_suc = true;
-                break;
+                errs.has_parsing_error = true;
+                errs.parsing_err_type = ParsingErrType::INVALID_DATA;
+                return {errs, {}};
             }
         }
-        return is_suc;
     }
 protected:
     RequestPayload BuildPayload() override
@@ -175,20 +201,26 @@ public:
         : room_id_(room_id), is_open_(is_open)
     {}
 
-    bool Send()
+    std::pair<ErrorPack, bool> Send()
     {
         auto payload = BuildPayload();
-        bool is_suc = false;
-        for (int i = 0; i < Config::kRetryAttempt; i++)
+
+        auto [errs, response] = SendRequest(payload);
+        if (errs.hasError())
         {
-            auto [temp_suc, response] = SendRequest(payload);
-            if (temp_suc && response.type == RequestType::ACK && response.result)
+            return {errs, {}};
+        }
+        else
+        {
+            if (response.type == RequestType::ACK)
+                return {errs, response.result.value()};
+            else
             {
-                is_suc = true;
-                break;
+                errs.has_parsing_error = true;
+                errs.parsing_err_type = ParsingErrType::INVALID_DATA;
+                return {errs, {}};
             }
         }
-        return is_suc;
     }
 protected:
     RequestPayload BuildPayload() override
@@ -213,20 +245,26 @@ public:
         : use_(use), cost_(cost)
     {}
 
-    bool Send()
+    std::pair<ErrorPack, bool> Send()
     {
         auto payload = BuildPayload();
-        bool is_suc = false;
-        for (int i = 0; i < Config::kRetryAttempt; i++)
+
+        auto [errs, response] = SendRequest(payload);
+        if (errs.hasError())
         {
-            auto [temp_suc, response] = SendRequest(payload);
-            if (temp_suc && response.type == RequestType::ACK && response.result)
+            return {errs, {}};
+        }
+        else
+        {
+            if (response.type == RequestType::ACK)
+                return {errs, response.result.value()};
+            else
             {
-                is_suc = true;
-                break;
+                errs.has_parsing_error = true;
+                errs.parsing_err_type = ParsingErrType::INVALID_DATA;
+                return {errs, {}};
             }
         }
-        return is_suc;
     }
 protected:
     RequestPayload BuildPayload() override
@@ -247,20 +285,26 @@ class SetModeRequest : Request
 public:
     SetModeRequest(const WorkingMode mode) : mode_(mode) {}
 
-    bool Send()
+    std::pair<ErrorPack, bool> Send()
     {
         auto payload = BuildPayload();
-        bool is_suc = false;
-        for (int i = 0; i < Config::kRetryAttempt; i++)
+
+        auto [errs, response] = SendRequest(payload);
+        if (errs.hasError())
         {
-            auto [temp_suc, response] = SendRequest(payload);
-            if (temp_suc && response.type == RequestType::ACK && response.result)
+            return {errs, {}};
+        }
+        else
+        {
+            if (response.type == RequestType::ACK)
+                return {errs, response.result.value()};
+            else
             {
-                is_suc = true;
-                break;
+                errs.has_parsing_error = true;
+                errs.parsing_err_type = ParsingErrType::INVALID_DATA;
+                return {errs, {}};
             }
         }
-        return is_suc;
     }
 protected:
     RequestPayload BuildPayload() override
@@ -279,20 +323,26 @@ class ForceShutDownRequest : Request
 public:
     ForceShutDownRequest(){}
 
-    bool Send()
+    std::pair<ErrorPack, bool> Send()
     {
         auto payload = BuildPayload();
-        bool is_suc = false;
-        for (int i = 0; i < Config::kRetryAttempt; i++)
+
+        auto [errs, response] = SendRequest(payload);
+        if (errs.hasError())
         {
-            auto [temp_suc, response] = SendRequest(payload);
-            if (temp_suc && response.type == RequestType::ACK && response.result)
+            return {errs, {}};
+        }
+        else
+        {
+            if (response.type == RequestType::ACK)
+                return {errs, response.result.value()};
+            else
             {
-                is_suc = true;
-                break;
+                errs.has_parsing_error = true;
+                errs.parsing_err_type = ParsingErrType::INVALID_DATA;
+                return {errs, {}};
             }
         }
-        return is_suc;
     }
 protected:
     RequestPayload BuildPayload() override
@@ -309,20 +359,26 @@ class GetRoomTemperatureRequest : Request
 public:
     GetRoomTemperatureRequest(){}
 
-    bool Send()
+    std::pair<ErrorPack, double> Send()
     {
         auto payload = BuildPayload();
-        bool is_suc = false;
-        for (int i = 0; i < Config::kRetryAttempt; i++)
+
+        auto [errs, response] = SendRequest(payload);
+        if (errs.hasError())
         {
-            auto [temp_suc, response] = SendRequest(payload);
-            if (temp_suc && response.type == RequestType::ACK && response.result)
+            return {errs, {}};
+        }
+        else
+        {
+            if (response.type == RequestType::GET_ROOM_TEMP_RESPONSE)
+                return {errs, response.temperature.value()};
+            else
             {
-                is_suc = true;
-                break;
+                errs.has_parsing_error = true;
+                errs.parsing_err_type = ParsingErrType::INVALID_DATA;
+                return {errs, {}};
             }
         }
-        return is_suc;
     }
 protected:
     RequestPayload BuildPayload() override
@@ -334,37 +390,43 @@ protected:
 private:
 };
 
-//class TellListenerPortRequest : Request
-//{
-//public:
-//    TellListenerPortRequest(const quint16 port): listener_port(port) {}
+class ScheduleInfoRequest : Request
+{
+public:
+    ScheduleInfoRequest(bool is_in_queue) : is_in_queue_(is_in_queue) {}
 
-//    bool Send()
-//    {
-//        auto payload = BuildPayload();
-//        bool is_suc = false;
-//        for (int i = 0; i < Config.kRetryAttempt; i++)
-//        {
-//            auto [temp_suc, response] = RequestParser::Parse(SendRequest(payload));
-//            if (temp_suc && response.type == RequestType::ACK && response.result)
-//            {
-//                is_suc = true;
-//                break;
-//            }
-//        }
-//        return is_suc;
-//    }
-//protected:
-//    RequestPayload BuildPayload() override
-//    {
-//        RequestPayload payload{};
-//        payload.type = RequestType::TELL_LISTENER_PORT;
-//        payload.listener_port = listener_port;
-//        return payload;
-//    }
-//private:
-//    quint16 listener_port;
-//};
+    std::pair<ErrorPack, bool> Send()
+    {
+        auto payload = BuildPayload();
+
+        auto [errs, response] = SendRequest(payload);
+        if (errs.hasError())
+        {
+            return {errs, {}};
+        }
+        else
+        {
+            if (response.type == RequestType::ACK)
+                return {errs, response.result.value()};
+            else
+            {
+                errs.has_parsing_error = true;
+                errs.parsing_err_type = ParsingErrType::INVALID_DATA;
+                return {errs, {}};
+            }
+        }
+    }
+protected:
+    RequestPayload BuildPayload() override
+    {
+        RequestPayload payload{};
+        payload.type = RequestType::SCHEDULE;
+        payload.is_in_queue = is_in_queue_;
+        return payload;
+    }
+private:
+    bool is_in_queue_{};
+};
 
 static inline RequestPayload getAckResponse(const bool result = true)
 {

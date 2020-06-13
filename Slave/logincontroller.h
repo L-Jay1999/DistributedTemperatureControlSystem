@@ -2,7 +2,7 @@
 #define LOGINCONTROLLER_H
 #include <QString>
 #include <tuple>
-#include "../CommonLib/requests.h"
+#include "requests.h"
 
 class LoginController
 {
@@ -13,13 +13,11 @@ public:
     {}
     std::tuple<bool, QString, WorkingMode, double> Login();
 
-
 private:
     QString _UserID;
     QString _RoomID;
-    QString _port;
+    quint16 _port;
     bool CheckArgs();
-
 };
 
 #endif // LOGINCONTROLLER_H

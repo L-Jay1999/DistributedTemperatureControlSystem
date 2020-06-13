@@ -2,7 +2,17 @@ QT       += core gui network sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++17
+lessThan(QT_MINOR_VERSION, 12) {
+    contains(QMAKE_COMPILER_DEFINES, __MSC_VER) {
+        QMAKE_CXXFLAGS += /std:c++17
+    }
+    else {
+        QMAKE_CXXFLAGS += -std=c++17
+    }
+}
+else {
+    CONFIG += c++17
+}
 
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
@@ -17,42 +27,54 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    userloginwidget.cpp \
+    useandcostcontroller.cpp \
+    userlogindialog.cpp \
     slavecontrolwindow.cpp \
     logincontroller.cpp \
     setspeedcontroller.cpp \
     settemperaturecontroller.cpp \
-    useandcostcontroller.cpp \
     getinformationcontroller.cpp \
     gettemperaturecontroller.cpp \
     modealtercontroller.cpp \
     windcontroller.cpp \
     shutdowncontroller.cpp \
-    user.cpp
+    user.cpp \
+    sensor.cpp
 
 HEADERS += \
-    userloginwidget.h \
+    useandcostcontroller.h \
+    userlogindialog.h \
     slavecontrolwindow.h \
     logincontroller.h \
     setspeedcontroller.h \
     settemperaturecontroller.h \
-    useandcostcontroller.h \
     getinformationcontroller.h \
     gettemperaturecontroller.h \
     modealtercontroller.h \
     windcontroller.h \
     shutdowncontroller.h \
-    user.h
+    user.h \
+    sensor.h
 
-win32 {
-    LIBS += ../lib/CommonLib.lib
-}
 
 FORMS += \
-    userloginwidget.ui \
+    userlogindialog.ui \
     slavecontrolwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../CommonLib/release/ -lCommonLib
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../CommonLib/debug/ -lCommonLib
+else:unix:!macx: LIBS += -L$$OUT_PWD/../CommonLib/ -lCommonLib
+
+INCLUDEPATH += $$PWD/../CommonLib
+DEPENDPATH += $$PWD/../CommonLib
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../CommonLib/release/libCommonLib.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../CommonLib/debug/libCommonLib.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../CommonLib/release/CommonLib.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../CommonLib/debug/CommonLib.lib
+else:unix:!macx: PRE_TARGETDEPS += $$OUT_PWD/../CommonLib/libCommonLib.a

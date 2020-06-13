@@ -6,16 +6,25 @@
 #include <mutex>
 
 #include <QString>
+#include <QObject>
 
 namespace Config
 {
     static std::optional<quint16> slave_listener_port = std::nullopt;
     static std::map<QString, std::pair<QString, quint16>> roomid_to_address{};
     static std::optional<UserType> user_type = std::nullopt;
+    static std::map<SlaveControllerType, QObject *> slave_ctrller_ptr{};
+    static std::map<MasterControllerType, QObject *> master_ctrller_ptr{};
+    static constexpr auto kMasterDBPath = "./master.db";
+    static constexpr auto kSlaveDBPath = "./slave.db";
+    static int timeout_msec = 4000;
     // 确保线程安全
     static std::shared_mutex slave_port_rw_mutex;
     static std::shared_mutex roomid_to_addr_rw_mutex;
     static std::shared_mutex user_type_rw_mutex;
+    static std::shared_mutex slave_ctrller_ptr_rw_mutex;
+    static std::shared_mutex timeout_ms_rw_mutex;
+    static std::shared_mutex master_ctrller_ptr_rw_mutex;
 
     quint16 getSlaveListenerPortValue()
     {
@@ -28,6 +37,12 @@ namespace Config
     {
         std::unique_lock lock(slave_port_rw_mutex);
         slave_listener_port = port;
+    }
+
+    void clearSlaveListenerPort()
+    {
+        std::unique_lock lock(slave_port_rw_mutex);
+        slave_listener_port.reset();
     }
 
     bool hasSlaveListenerPort()
@@ -72,7 +87,51 @@ namespace Config
     {
         QString path;
         if (getUserType().has_value())
-            path = (getUserType().value() == UserType::MASTER) ? "./master.db" : "./slave.db";
+            path = (getUserType().value() == UserType::MASTER) ? kMasterDBPath : kSlaveDBPath;
         return path;
+    }
+
+    void setSlaveControllerPointer(SlaveControllerType type, QObject *controller)
+    {
+        std::unique_lock lock(slave_ctrller_ptr_rw_mutex);
+        // slave_ctrller_ptr.at(type) = controller;
+        slave_ctrller_ptr[type] = controller;
+    }
+
+    QObject *getSlaveControllerPointer(SlaveControllerType ctrller_type)
+    {
+        std::shared_lock lock(slave_ctrller_ptr_rw_mutex);
+        if (auto i = slave_ctrller_ptr.find(ctrller_type);
+                i != slave_ctrller_ptr.end())
+            return (*i).second;
+        return nullptr;
+    }
+
+    void setMasterControllerPointer(MasterControllerType type, QObject *controller)
+    {
+        std::unique_lock lock(master_ctrller_ptr_rw_mutex);
+        // slave_ctrller_ptr.at(type) = controller;
+        master_ctrller_ptr[type] = controller;
+    }
+
+    QObject *getMasterControllerPointer(MasterControllerType ctrller_type)
+    {
+        std::shared_lock lock(master_ctrller_ptr_rw_mutex);
+        if (auto i = master_ctrller_ptr.find(ctrller_type);
+                i != master_ctrller_ptr.end())
+            return (*i).second;
+        return nullptr;
+    }
+
+    void setTimeOutMsec(int timeout_ms)
+    {
+        std::unique_lock lock(timeout_ms_rw_mutex);
+        timeout_msec = timeout_ms;
+    }
+
+    int getTimeOutMSec()
+    {
+        std::shared_lock lock(timeout_ms_rw_mutex);
+        return timeout_msec;
     }
 } // namespace Config
