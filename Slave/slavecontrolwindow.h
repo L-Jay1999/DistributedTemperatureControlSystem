@@ -16,6 +16,7 @@
 #include "windcontroller.h"
 #include "modealtercontroller.h"
 #include "userlogindialog.h"
+#include "gettemperaturecontroller.h"
 #include "common.h"
 
 namespace Ui {
@@ -56,6 +57,7 @@ private:
     QTimer *_timer;
     UseAndCostController *_useandcostcontroller;
     ModeAlterController *_modealtercontroller;
+    GetTemperatureController *_gettemperaturecontroller;
 
     QLCDNumber *_temperature_lcd;
     QLCDNumber *_windspeed_lcd;

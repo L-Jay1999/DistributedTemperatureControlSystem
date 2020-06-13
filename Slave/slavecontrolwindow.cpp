@@ -16,36 +16,14 @@ SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
 
     _wind_text->clear();
     ShutDownDisplays();
-//    _temperature_lcd->display(_temperature);
-
-//    _windspeed = 1;
-//    _windspeed_lcd->display(_windspeed);
 
     _sensor = new Sensor(this);
-//    _sensor->setTargetDegree(_temperature);
-//    _sensor->setWindSpeed(WindSpeed(_windspeed));
-//    _sensor->setWorkingMode(_mode);
-//    GetRoomTemperature();
+    _gettemperaturecontroller = new GetTemperatureController(this, _sensor);
 
     _timer = new QTimer(this);
     connect(_timer, SIGNAL(timeout()), this, SLOT(GetRoomTemperature()));
-//    _timer->start(5000);
 
-//    _usage = _user->getUsage();
-//    _cost = _user->getCost();
-//    _usage_lcd->display(_usage);
-//    _cost_lcd->display(_cost);
-//    _useandcostcontroller = new UseAndCostController(this, _user);
-//    Config::setSlaveControllerPointer(Config::SlaveControllerType::USE_COST, _useandcostcontroller);
-//    connect(_useandcostcontroller, SIGNAL(UseandCostChanged()), this, SLOT(GetUseandCost()));
-
-//    ModeDisplay();
-//    UpdateBound();
     _modealtercontroller = new ModeAlterController(this);
-    connect(_modealtercontroller, SIGNAL(ModeChanged(WorkingMode)), this, SLOT(GetMode(WorkingMode)));
-
-//    WindDisplay();
-//    SendWind();
 
     qDebug() << "slavecontrolwindow create";
 }
@@ -111,12 +89,22 @@ void SlaveControlWindow::UpdateBound()
             _temperature_lcd->display(_temperature);
             _sensor->setTargetDegree(_temperature);
         }
+        else if(_temperature < 18.0){
+            _temperature = 18.0;
+            _temperature_lcd->display(_temperature);
+            _sensor->setTargetDegree(_temperature);
+        }
     }
     else{
         _upperbound = 30.0;
         _lowerbound = 25.0;
         if(_temperature < 25.0){
             _temperature = 25.0;
+            _temperature_lcd->display(_temperature);
+            _sensor->setTargetDegree(_temperature);
+        }
+        else if(_temperature > 30.0){
+            _temperature = 30.0;
             _temperature_lcd->display(_temperature);
             _sensor->setTargetDegree(_temperature);
         }
@@ -139,29 +127,11 @@ void SlaveControlWindow::setUser(User *value)
     _cost = _user->getCost();
     _useandcostcontroller = new UseAndCostController(this, _user);
 //    Config::setSlaveControllerPointer(Config::SlaveControllerType::USE_COST, _useandcostcontroller);
-    connect(_useandcostcontroller, SIGNAL(UseandCostChanged()), this, SLOT(GetUseandCost()));
+//    connect(_useandcostcontroller, SIGNAL(UseandCostChanged()), this, SLOT(GetUseandCost()));
 }
 
 void SlaveControlWindow::on_shutdownbtn_clicked()
 {
-//    ShutDownController shutdown_controller(_user->getRoomID());
-//    if(shutdown_controller.ShutDown()){
-//        StartUpWindow *start_up_window = new StartUpWindow();
-//        start_up_window->show();
-//        Config::clearSlaveListenerPort();
-//        // 设定 sensor 不再送风
-//        close();
-//        qDebug() << "ShutDown";
-//    }
-//    else{
-//        // todo 弹窗表示无法连接到中央空调
-//        qDebug() << "ShutDown Fail!";
-//    }
-
-//     StartUpWindow *start_up_window = new StartUpWindow();
-//     start_up_window->show();
-//     Config::clearSlaveListenerPort();
-//     close();
     if (_is_open)
     {
 //        ShutDownController shut_down(_user->getRoomID());
@@ -310,7 +280,17 @@ void SlaveControlWindow::GetMode(WorkingMode mode)
 
 bool SlaveControlWindow::SendWind()
 {
-    qDebug() << "SendWind" << _temperature << _roomtemperature;
+    qDebug() << "SendWind Function" << _temperature << _roomtemperature;
+
+    if(_temperature < _roomtemperature && _mode == WorkingMode::HOT){
+        qDebug() << "SendWind Fail!";
+        return false;
+    }
+    else if(_temperature > _roomtemperature && _mode == WorkingMode::COLD){
+        qDebug() << "SendWind Fail!";
+        return false;
+    }
+
     if(std::abs(_temperature - _roomtemperature) >= 1.0){
 //        WindController windcontroller(true, _user->getRoomID());
 //        bool result = windcontroller.Send();

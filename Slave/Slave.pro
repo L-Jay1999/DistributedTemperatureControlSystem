@@ -33,7 +33,6 @@ SOURCES += \
     logincontroller.cpp \
     setspeedcontroller.cpp \
     settemperaturecontroller.cpp \
-    getinformationcontroller.cpp \
     gettemperaturecontroller.cpp \
     modealtercontroller.cpp \
     windcontroller.cpp \
@@ -48,7 +47,6 @@ HEADERS += \
     logincontroller.h \
     setspeedcontroller.h \
     settemperaturecontroller.h \
-    getinformationcontroller.h \
     gettemperaturecontroller.h \
     modealtercontroller.h \
     windcontroller.h \
