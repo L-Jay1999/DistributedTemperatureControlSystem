@@ -34,8 +34,8 @@ void ParameterWidget::confirm()
         this->_mode = WorkingMode(1);
         ui->lineEdit_temperature->setText("28");
         //TODO 将初始的所有空调模式更改设置
-        SetModeRequest *setmoderequest = new SetModeRequest(_mode);
-        bool result = setmoderequest->Send();
+//        SetModeRequest *setmoderequest = new SetModeRequest(_mode);
+//        bool result = setmoderequest->Send();
 
     }else{
         this->mode = "cold";
