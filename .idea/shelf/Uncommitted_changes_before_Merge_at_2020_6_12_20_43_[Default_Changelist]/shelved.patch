@@ -1,0 +1,594 @@
+Index: Master/managerloginwidget.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include \"managerloginwidget.h\"\r\n#include \"ui_managerloginwidget.h\"\r\n\r\nManagerLoginWidget::ManagerLoginWidget(QWidget *parent) :\r\n    QWidget(parent),\r\n    ui(new Ui::ManagerLoginWidget)\r\n{\r\n    ui->setupUi(this);\r\n    setAttribute(Qt::WA_DeleteOnClose);\r\n    this->setWindowTitle(\"管理员认证\");\r\n    this->setFixedSize(this->width(),this->height());\r\n    ui->label_error->clear();\r\n    ui->label_error->setAlignment(Qt::AlignHCenter);\r\n    ui->lineEdit_password->setEchoMode(QLineEdit::Password);//设置密码输入框\r\n    connect(ui->pushButton_confirm, &QPushButton::clicked, this, &ManagerLoginWidget::confirm);//连接确认按钮与确认函数\r\n    connect(ui->pushButton_cancel, &QPushButton::clicked, this, &ManagerLoginWidget::cancel);//连接取消按钮与取消函数\r\n}\r\n\r\nManagerLoginWidget::~ManagerLoginWidget()\r\n{\r\n    delete ui;\r\n}\r\nvoid ManagerLoginWidget::Login()\r\n{\r\n    mlc = new ManagerLoginController(ui->lineEdit_account->text(),ui->lineEdit_password->text());//生成一个登陆控制器\r\n    login_res = mlc->ManagerLogin();//发送认证请求\r\n    delete mlc;\r\n}\r\n\r\nvoid ManagerLoginWidget::confirm()\r\n{\r\n    Login();\r\n    if(std::get<0>(login_res) == true)//认证成功\r\n    {\r\n        emit certified_signal();\r\n        this->close();\r\n    }else//认证失败\r\n    {\r\n        ui->lineEdit_password->clear();//清空密码输入框\r\n        ui->label_error->setText(std::get<1>(login_res));//错误提示信息\r\n    }\r\n}\r\n\r\nvoid ManagerLoginWidget::cancel()\r\n{\r\n    emit cancel_signal();\r\n    this->close();\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Master/managerloginwidget.cpp	(revision b3f046e205734e965e35d3ad7e7ae77362583357)
++++ Master/managerloginwidget.cpp	(date 1591963415642)
+@@ -7,7 +7,7 @@
+ {
+     ui->setupUi(this);
+     setAttribute(Qt::WA_DeleteOnClose);
+-    this->setWindowTitle("管理员认证");
++    this->setWindowTitle("Manager Confirm");
+     this->setFixedSize(this->width(),this->height());
+     ui->label_error->clear();
+     ui->label_error->setAlignment(Qt::AlignHCenter);
+Index: Master/managerlogincontroller.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>\r\n#include \"managerlogincontroller.h\"\r\n\r\nstd::tuple<bool, QString> ManagerLoginController::ManagerLogin()\r\n{\r\n    if(CheckArgs()){\r\n        //bool result = db.hasManager(_Account,_Password);\r\n        bool result = true;\r\n        if(result){\r\n            return (std::tuple<bool,QString>){true, \"Succeed\"};\r\n        }\r\n        else{\r\n            return (std::tuple<bool,QString>){false, \"Incorrect password or account doesn't exist.\"};\r\n        }\r\n    }\r\n    else{\r\n        return (std::tuple<bool,QString>){false, \"Input format error.\"};\r\n    }\r\n}\r\n\r\nbool ManagerLoginController::CheckArgs()\r\n{\r\n    return true;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Master/managerlogincontroller.cpp	(revision b3f046e205734e965e35d3ad7e7ae77362583357)
++++ Master/managerlogincontroller.cpp	(date 1591963428792)
+@@ -7,14 +7,14 @@
+         //bool result = db.hasManager(_Account,_Password);
+         bool result = true;
+         if(result){
+-            return (std::tuple<bool,QString>){true, "Succeed"};
++            return {true, "Succeed"};
+         }
+         else{
+-            return (std::tuple<bool,QString>){false, "Incorrect password or account doesn't exist."};
++            return {false, "Incorrect password or account doesn't exist."};
+         }
+     }
+     else{
+-        return (std::tuple<bool,QString>){false, "Input format error."};
++        return {false, "Input format error."};
+     }
+ }
+ 
+Index: Master/operationconfirmationdialog.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include \"operationconfirmationdialog.h\"\r\n#include \"ui_operationconfirmationdialog.h\"\r\n\r\nOperationConfirmationDialog::OperationConfirmationDialog(QWidget *parent) :\r\n    QDialog(parent),\r\n    ui(new Ui::OperationConfirmationDialog)\r\n{\r\n    ui->setupUi(this);\r\n    setWindowTitle(\"操作确认\");\r\n    setAttribute(Qt::WA_DeleteOnClose);\r\n}\r\n\r\nOperationConfirmationDialog::~OperationConfirmationDialog()\r\n{\r\n    delete ui;\r\n}\r\n\r\nvoid OperationConfirmationDialog::setText(QString text)\r\n{\r\n    text = \"将执行操作:\\n\\n\" + text + \"\\n\\n是否确认？\";\r\n    ui->textEdit->setText(text);\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Master/operationconfirmationdialog.cpp	(revision b3f046e205734e965e35d3ad7e7ae77362583357)
++++ Master/operationconfirmationdialog.cpp	(date 1591964707146)
+@@ -6,7 +6,7 @@
+     ui(new Ui::OperationConfirmationDialog)
+ {
+     ui->setupUi(this);
+-    setWindowTitle("操作确认");
++    setWindowTitle("Operation confirm");
+     setAttribute(Qt::WA_DeleteOnClose);
+ }
+ 
+@@ -17,7 +17,7 @@
+ 
+ void OperationConfirmationDialog::setText(QString text)
+ {
+-    text = "将执行操作:\n\n" + text + "\n\n是否确认？";
++    text = "We're going to operate:\n\n" + text + "\n\nConfirm?";
+     ui->textEdit->setText(text);
+ }
+ 
+Index: Master/powersupplywidget.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include \"powersupplywidget.h\"\r\n#include \"ui_powersupplywidget.h\"\r\n\r\nPowerSupplyWidget::PowerSupplyWidget(QWidget *parent) :\r\n    QWidget(parent),\r\n    ui(new Ui::PowerSupplyWidget)\r\n{\r\n    ui->setupUi(this);\r\n    setAttribute(Qt::WA_DeleteOnClose);\r\n    this->setWindowTitle(\"电源控制\");\r\n    this->setFixedSize(this->width(),this->height());\r\n    connect(ui->pushButton_cancel,&QPushButton::clicked,this,&PowerSupplyWidget::cancel);\r\n    connect(ui->pushButton_on,&QPushButton::clicked,this,&PowerSupplyWidget::clicked_on);\r\n    connect(ui->pushButton_off,&QPushButton::clicked,this,&PowerSupplyWidget::clicked_off);\r\n}\r\n\r\nPowerSupplyWidget::~PowerSupplyWidget()\r\n{\r\n    delete ui;\r\n}\r\n\r\nvoid PowerSupplyWidget::cancel()\r\n{\r\n    emit cancel_signal();\r\n    this->hide();\r\n}\r\n\r\nvoid PowerSupplyWidget::clicked_on()\r\n{\r\n    QString text = \"启动中央空调\";\r\n    ocd = new OperationConfirmationDialog;\r\n    ocd->setText(text);\r\n    int res = ocd->exec();\r\n    if(res == QDialog::Accepted)\r\n    {\r\n        StartSystem();\r\n    }\r\n}\r\n\r\nvoid PowerSupplyWidget::clicked_off()\r\n{\r\n    QString text = \"关闭中央空调\";\r\n    ocd = new OperationConfirmationDialog;\r\n    ocd->setText(text);\r\n    int res = ocd->exec();\r\n    if(res == QDialog::Accepted)\r\n    {\r\n        ShutDownSystem();\r\n    }\r\n}\r\n\r\nvoid PowerSupplyWidget::StartSystem()\r\n{\r\n    ui->label_power->setText(\"开启\");\r\n}\r\n\r\nvoid PowerSupplyWidget::ShutDownSystem()\r\n{\r\n    ui->label_power->setText(\"关闭\");\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Master/powersupplywidget.cpp	(revision b3f046e205734e965e35d3ad7e7ae77362583357)
++++ Master/powersupplywidget.cpp	(date 1591964778993)
+@@ -27,7 +27,7 @@
+ 
+ void PowerSupplyWidget::clicked_on()
+ {
+-    QString text = "启动中央空调";
++    QString text = "Open Master";
+     ocd = new OperationConfirmationDialog;
+     ocd->setText(text);
+     int res = ocd->exec();
+@@ -39,7 +39,7 @@
+ 
+ void PowerSupplyWidget::clicked_off()
+ {
+-    QString text = "关闭中央空调";
++    QString text = "Close Master";
+     ocd = new OperationConfirmationDialog;
+     ocd->setText(text);
+     int res = ocd->exec();
+@@ -51,10 +51,11 @@
+ 
+ void PowerSupplyWidget::StartSystem()
+ {
+-    ui->label_power->setText("开启");
++//    ui->label_power->setText("开启");
++    ui->label_power->setText("Open");
+ }
+ 
+ void PowerSupplyWidget::ShutDownSystem()
+ {
+-    ui->label_power->setText("关闭");
++    ui->label_power->setText("Close");
+ }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"CMakeRunConfigurationManager\" shouldGenerate=\"true\" shouldDeleteObsolete=\"true\">\r\n    <generated>\r\n      <config projectName=\"DC\" targetName=\"DC\" />\r\n    </generated>\r\n  </component>\r\n  <component name=\"CMakeSettings\">\r\n    <configurations>\r\n      <configuration PROFILE_NAME=\"Debug\" CONFIG_NAME=\"Debug\" />\r\n    </configurations>\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"c879fa30-8bae-46fc-8c38-ccaa639e5a28\" name=\"Default Changelist\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/$PRODUCT_WORKSPACE_FILE$\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/$PRODUCT_WORKSPACE_FILE$\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ClangdSettings\">\r\n    <option name=\"formatViaClangd\" value=\"false\" />\r\n  </component>\r\n  <component name=\"ExecutionTargetManager\" SELECTED_TARGET=\"CMakeBuildProfile:Debug\" />\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"1dD8nJADfTkdgREvUNNEBkPXW93\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\r\n    <property name=\"cf.first.check.clang-format\" value=\"false\" />\r\n    <property name=\"nodejs_interpreter_path.stuck_in_default_project\" value=\"undefined stuck path\" />\r\n    <property name=\"nodejs_npm_path_reset_for_default_project\" value=\"true\" />\r\n    <property name=\"settings.editor.selected.configurable\" value=\"org.jetbrains.plugins.github.ui.GithubSettingsConfigurable\" />\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"DC\" type=\"CMakeRunConfiguration\" factoryName=\"Application\" REDIRECT_INPUT=\"false\" PASS_PARENT_ENVS_2=\"true\" PROJECT_NAME=\"DC\" TARGET_NAME=\"DC\" CONFIG_NAME=\"Debug\" RUN_TARGET_PROJECT_NAME=\"DC\" RUN_TARGET_NAME=\"DC\">\r\n      <method v=\"2\">\r\n        <option name=\"com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SvnConfiguration\">\r\n    <configuration />\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"c879fa30-8bae-46fc-8c38-ccaa639e5a28\" name=\"Default Changelist\" comment=\"\" />\r\n      <created>1591942466770</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1591942466770</updated>\r\n      <workItem from=\"1591942471501\" duration=\"104000\" />\r\n      <workItem from=\"1591948470727\" duration=\"543000\" />\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"2\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\r\n  </component>\r\n  <component name=\"WindowStateProjectService\">\r\n    <state x=\"270\" y=\"56\" key=\"SettingsEditor\" timestamp=\"1591949018546\">\r\n      <screen x=\"0\" y=\"0\" width=\"1536\" height=\"824\" />\r\n    </state>\r\n    <state x=\"270\" y=\"56\" key=\"SettingsEditor/0.0.1536.824@0.0.1536.824\" timestamp=\"1591949018546\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/workspace.xml	(revision b3f046e205734e965e35d3ad7e7ae77362583357)
++++ .idea/workspace.xml	(date 1591965673464)
+@@ -1,19 +1,64 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="BranchesTreeState">
++    <expand>
++      <path>
++        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
++        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
++      </path>
++      <path>
++        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
++        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
++      </path>
++      <path>
++        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
++        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
++        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
++      </path>
++      <path>
++        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
++        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
++        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
++        <item name="GROUP_NODE:slave-dev" type="e8cecc67:BranchNodeDescriptor" />
++      </path>
++    </expand>
++    <select />
++  </component>
+   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+     <generated>
+       <config projectName="DC" targetName="DC" />
++      <config projectName="DC" targetName="DC_autogen" />
+     </generated>
+   </component>
+   <component name="CMakeSettings">
+     <configurations>
+-      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
++      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" GENERATION_OPTIONS="-DCMAKE_PREFIX_PATH=C:/Qt/5.9.9/mingw53_32/lib/cmake" />
+     </configurations>
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="c879fa30-8bae-46fc-8c38-ccaa639e5a28" name="Default Changelist" comment="">
+-      <change beforePath="$PROJECT_DIR$/.idea/$PRODUCT_WORKSPACE_FILE$" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/$PRODUCT_WORKSPACE_FILE$" afterDir="false" />
++    <list default="true" id="c879fa30-8bae-46fc-8c38-ccaa639e5a28" name="Default Changelist" comment="new version update">
++      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/DC.iml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/DC.iml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/Master/parametercontroller.cpp" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/Master/parametercontroller.h" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/CommonLib/dbhelper.h" beforeDir="false" afterPath="$PROJECT_DIR$/CommonLib/dbhelper.h" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/CommonLib/listener.h" beforeDir="false" afterPath="$PROJECT_DIR$/CommonLib/listener.h" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/CommonLib/log.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/CommonLib/log.cpp" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Master/Master.pro" beforeDir="false" afterPath="$PROJECT_DIR$/Master/Master.pro" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Master/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/main.cpp" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Master/manager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/manager.cpp" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Master/managerlogincontroller.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/managerlogincontroller.cpp" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Master/managerloginwidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/managerloginwidget.cpp" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Master/operationconfirmationdialog.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/operationconfirmationdialog.cpp" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Master/powersupplywidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/powersupplywidget.cpp" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Master/standbywidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/standbywidget.cpp" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Slave/user.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Slave/user.cpp" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/Slave/user.h" beforeDir="false" afterPath="$PROJECT_DIR$/Slave/user.h" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -33,18 +78,38 @@
+     <option name="showLibraryContents" value="true" />
+   </component>
+   <component name="PropertiesComponent">
++    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
++    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+     <property name="WebServerToolWindowFactoryState" value="false" />
++    <property name="aspect.path.notification.shown" value="true" />
+     <property name="cf.first.check.clang-format" value="false" />
++    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
++    <property name="node.js.detected.package.eslint" value="true" />
++    <property name="node.js.detected.package.tslint" value="true" />
++    <property name="node.js.path.for.package.eslint" value="project" />
++    <property name="node.js.path.for.package.tslint" value="project" />
++    <property name="node.js.selected.package.eslint" value="(autodetect)" />
++    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+-    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.github.ui.GithubSettingsConfigurable" />
++    <property name="nodejs_package_manager_path" value="npm" />
++    <property name="settings.editor.selected.configurable" value="CPPToolchains" />
+   </component>
+-  <component name="RunManager">
++  <component name="RunManager" selected="CMake Application.DC">
+     <configuration name="DC" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DC" TARGET_NAME="DC" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="DC" RUN_TARGET_NAME="DC">
+       <method v="2">
+         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+       </method>
+     </configuration>
++    <configuration name="DC_autogen" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="DC" TARGET_NAME="DC_autogen" CONFIG_NAME="Debug">
++      <method v="2">
++        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
++      </method>
++    </configuration>
++    <list>
++      <item itemvalue="CMake Application.DC" />
++      <item itemvalue="CMake Application.DC_autogen" />
++    </list>
+   </component>
+   <component name="SvnConfiguration">
+     <configuration />
+@@ -57,7 +122,9 @@
+       <option name="presentableId" value="Default" />
+       <updated>1591942466770</updated>
+       <workItem from="1591942471501" duration="104000" />
+-      <workItem from="1591948470727" duration="543000" />
++      <workItem from="1591948470727" duration="368000" />
++      <workItem from="1591948916201" duration="252000" />
++      <workItem from="1591951592602" duration="6705000" />
+     </task>
+     <servers />
+   </component>
+@@ -75,11 +142,31 @@
+       </map>
+     </option>
+     <option name="oldMeFiltersMigrated" value="true" />
++  </component>
++  <component name="VcsManagerConfiguration">
++    <MESSAGE value="new version update" />
++    <option name="LAST_COMMIT_MESSAGE" value="new version update" />
+   </component>
+   <component name="WindowStateProjectService">
+-    <state x="270" y="56" key="SettingsEditor" timestamp="1591949018546">
++    <state x="119" y="193" key="FileChooserDialogImpl" timestamp="1591965666875">
+       <screen x="0" y="0" width="1536" height="824" />
+     </state>
+-    <state x="270" y="56" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1591949018546" />
++    <state x="119" y="193" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1591965666875" />
++    <state x="403" y="172" key="MultipleFileMergeDialog" timestamp="1591951451893">
++      <screen x="0" y="0" width="1536" height="824" />
++    </state>
++    <state x="403" y="172" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1591951451893" />
++    <state x="270" y="56" key="SettingsEditor" timestamp="1591965672911">
++      <screen x="0" y="0" width="1536" height="824" />
++    </state>
++    <state x="270" y="56" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1591965672911" />
++    <state x="468" y="10" width="600" height="804" key="find.popup" timestamp="1591955230714">
++      <screen x="0" y="0" width="1536" height="824" />
++    </state>
++    <state x="468" y="10" width="600" height="804" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1591955230714" />
++    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1591955220045">
++      <screen x="0" y="0" width="1536" height="824" />
++    </state>
++    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1591955220045" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/modules.xml	(date 1591948492567)
++++ .idea/modules.xml	(date 1591948492567)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/DC.iml" filepath="$PROJECT_DIR$/.idea/DC.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/DC.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/DC.iml	(date 1591948492487)
++++ .idea/DC.iml	(date 1591948492487)
+@@ -0,0 +1,2 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module classpath="CMake" type="CPP_MODULE" version="4" />
+\ No newline at end of file
+Index: Master/parametercontroller.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Master/parametercontroller.cpp	(date 1591965499053)
++++ Master/parametercontroller.cpp	(date 1591965499053)
+@@ -0,0 +1,7 @@
++#include "parametercontroller.h"
++#include "ui_parametercontroller.h"
++
++Parametercontroller::Parametercontroller(QWidget *parent)
++{
++
++}
+Index: Master/main.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include \"standbywidget.h\"\r\n#include <QApplication>\r\n\r\nint main(int argc, char *argv[])\r\n{\r\n    QApplication a(argc, argv);\r\n    StandbyWidget sw;\r\n    sw.show();\r\n    return a.exec();\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Master/main.cpp	(revision b3f046e205734e965e35d3ad7e7ae77362583357)
++++ Master/main.cpp	(date 1591964623045)
+@@ -1,9 +1,28 @@
+ #include "standbywidget.h"
+ #include <QApplication>
+-
++#include <QTextCodec>
++#if defined(_MSC_VER) && (_MSC_VER >= 1600)
++# pragma execution_character_set("utf-8")
++#endif
+ int main(int argc, char *argv[])
+ {
+     QApplication a(argc, argv);
++    a.setFont(QFont("Microsoft Yahei", 9));
++
++    //设置中文编码
++#if (QT_VERSION <= QT_VERSION_CHECK(5,0,0))
++#if _MSC_VER
++    QTextCodec *codec = QTextCodec::codecForName("GBK");
++#else
++    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
++#endif
++    QTextCodec::setCodecForLocale(codec);
++    QTextCodec::setCodecForCStrings(codec);
++    QTextCodec::setCodecForTr(codec);
++#else
++    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
++    QTextCodec::setCodecForLocale(codec);
++#endif
+     StandbyWidget sw;
+     sw.show();
+     return a.exec();
+Index: Master/parametercontroller.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Master/parametercontroller.h	(date 1591965499075)
++++ Master/parametercontroller.h	(date 1591965499075)
+@@ -0,0 +1,32 @@
++#ifndef PARAMETERCONTROLLER_H
++#define PARAMETERCONTROLLER_H
++
++#include <QWidget>
++#include "operationconfirmationdialog.h"
++
++namespace Ui {
++class ParameterController;
++}
++
++class ParameterController : public QWidget
++{
++    Q_OBJECT
++
++public:
++    explicit ParameterController(QWidget *parent = 0);
++    ~ParameterController();
++
++private:
++    Ui::ParameterController *ui;
++    OperationConfirmationDialog *ocd;
++private slots:
++    void cancel();
++    void StartSystem();
++    void ShutDownSystem();
++    void clicked_on();//点击开启按钮
++    void clicked_off();//点击关闭按钮
++signals:
++    void cancel_signal();//点击返回
++};
++
++#endif
+Index: CommonLib/log.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include \"log.h\"\r\n#include \"common.h\"\r\n\r\n#include <QString>\r\n#include <QDir>\r\n#include <QDebug>\r\n#include <QDateTime>\r\n#include <QThread>\r\n\r\n#include <thread>\r\n#include <mutex>\r\n#include <memory>\r\n#include <map>\r\n\r\nnamespace Log\r\n{\r\n    static constexpr auto kLogPath = \"logs\";\r\n    static const QString kLogPrefix = \"Log-\";\r\n    static const QString kLogSuffix = \".log\";\r\n    static std::shared_ptr<QFile> log_file;\r\n    static LogLevel log_level = LogLevel::ERROR;\r\n    static std::mutex log_mtx;\r\n    static std::mutex init_mtx;\r\n    static bool is_inited = false;\r\n\r\n    static const std::map<LogLevel, QString> kLogLevelStr =\r\n    {\r\n        {LogLevel::ERROR, \"ERROR\"},\r\n        {LogLevel::WARNING, \"WARNING\"},\r\n        {LogLevel::INFO, \"INFO\"},\r\n        {LogLevel::DEBUG, \"DEBUG\"},\r\n    };\r\n\r\n    static inline const QString &getLogLevelStr(const LogLevel level)\r\n    {\r\n        return kLogLevelStr.at(level);\r\n    }\r\n\r\n    bool init(LogLevel level)\r\n    {\r\n        std::lock_guard lock(init_mtx);\r\n        if (is_inited)\r\n            return true;\r\n        else\r\n        {\r\n            log_level = level;\r\n            QDir dir(kLogPath);\r\n            if (!dir.exists())\r\n                if (!dir.mkdir(kLogPath))\r\n                    return false;\r\n            QDateTime time = QDateTime::currentDateTime();\r\n            log_file = std::make_shared<QFile>(QString(\"./%1/%2%3%4\")\r\n                                        .arg(kLogPath)\r\n                                        .arg(kLogPrefix)\r\n                                        .arg(time.toString(\"hh-mm-ss\"))\r\n                                        .arg(kLogSuffix));\r\n\r\n            if (!log_file->open(QIODevice::ReadWrite))\r\n                return false;\r\n        }\r\n        return true;\r\n    }\r\n\r\n    void addLog(LogLevel level, const QString &log)\r\n    {\r\n        std::lock_guard lock(log_mtx);\r\n        if (init() && EnumToInt(level) <= EnumToInt(log_level))\r\n        {\r\n            QDateTime time = QDateTime::currentDateTime();\r\n            QTextStream stream(log_file.get());\r\n            const QString temp = \"%1 [%2](%3) %4\"; // time, level, thread_id, log_str;\r\n            stream << temp.arg(time.toString(\"yy/MM/dd hh:mm:ss\"))\r\n                          .arg(getLogLevelStr(level))\r\n                          .arg(getThreadIdStr())\r\n                          .arg(log) << Qt::endl;\r\n        }\r\n        else\r\n        {\r\n            qDebug() << \"Failed to initialize log module.\";\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- CommonLib/log.cpp	(revision b3f046e205734e965e35d3ad7e7ae77362583357)
++++ CommonLib/log.cpp	(date 1591962414184)
+@@ -72,7 +72,7 @@
+             stream << temp.arg(time.toString("yy/MM/dd hh:mm:ss"))
+                           .arg(getLogLevelStr(level))
+                           .arg(getThreadIdStr())
+-                          .arg(log) << Qt::endl;
++                          .arg(log);
+         }
+         else
+         {
+Index: Master/manager.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include \"manager.h\"\r\n\r\nQString Manager::getAccount() const\r\n{\r\n    return _Account;\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Master/manager.cpp	(revision b3f046e205734e965e35d3ad7e7ae77362583357)
++++ Master/manager.cpp	(date 1591956683125)
+@@ -3,4 +3,4 @@
+ QString Manager::getAccount() const
+ {
+     return _Account;
+-}
++}
+\ No newline at end of file
+Index: DC.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- DC.iml	(date 1591942472794)
++++ DC.iml	(date 1591942472794)
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="WEB_MODULE" version="4">
++  <component name="NewModuleRootManager" inherit-compiler-output="true">
++    <exclude-output />
++    <content url="file://$MODULE_DIR$" />
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/.gitignore	(date 1591951610353)
++++ .idea/.gitignore	(date 1591951610353)
+@@ -0,0 +1,8 @@
++# Default ignored files
++/shelf/
++/workspace.xml
++# Datasource local storage ignored files
++/dataSources/
++/dataSources.local.xml
++# Editor-based HTTP Client requests
++/httpRequests/
+Index: CommonLib/listener.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#ifndef LISTENER_H\r\n#define LISTENER_H\r\n\r\n#include <map>\r\n\r\n#include <QObject>\r\n#include <QTcpServer>\r\n#include <QTcpSocket>\r\n#include <QJsonDocument>\r\n#include <QJsonObject>\r\n\r\n#include \"request_controller.h\"\r\n#include \"request_payload.h\"\r\n#include \"common.h\"\r\n\r\n\r\nclass Listener : public QObject\r\n{\r\n    Q_OBJECT\r\npublic:\r\n    Listener(QObject *parent = nullptr) : QObject(parent), server(new QTcpServer(this))\r\n    {\r\n        connect(server, SIGNAL(QTcpServer::newConnection()), this, SLOT(HandleConnection()));\r\n    }\r\n\r\n    /**\r\n     * @brief 使 Listener 监听位于区间 [a,b] 内的随机端口\r\n     * \r\n     * @param a 区间下界\r\n     * @param b 区间上界\r\n     * @return quint16 成功监听的端口\r\n     */\r\n    quint16 ListenOnRandomPort(const quint16 a, const quint16 b)\r\n    {\r\n        int random_port = getRandomInt(a, b);\r\n        // TODO 如果区间过小可能导致死循环，考虑之后缓减\r\n        while (!Listen(random_port))\r\n            random_port = getRandomInt(a, b);\r\n        Config::setSlaveListenerPort(random_port);\r\n        return random_port;\r\n    }\r\n\r\n    /**\r\n     * @brief 使 Listener 监听指定端口（默认为中央空调监听端口）\r\n     * \r\n     * @param port 需要监听的端口\r\n     * @return true 成功监听\r\n     * @return false 发生错误，监听失败\r\n     */\r\n    bool Listen(const quint16 port = Config::kMasterListenPort)\r\n    {\r\n        bool is_listen_suc = server->listen(QHostAddress::LocalHost, port);\r\n        if (is_listen_suc)\r\n            Config::setSlaveListenerPort(port);\r\n        return is_listen_suc;\r\n    }\r\n\r\n    ~Listener() {}\r\n\r\nprivate:\r\n    QTcpServer *server;\r\npublic slots:\r\n    void HandleConnection()\r\n    {\r\n        QTcpSocket *connection = server->nextPendingConnection();\r\n        if (connection)\r\n        {\r\n            connect(connection, &QAbstractSocket::disconnected, connection, &QObject::deleteLater);\r\n            if (!connection->waitForReadyRead())\r\n            {\r\n               qDebug() << connection->errorString();\r\n               return;\r\n            }\r\n\r\n            auto receive_data = connection->readAll();\r\n            auto host_addr = connection->peerAddress().toString();\r\n            auto host_port = connection->peerPort();\r\n            auto response = RequestController::HandleRequest(receive_data, host_addr, host_port);\r\n\r\n            // TODO retransmission ?\r\n            connection->write(response);\r\n            if (!connection->waitForBytesWritten())\r\n            {\r\n                qDebug() << connection->errorString();\r\n                return;\r\n            }\r\n        }\r\n    }\r\n\r\n};\r\n\r\n#endif // LISTENER_H\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- CommonLib/listener.h	(revision b3f046e205734e965e35d3ad7e7ae77362583357)
++++ CommonLib/listener.h	(date 1591954197548)
+@@ -4,8 +4,8 @@
+ #include <map>
+ 
+ #include <QObject>
+-#include <QTcpServer>
+-#include <QTcpSocket>
++#include <QtNetwork//QTcpServer>
++#include <QtNetwork/QTcpSocket>
+ #include <QJsonDocument>
+ #include <QJsonObject>
+ 
+Index: Master/standbywidget.cpp
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include \"standbywidget.h\"\r\n#include \"ui_standbywidget.h\"\r\n\r\nStandbyWidget::StandbyWidget(QWidget *parent) :\r\n    QWidget(parent),\r\n    ui(new Ui::StandbyWidget)\r\n{\r\n    ui->setupUi(this);\r\n    this->setWindowTitle(\"中央空调控制系统-待机\");\r\n    this->setFixedSize(this->width(),this->height());\r\n    setAttribute(Qt::WA_DeleteOnClose);\r\n    connect(ui->btn_login, &QPushButton::clicked, this, &StandbyWidget::switch_to_login);//点击认证按钮\r\n}\r\n\r\nStandbyWidget::~StandbyWidget()\r\n{\r\n    delete ui;\r\n}\r\n\r\nvoid StandbyWidget::reshow()\r\n{\r\n    this->show();\r\n}\r\n\r\nvoid StandbyWidget::switch_to_login()//切换到管理员认证窗口\r\n{\r\n    mlw = new ManagerLoginWidget;\r\n    mlw->show();\r\n    connect(mlw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接取消信号与回显\r\n    connect(mlw,SIGNAL(certified_signal()),this,SLOT(switch_to_panel()));//收到信号表示认证成功，切换到控制面板\r\n    this->hide();\r\n}\r\n\r\nvoid StandbyWidget::switch_to_panel()//切换到中央空调控制面板\r\n{\r\n    mcp = new ManagerControlPanel;\r\n    mcp->show();\r\n    connect(mcp,SIGNAL(logout_signal()),this,SLOT(reshow()));//连接登出信号与回显\r\n    this->hide();\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Master/standbywidget.cpp	(revision b3f046e205734e965e35d3ad7e7ae77362583357)
++++ Master/standbywidget.cpp	(date 1591963932852)
+@@ -6,7 +6,7 @@
+     ui(new Ui::StandbyWidget)
+ {
+     ui->setupUi(this);
+-    this->setWindowTitle("中央空调控制系统-待机");
++    this->setWindowTitle("中央空调控制系统");
+     this->setFixedSize(this->width(),this->height());
+     setAttribute(Qt::WA_DeleteOnClose);
+     connect(ui->btn_login, &QPushButton::clicked, this, &StandbyWidget::switch_to_login);//点击认证按钮
+Index: CommonLib/dbhelper.h
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#ifndef DBDEF_BASE_H\r\n#define DBDEF_BASE_H\r\n\r\n#include <QString>\r\n#include <QSqlQuery>\r\n\r\n#include <vector>\r\n#include <variant>\r\n\r\n#include \"common.h\"\r\n\r\nnamespace DBHelper\r\n{\r\n    enum class ColTypes\r\n    {\r\n        INTEGER,\r\n        NUMERIC,\r\n        TEXT\r\n    };\r\n\r\n    struct ColPayload\r\n    {\r\n        QString col_name{};\r\n        ColTypes col_type{ColTypes::INTEGER};\r\n        bool is_primary{false};\r\n        bool is_not_null{false};\r\n        bool has_default{false};\r\n        QString default_val{\"\"};\r\n    };\r\n\r\n    /**\r\n     * @brief 通过给定信息构造建表语句\r\n     * \r\n     * @param table_name 建表的名称\r\n     * @param col_info 表的列信息\r\n     * @return QString 建表语句\r\n     */\r\n    QString getCreateSQL(const QString &table_name, const std::vector<ColPayload> &col_info);\r\n\r\n    /**\r\n     * @brief 以事务的方式执行多个 SQL 语句\r\n     * \r\n     * @param query_sqls 需要执行的 SQL 语句\r\n     * @return QSqlError 错误信息\r\n     */\r\n    QSqlError ExecSQLs(const std::vector<QString> &query_sqls);\r\n\r\n    /**\r\n     * @brief 通过给定信息构建插入语句\r\n     * \r\n     * @param table_name 需要插入的表名称\r\n     * @param col_info 该表的列信息\r\n     * @return QString 构造的插入语句\r\n     */\r\n    QString getInsertSQL(const QString &table_name, const std::vector<ColPayload> &col_info);\r\n\r\n    /**\r\n     * @brief 将给出的值绑定至给出的 QSqlQuery 上并执行\r\n     * \r\n     * @param q 已绑定 SQL 语句的 QSqlQuery 对象\r\n     * @param binds 需要绑定的值\r\n     * @return QSqlError 错误信息\r\n     */\r\n    QSqlError BindAndExec(QSqlQuery &q, const std::vector<std::variant<QString, double, int, qint64, SpeedLevel>> binds);\r\n}\r\n\r\n\r\n#endif // DBDEF_BASE_H\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- CommonLib/dbhelper.h	(revision b3f046e205734e965e35d3ad7e7ae77362583357)
++++ CommonLib/dbhelper.h	(date 1591952955538)
+@@ -2,7 +2,7 @@
+ #define DBDEF_BASE_H
+ 
+ #include <QString>
+-#include <QSqlQuery>
++#include <QtSql/QSqlQuery>
+ 
+ #include <vector>
+ #include <variant>
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/vcs.xml	(date 1591942560587)
++++ .idea/vcs.xml	(date 1591942560587)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(date 1591948492530)
++++ .idea/misc.xml	(date 1591948492530)
+@@ -0,0 +1,4 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$" />
++</project>
+\ No newline at end of file
+Index: Master/Master.pro
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#-------------------------------------------------\r\n#\r\n# Project created by QtCreator 2020-06-09T15:00:18\r\n#\r\n#-------------------------------------------------\r\n\r\nQT       += core gui network sql\r\n\r\ngreaterThan(QT_MAJOR_VERSION, 4): QT += widgets\r\n\r\nlessThan(QT_MINOR_VERSION, 12) {\r\n    contains(QMAKE_COMPILER_DEFINES, __MSC_VER) {\r\n        QMAKE_CXXFLAGS += /std:c++17\r\n    }\r\n    else {\r\n        QMAKE_CXXFLAGS += -std=c++17\r\n    }\r\n}\r\nelse {\r\n    CONFIG += c++17\r\n}\r\n\r\nTARGET = DistributedTemperatureControlSystem\r\nTEMPLATE = app\r\n\r\n# The following define makes your compiler emit warnings if you use\r\n# any feature of Qt which as been marked as deprecated (the exact warnings\r\n# depend on your compiler). Please consult the documentation of the\r\n# deprecated API in order to know how to port your code away from it.\r\nDEFINES += QT_DEPRECATED_WARNINGS\r\n\r\n# You can also make your code fail to compile if you use deprecated APIs.\r\n# In order to do so, uncomment the following line.\r\n# You can also select to disable deprecated APIs only up to a certain version of Qt.\r\n#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0\r\n\r\n\r\nSOURCES += \\\r\n        main.cpp \\\r\n    managerlogincontroller.cpp \\\r\n    managerloginwidget.cpp \\\r\n    standbywidget.cpp \\\r\n    managercontrolpanel.cpp \\\r\n    manager.cpp \\\r\n    powersupplywidget.cpp \\\r\n    operationconfirmationdialog.cpp\r\n\r\nHEADERS += \\\r\n    managerlogincontroller.h \\\r\n    managerloginwidget.h \\\r\n    standbywidget.h \\\r\n    managercontrolpanel.h \\\r\n    manager.h \\\r\n    powersupplywidget.h \\\r\n    operationconfirmationdialog.h\r\n\r\nFORMS += \\\r\n    managerloginwidget.ui \\\r\n    standbywidget.ui \\\r\n    managercontrolpanel.ui \\\r\n    powersupplywidget.ui \\\r\n    operationconfirmationdialog.ui\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- Master/Master.pro	(revision b3f046e205734e965e35d3ad7e7ae77362583357)
++++ Master/Master.pro	(date 1591965239774)
+@@ -4,8 +4,8 @@
+ #
+ #-------------------------------------------------
+ 
+-QT       += core gui network sql
+-
++QT += core gui network sql
++QMAKE_CFLAGS += -std=c99
+ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+ 
+ lessThan(QT_MINOR_VERSION, 12) {
+@@ -43,7 +43,8 @@
+     managercontrolpanel.cpp \
+     manager.cpp \
+     powersupplywidget.cpp \
+-    operationconfirmationdialog.cpp
++    operationconfirmationdialog.cpp \
++    parametercontroller.cpp
+ 
+ HEADERS += \
+     managerlogincontroller.h \
+@@ -52,7 +53,9 @@
+     managercontrolpanel.h \
+     manager.h \
+     powersupplywidget.h \
+-    operationconfirmationdialog.h
++    operationconfirmationdialog.h \
++    parametercontroller.h \
++    parametercontroller.h
+ 
+ FORMS += \
+     managerloginwidget.ui \
+diff --git Slave/user.cpp Slave/user.cpp
+diff --git Slave/user.h Slave/user.h
