@@ -33,12 +33,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c879fa30-8bae-46fc-8c38-ccaa639e5a28" name="Default Changelist" comment="add setModeRequest">
-      <change afterPath="$PROJECT_DIR$/Master/requestcontroller.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Master/requestcontroller.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Master/Master.pro" beforeDir="false" afterPath="$PROJECT_DIR$/Master/Master.pro" afterDir="false" />
-    </list>
+    <list default="true" id="c879fa30-8bae-46fc-8c38-ccaa639e5a28" name="Default Changelist" comment="add requestcontroller" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -104,7 +99,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592041554304</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="add requestcontroller">
+      <created>1592043557217</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1592043557217</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -126,7 +128,8 @@
     <MESSAGE value="new version update" />
     <MESSAGE value="merge from master" />
     <MESSAGE value="add setModeRequest" />
-    <option name="LAST_COMMIT_MESSAGE" value="add setModeRequest" />
+    <MESSAGE value="add requestcontroller" />
+    <option name="LAST_COMMIT_MESSAGE" value="add requestcontroller" />
   </component>
   <component name="WindowStateProjectService">
     <state x="119" y="193" key="FileChooserDialogImpl" timestamp="1592034189098">
