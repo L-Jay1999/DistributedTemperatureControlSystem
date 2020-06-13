@@ -107,6 +107,15 @@ namespace Config {
         WIND_SCHEDULE,
     };
 
+    enum class MasterControllerType
+    {
+        LOGIN = 0,
+        SET_SPEED,
+        SET_TEMP,
+        SHUTDOWN,
+        WIND_REQUEST
+    };
+
     /**
      * @brief 获取 Listener 监听的端口
      * 线程安全
@@ -181,6 +190,10 @@ namespace Config {
     void setSlaveControllerPointer(SlaveControllerType type, QObject *controller);
 
     QObject *getSlaveControllerPointer(SlaveControllerType ctrller_type);
+
+    void setMasterControllerPointer(MasterControllerType type, QObject *controller);
+
+    QObject *getMasterControllerPointer(MasterControllerType ctrller_type);
 
     void setTimeOutMsec(int timeout_ms);
 
