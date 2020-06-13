@@ -33,9 +33,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c879fa30-8bae-46fc-8c38-ccaa639e5a28" name="Default Changelist" comment="merge from master">
-      <change beforePath="$PROJECT_DIR$/Master/monitorwidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/monitorwidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Master/parameterwidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/parameterwidget.cpp" afterDir="false" />
+    <list default="true" id="c879fa30-8bae-46fc-8c38-ccaa639e5a28" name="Default Changelist" comment="add setModeRequest">
+      <change afterPath="$PROJECT_DIR$/Master/requestcontroller.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Master/requestcontroller.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Master/Master.pro" beforeDir="false" afterPath="$PROJECT_DIR$/Master/Master.pro" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +97,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592038718098</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add setModeRequest">
+      <created>1592041554304</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1592041554304</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -116,7 +125,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="new version update" />
     <MESSAGE value="merge from master" />
-    <option name="LAST_COMMIT_MESSAGE" value="merge from master" />
+    <MESSAGE value="add setModeRequest" />
+    <option name="LAST_COMMIT_MESSAGE" value="add setModeRequest" />
   </component>
   <component name="WindowStateProjectService">
     <state x="119" y="193" key="FileChooserDialogImpl" timestamp="1592034189098">
