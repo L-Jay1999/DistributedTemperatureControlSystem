@@ -93,10 +93,10 @@ void SlaveControlWindow::ModeDisplay()
 void SlaveControlWindow::WindDisplay()
 {
     if(_is_wind){
-        _wind_text->setText("送风中");
+        _wind_text->setText("Winding");
     }
     else{
-        _wind_text->setText("暂停工作");
+        _wind_text->setText("Stop work");
     }
 
 }

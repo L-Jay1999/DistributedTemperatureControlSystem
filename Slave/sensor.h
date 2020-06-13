@@ -1,11 +1,10 @@
 #ifndef SENSOR_H
 #define SENSOR_H
 
-#include "common.h"
-
 #include <QObject>
 #include <QTimer>
 #include <QDateTime>
+#include "../CommonLib/common.h"
 
 class Sensor : public QObject
 {

@@ -1,7 +1,6 @@
 ﻿#ifndef MONITORWIDGET_H
 #define MONITORWIDGET_H
 
-
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QPushButton>
@@ -10,6 +9,7 @@
 #include <QTreeView>
 #include <QTableView>
 #include <QHeaderView>
+//#include "../Slave/sensor.h"
 
 namespace Ui {
 class MonitorWidget;
@@ -26,7 +26,7 @@ public:
 
 private:
     Ui::MonitorWidget *ui;
-
+//    Sensor sensor;
     QPushButton *testBtn;
     QPushButton *m_PushButton;
     QVBoxLayout *mainLayout;
