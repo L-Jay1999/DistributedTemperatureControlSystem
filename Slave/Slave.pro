@@ -27,7 +27,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    startupwindow.cpp \
     useandcostcontroller.cpp \
     userlogindialog.cpp \
     slavecontrolwindow.cpp \
@@ -43,7 +42,6 @@ SOURCES += \
     sensor.cpp
 
 HEADERS += \
-    startupwindow.h \
     useandcostcontroller.h \
     userlogindialog.h \
     slavecontrolwindow.h \
@@ -60,7 +58,6 @@ HEADERS += \
 
 
 FORMS += \
-    startupwindow.ui \
     userlogindialog.ui \
     slavecontrolwindow.ui
 

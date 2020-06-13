@@ -15,6 +15,8 @@
 #include "useandcostcontroller.h"
 #include "windcontroller.h"
 #include "modealtercontroller.h"
+#include "startupwindow.h"
+#include "userlogindialog.h"
 #include "../CommonLib/common.h"
 
 namespace Ui {
@@ -51,7 +53,7 @@ private:
     Ui::SlaveControlWindow *ui;
     User *_user;
     Sensor *_sensor;
-//    QTimer *_timer;
+    QTimer *_timer;
     UseAndCostController *_useandcostcontroller;
     ModeAlterController *_modealtercontroller;
 
@@ -72,9 +74,8 @@ private:
     bool _is_open{false};
     bool _is_wind{false};
 
-    double _upperbound;
-    double _lowerbound;
-//    const int _interval[3] = {25000, 20000, 15000};
+    double _upperbound = 25.0;
+    double _lowerbound = 18.0;
 
     int WindSpeed(SpeedLevel speedlevel);
     SpeedLevel WindSpeed(int speedlevel);
@@ -82,9 +83,8 @@ private:
     void WindDisplay();
     void UpdateBound();
     void ShutDownDisplays();
-
-//    void SetInterval();
     void ShutDown();
+    bool SendWind();
 
 };
 
