@@ -1,6 +1,6 @@
-#include "schedule.h"
+//#include "schedule.h"
 
-Schedule::Schedule(QObject *parent) : QObject(parent)
-{
+//Schedule::Schedule(QObject *parent) : QObject(parent)
+//{
 
-}
+//}

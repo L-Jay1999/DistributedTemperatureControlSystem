@@ -4,6 +4,9 @@
 #include <tuple>
 #include <QString>
 #include <QDateTime>
+
+#include "../CommonLib/dbaccess.h"
+
 class UserInfoController
 {
 public:
@@ -12,6 +15,7 @@ public:
     std::tuple<bool,QString> DeleteUser(const QString &RoomID, const QString &UserID);
     QString GetUser();
 private:
+    DBAccess dba{};
 };
 
 #endif // USERINFOCONTROLLER_H

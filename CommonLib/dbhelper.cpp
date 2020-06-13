@@ -25,7 +25,7 @@ namespace DBHelper
 
     QString getCreateSQL(const QString &table_name, const std::vector<ColPayload> &col_infos)
     {
-        QString sql = "create table";
+        QString sql = "create table ";
         sql.append(table_name)
                 .append('(');
         bool has_primary_key = false;
@@ -48,26 +48,31 @@ namespace DBHelper
         }
 
         if (has_primary_key)
+        {
             primary_keys.back() = ')';
+            sql.append(primary_keys + ",");
+        }
 
-        sql.append(primary_keys + ",");
         sql.back() = ')';
         return sql;
     }
 
-    QSqlError ExecSQLs(const std::vector<QString> &query_sqls)
+    QSqlError ExecSQLs(const std::vector<QString> &query_sqls, const QString &connection_name)
     {
-        QSqlDatabase::database().transaction();
-        QSqlQuery q;
+        QSqlDatabase db = QSqlDatabase::database(connection_name);
+        qDebug() << db.isOpen();
+        db.transaction();
+        QSqlQuery q(db);
         for (const auto &sql : query_sqls)
         {
+            qDebug() << sql;
             if (!q.exec(sql))
             {
-                QSqlDatabase::database().rollback();
+                db.rollback();
                 return q.lastError();
             }
         }
-        QSqlDatabase::database().commit();
+        db.commit();
         return q.lastError();
     }
 

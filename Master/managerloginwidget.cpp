@@ -20,24 +20,24 @@ ManagerLoginWidget::~ManagerLoginWidget()
 {
     delete ui;
 }
-void ManagerLoginWidget::Login()
+std::tuple<bool,QString> ManagerLoginWidget::Login()
 {
-    mlc = new ManagerLoginController(ui->lineEdit_account->text(),ui->lineEdit_password->text());//生成一个登陆控制器
-    login_res = mlc->ManagerLogin();//发送认证请求
-    delete mlc;
+    auto mlc = ManagerLoginController(ui->lineEdit_account->text(),ui->lineEdit_password->text());//生成一个登陆控制器
+    return mlc.ManagerLogin();//发送认证请求
 }
 
 void ManagerLoginWidget::confirm()
 {
-    Login();
-    if(std::get<0>(login_res) == true)//认证成功
+    auto [login_res, err_info] = Login();
+    if(login_res)//认证成功
     {
-        emit certified_signal();
+        emit certified_signal(ui->lineEdit_account->text());
         this->close();
-    }else//认证失败
+    }
+    else//认证失败
     {
         ui->lineEdit_password->clear();//清空密码输入框
-        ui->label_error->setText(std::get<1>(login_res));//错误提示信息
+        ui->label_error->setText(err_info);//错误提示信息
     }
 }
 

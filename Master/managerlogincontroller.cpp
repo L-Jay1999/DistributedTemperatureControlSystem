@@ -3,18 +3,23 @@
 
 std::tuple<bool, QString> ManagerLoginController::ManagerLogin()
 {
-    if(CheckArgs()){
-        //bool result = db.hasManager(_Account,_Password);
-        bool result = true;
-        if(result){
-            return (std::tuple<bool,QString>){true, "Succeed"};
+    return {true, {}};
+
+    if (CheckArgs())
+    {
+        bool result = db.hasManager(_Account,_Password);
+        if (result)
+        {
+            return {true, "登录成功"};
         }
-        else{
-            return (std::tuple<bool,QString>){false, "Incorrect password or account doesn't exist."};
+        else
+        {
+            return {false, "账户不存在或密码错误"};
         }
     }
-    else{
-        return (std::tuple<bool,QString>){false, "Input format error."};
+    else
+    {
+        return {false, "输入格式有误"};
     }
 }
 

@@ -24,7 +24,7 @@ private:
 private slots:
     void switch_to_login();//切换到认证界面
     void reshow();//认证失败，切回等待界面
-    void switch_to_panel();//认证成功，切换到控制面板
+    void switch_to_panel(const QString &manager_account);//认证成功，切换到控制面板
 signals:
 };
 #endif // STANDBYWIDGET_H
