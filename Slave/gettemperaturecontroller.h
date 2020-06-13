@@ -3,6 +3,7 @@
 
 #include <QObject>
 
+#include "common.h"
 #include "sensor.h"
 
 class GetTemperatureController : public QObject

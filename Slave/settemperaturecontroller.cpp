@@ -3,6 +3,10 @@
 bool SetTemperatureController::Set()
 {
     SetTemperatureRequest settemperaturerequest(_RoomID, _degree);
-    bool result = settemperaturerequest.Send();
+    auto [error, result] = settemperaturerequest.Send();
+    if(!result){
+        qDebug() << "settemperaturecontroller error:";
+        qDebug() << error.err_str;
+    }
     return result;
 }

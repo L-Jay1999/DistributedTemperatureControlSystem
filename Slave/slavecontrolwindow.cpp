@@ -126,19 +126,18 @@ void SlaveControlWindow::setUser(User *value)
     _usage = _user->getUsage();
     _cost = _user->getCost();
     _useandcostcontroller = new UseAndCostController(this, _user);
-//    Config::setSlaveControllerPointer(Config::SlaveControllerType::USE_COST, _useandcostcontroller);
-//    connect(_useandcostcontroller, SIGNAL(UseandCostChanged()), this, SLOT(GetUseandCost()));
 }
 
 void SlaveControlWindow::on_shutdownbtn_clicked()
 {
     if (_is_open)
     {
-//        ShutDownController shut_down(_user->getRoomID());
-//        if (!shut_down.ShutDown())
-//        {
-//            // TODO handle connection fails
-//        }
+        ShutDownController shut_down(_user->getRoomID());
+        if (!shut_down.ShutDown())
+        {
+            // TODO handle connection fails
+            qDebug() << "shut down fail!";
+        }
         _timer->stop();
         ShutDownDisplays();
         _wind_text->clear();
@@ -187,20 +186,21 @@ void SlaveControlWindow::on_windspeedbtn_clicked()
     else{
         _windspeed += 1;
     }
-//    SetSpeedController setspeedcontroller(_user->getRoomID(), WindSpeed(_windspeed));
-//    if(setspeedcontroller.Set()){
-//        _windspeed_lcd->display(_windspeed);
-//    }
-//    else{
-//        if(_windspeed == 1){
-//            _windspeed = 3;
-//        }
-//        else{
-//            _windspeed -= 1;
-//        }
-//    }
-    _windspeed_lcd->display(_windspeed);
-    _sensor->setWindSpeed(WindSpeed(_windspeed));
+    SetSpeedController setspeedcontroller(_user->getRoomID(), WindSpeed(_windspeed));
+    if(setspeedcontroller.Set()){
+        _windspeed_lcd->display(_windspeed);
+        _sensor->setWindSpeed(WindSpeed(_windspeed));
+    }
+    else{
+        if(_windspeed == 1){
+            _windspeed = 3;
+        }
+        else{
+            _windspeed -= 1;
+        }
+    }
+//    _windspeed_lcd->display(_windspeed);
+//    _sensor->setWindSpeed(WindSpeed(_windspeed));
 }
 
 void SlaveControlWindow::on_uptemperaturebtn_clicked()
@@ -211,16 +211,18 @@ void SlaveControlWindow::on_uptemperaturebtn_clicked()
     if(_temperature >= _upperbound)
         return;
     _temperature += 1.0;
-//    SetTemperatureController settemperaturecontroller(_user->getRoomID(), _temperature);
-//    if(settemperaturecontroller.Set()){
-//        _temperature_lcd->display(_temperature);
-//    }
-//    else{
-//        _temperature -= 1.0;
-//    }
-    _temperature_lcd->display(_temperature);
-    _sensor->setTargetDegreeWithoutUpdate(_temperature);
-    SendWind();
+    SetTemperatureController settemperaturecontroller(_user->getRoomID(), _temperature);
+    if(settemperaturecontroller.Set()){
+        _temperature_lcd->display(_temperature);
+        _sensor->setTargetDegreeWithoutUpdate(_temperature);
+        SendWind();
+    }
+    else{
+        _temperature -= 1.0;
+    }
+//    _temperature_lcd->display(_temperature);
+//    _sensor->setTargetDegreeWithoutUpdate(_temperature);
+//    SendWind();
 }
 
 void SlaveControlWindow::on_downtemperaturebtn_clicked()
@@ -231,16 +233,18 @@ void SlaveControlWindow::on_downtemperaturebtn_clicked()
     if(_temperature <= _lowerbound)
         return;
     _temperature -= 1.0;
-//    SetTemperatureController settemperaturecontroller(_user->getRoomID(), _temperature);
-//    if(settemperaturecontroller.Set()){
-//        _temperature_lcd->display(_temperature);
-//    }
-//    else{
-//        _temperature += 1.0;
-//    }
-    _temperature_lcd->display(_temperature);
-    _sensor->setTargetDegreeWithoutUpdate(_temperature);
-    SendWind();
+    SetTemperatureController settemperaturecontroller(_user->getRoomID(), _temperature);
+    if(settemperaturecontroller.Set()){
+        _temperature_lcd->display(_temperature);
+        _sensor->setTargetDegreeWithoutUpdate(_temperature);
+        SendWind();
+    }
+    else{
+        _temperature += 1.0;
+    }
+//    _temperature_lcd->display(_temperature);
+//    _sensor->setTargetDegreeWithoutUpdate(_temperature);
+//    SendWind();
 }
 
 void SlaveControlWindow::GetRoomTemperature()
@@ -292,9 +296,9 @@ bool SlaveControlWindow::SendWind()
     }
 
     if(std::abs(_temperature - _roomtemperature) >= 1.0){
-//        WindController windcontroller(true, _user->getRoomID());
-//        bool result = windcontroller.Send();
-        bool result = true;
+        WindController windcontroller(true, _user->getRoomID());
+        bool result = windcontroller.Send();
+//        bool result = true;
         if(result){
             _is_wind = true;
         }
@@ -312,9 +316,9 @@ bool SlaveControlWindow::SendWind()
 void SlaveControlWindow::reachTargetDegree()
 {
     // TODO 停止送风请求
-//    WindController windcontroller(false, _user->getRoomID());
-//    bool result = windcontroller.Send();
-    bool result = true;
+    WindController windcontroller(false, _user->getRoomID());
+    bool result = windcontroller.Send();
+//    bool result = true;
     if(result){
         _is_wind = false;
     }
@@ -326,9 +330,9 @@ void SlaveControlWindow::higherThanTargetDegreePlusOne()
 {
     if (_is_open)
     {
-        // WindController windcontroller(true, _user->getRoomID());
-        // bool result = windcontroller.Send();
-        bool result = true;
+        WindController windcontroller(true, _user->getRoomID());
+        bool result = windcontroller.Send();
+//        bool result = true;
         if (result)
         {
             _sensor->setIsWindWithoutUpdate(true);
@@ -338,6 +342,7 @@ void SlaveControlWindow::higherThanTargetDegreePlusOne()
         else
         {
             // TODO handle false condition
+            qDebug() << "higherThanTargetDegreePlusOne error!";
         }
     }
 }
@@ -347,6 +352,18 @@ void SlaveControlWindow::SetLoginUser(const QString &room_id, const QString &use
     setUser(new User(room_id, user_id));
     _mode = mode;
     _temperature = init_temp;
+}
+
+void SlaveControlWindow::WindControlFromM(bool is_in_queue)
+{
+    if(is_in_queue){
+        _is_wind = true;
+    }
+    else{
+        _is_wind = true;
+    }
+    _sensor->setIsWindWithoutUpdate(_is_wind);
+    WindDisplay();
 }
 
 void SlaveControlWindow::GetUseandCost()

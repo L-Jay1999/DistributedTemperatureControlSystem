@@ -1,6 +1,9 @@
 #ifndef SETSPEEDCONTROLLER_H
 #define SETSPEEDCONTROLLER_H
+
 #include <QString>
+#include <tuple>
+#include <QDebug>
 
 #include "common.h"
 #include "requests.h"

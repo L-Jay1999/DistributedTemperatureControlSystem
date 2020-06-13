@@ -3,6 +3,10 @@
 bool SetSpeedController::Set()
 {
     SetSpeedRequest setspeedrequest(_RoomID, _level);
-    bool result = setspeedrequest.Send();
+    auto [error, result] = setspeedrequest.Send();
+    if(!result){
+        qDebug() << "setspeedcontroller error:";
+        qDebug() << error.err_str;
+    }
     return result;
 }

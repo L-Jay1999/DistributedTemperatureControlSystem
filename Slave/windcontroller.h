@@ -2,8 +2,11 @@
 #define WINDCONTROLLER_H
 
 #include <QString>
+#include <tuple>
+#include <QDebug>
 
 #include "requests.h"
+#include "common.h"
 
 class WindController
 {

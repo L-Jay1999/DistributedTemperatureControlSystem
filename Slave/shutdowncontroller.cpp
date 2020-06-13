@@ -3,6 +3,10 @@
 bool ShutDownController::ShutDown()
 {
     ShutDownRequest shutdownrequest(_RoomID);
-    bool result = shutdownrequest.Send();
+    auto [error, result] = shutdownrequest.Send();
+    if(!result){
+        qDebug() << "shutdowncontroller error:";
+        qDebug() << error.err_str;
+    }
     return result;
 }

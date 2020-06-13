@@ -49,6 +49,7 @@ public slots:
     void reachTargetDegree();
     void higherThanTargetDegreePlusOne();
     void SetLoginUser(const QString &room_id, const QString &_id, WorkingMode mode, double init_temp);
+    void WindControlFromM(bool is_in_queue);
 
 private:
     Ui::SlaveControlWindow *ui;

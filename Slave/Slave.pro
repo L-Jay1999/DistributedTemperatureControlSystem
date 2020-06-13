@@ -38,7 +38,8 @@ SOURCES += \
     windcontroller.cpp \
     shutdowncontroller.cpp \
     user.cpp \
-    sensor.cpp
+    sensor.cpp \
+    windcontrollerfromm.cpp
 
 HEADERS += \
     useandcostcontroller.h \
@@ -52,7 +53,8 @@ HEADERS += \
     windcontroller.h \
     shutdowncontroller.h \
     user.h \
-    sensor.h
+    sensor.h \
+    windcontrollerfromm.h
 
 
 FORMS += \

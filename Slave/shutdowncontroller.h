@@ -1,6 +1,9 @@
 #ifndef SHUTDOWNCONTROLLER_H
 #define SHUTDOWNCONTROLLER_H
+
 #include <QString>
+#include <tuple>
+#include <QDebug>
 
 #include "requests.h"
 

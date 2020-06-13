@@ -5,6 +5,7 @@
 #include <QLineEdit>
 #include <QWidget>
 #include <QMessageBox>
+#include <tuple>
 
 #include "logincontroller.h"
 #include "user.h"

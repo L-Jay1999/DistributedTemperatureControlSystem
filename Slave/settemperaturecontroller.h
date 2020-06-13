@@ -1,6 +1,9 @@
 #ifndef SETTEMPERATURECONTROLLER_H
 #define SETTEMPERATURECONTROLLER_H
+
 #include <QString>
+#include <tuple>
+#include <QDebug>
 
 #include "requests.h"
 

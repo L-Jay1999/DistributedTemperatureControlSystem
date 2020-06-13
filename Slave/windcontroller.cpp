@@ -3,6 +3,10 @@
 bool WindController::Send()
 {
     WindRequest windrequest(_RoomID, _open);
-    bool result = windrequest.Send();
+    auto [error, result] = windrequest.Send();
+    if(!result){
+        qDebug() << "windcontroller error:";
+        qDebug() << error.err_str;
+    }
     return result;
 }
