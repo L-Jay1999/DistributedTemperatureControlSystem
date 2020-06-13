@@ -16,11 +16,13 @@ namespace Config
     static std::map<SlaveControllerType, QObject *> slave_ctrller_ptr{};
     static constexpr auto kMasterDBPath = "./master.db";
     static constexpr auto kSlaveDBPath = "./slave.db";
+    static int timeout_msec = 4000;
     // 确保线程安全
     static std::shared_mutex slave_port_rw_mutex;
     static std::shared_mutex roomid_to_addr_rw_mutex;
     static std::shared_mutex user_type_rw_mutex;
     static std::shared_mutex slave_ctrller_ptr_rw_mutex;
+    static std::shared_mutex timeout_ms_rw_mutex;
 
     quint16 getSlaveListenerPortValue()
     {
@@ -90,7 +92,8 @@ namespace Config
     void setSlaveControllerPointer(SlaveControllerType type, QObject *controller)
     {
         std::unique_lock lock(slave_ctrller_ptr_rw_mutex);
-        slave_ctrller_ptr.at(type) = controller;
+        // slave_ctrller_ptr.at(type) = controller;
+        slave_ctrller_ptr[type] = controller;
     }
 
     QObject *getSlaveControllerPointer(SlaveControllerType ctrller_type)
@@ -100,5 +103,17 @@ namespace Config
                 i != slave_ctrller_ptr.end())
             return (*i).second;
         return nullptr;
+    }
+
+    void setTimeOutMsec(int timeout_ms)
+    {
+        std::unique_lock lock(timeout_ms_rw_mutex);
+        timeout_msec = timeout_ms;
+    }
+
+    int getTimeOutMSec()
+    {
+        std::shared_lock lock(timeout_ms_rw_mutex);
+        return timeout_msec;
     }
 } // namespace Config
