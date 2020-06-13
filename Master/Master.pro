@@ -43,7 +43,9 @@ SOURCES += \
     managercontrolpanel.cpp \
     manager.cpp \
     powersupplywidget.cpp \
-    operationconfirmationdialog.cpp
+    operationconfirmationdialog.cpp \
+    usermanagementwidget.cpp \
+    promptdialog.cpp
 
 HEADERS += \
     managerlogincontroller.h \
@@ -52,11 +54,15 @@ HEADERS += \
     managercontrolpanel.h \
     manager.h \
     powersupplywidget.h \
-    operationconfirmationdialog.h
+    operationconfirmationdialog.h \
+    usermanagementwidget.h \
+    promptdialog.h
 
 FORMS += \
     managerloginwidget.ui \
     standbywidget.ui \
     managercontrolpanel.ui \
     powersupplywidget.ui \
-    operationconfirmationdialog.ui
+    operationconfirmationdialog.ui \
+    usermanagementwidget.ui \
+    promptdialog.ui

@@ -19,35 +19,28 @@
      <x>30</x>
      <y>30</y>
      <width>251</width>
-     <height>171</height>
+     <height>241</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="4" column="1">
-     <widget class="QPushButton" name="pushButton_monitor">
+    <item row="6" column="0">
+     <widget class="QPushButton" name="pushButton_user">
       <property name="text">
-       <string>监控信息</string>
+       <string>用户管理</string>
       </property>
      </widget>
     </item>
-    <item row="3" column="1">
-     <widget class="QPushButton" name="pushButton_parameter">
-      <property name="text">
-       <string>参数设置</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0">
+    <item row="5" column="0">
      <widget class="QPushButton" name="pushButton_log">
       <property name="text">
        <string>运行日志</string>
       </property>
      </widget>
     </item>
-    <item row="3" column="0">
-     <widget class="QPushButton" name="pushButton_power">
+    <item row="5" column="1">
+     <widget class="QPushButton" name="pushButton_monitor">
       <property name="text">
-       <string>电源控制</string>
+       <string>监控信息</string>
       </property>
      </widget>
     </item>
@@ -58,10 +51,10 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label">
+    <item row="4" column="1">
+     <widget class="QPushButton" name="pushButton_parameter">
       <property name="text">
-       <string>电源状态：</string>
+       <string>参数设置</string>
       </property>
      </widget>
     </item>
@@ -72,20 +65,63 @@
       </property>
      </widget>
     </item>
+    <item row="4" column="0">
+     <widget class="QPushButton" name="pushButton_power">
+      <property name="text">
+       <string>电源控制</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>电源状态：</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QPushButton" name="pushButton_logout">
+      <property name="text">
+       <string>管理员登出</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLabel" name="label_manager">
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="label_power">
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLabel" name="label_mode">
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string>刷新频率：</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLabel" name="label_rate">
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+     </widget>
+    </item>
    </layout>
-  </widget>
-  <widget class="QPushButton" name="pushButton_logout">
-   <property name="geometry">
-    <rect>
-     <x>100</x>
-     <y>230</y>
-     <width>93</width>
-     <height>28</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>管理员登出</string>
-   </property>
   </widget>
  </widget>
  <resources/>
