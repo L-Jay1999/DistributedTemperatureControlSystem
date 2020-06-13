@@ -17,8 +17,8 @@ public:
 private:
     QString _RoomID;
     QString _UserID;
-    double _usage = 1.0;
-    double _cost = 1.0;
+    double _usage{};
+    double _cost{};
 };
 
 #endif // USER_H

@@ -22,3 +22,4 @@ QString getRandomString(int length)
         res.append(getRandomInt(static_cast<int>('a'), static_cast<int>('z')));
     return res;
 }
+

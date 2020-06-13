@@ -2,8 +2,8 @@
 #define SETSPEEDCONTROLLER_H
 #include <QString>
 
-#include "../CommonLib/common.h"
-#include "../CommonLib/requests.h"
+#include "common.h"
+#include "requests.h"
 
 class SetSpeedController
 {
