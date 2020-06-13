@@ -1,6 +1,5 @@
 ﻿#ifndef PARAMETERWIDGET_H
 #define PARAMETERWIDGET_H
-
 #include <QWidget>
 #include<QDebug>
 
@@ -17,6 +16,7 @@ public:
     ~ParameterWidget();
     int getTemperature();
     QString getMode();
+//    WorkingMode _mode;
 
 private:
     Ui::ParameterWidget *ui;
