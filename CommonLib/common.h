@@ -103,7 +103,8 @@ namespace Config {
         USE_COST = 0,
         MODE_ALTER,
         GET_TEMPERATURE,
-        FORCE_SHUTDOWN
+        FORCE_SHUTDOWN,
+        WIND_SCHEDULE,
     };
 
     /**
