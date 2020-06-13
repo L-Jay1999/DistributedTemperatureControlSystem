@@ -127,6 +127,7 @@ void Sensor::UpdateTemperature()
                 _current_degree -= degree_diff;
         }
     }
+    _last_update_time = now;
 }
 
 void Sensor::TimerUp()
