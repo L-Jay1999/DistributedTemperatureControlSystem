@@ -63,21 +63,21 @@ protected:
         QByteArray send_data = payload.toBase64ByteArray();
         RequestSendReturnPack res;
         socket.connectToHost(payload.target_host, payload.target_port);
-        if (!socket.waitForConnected())
+        if (!socket.waitForConnected(Config::getTimeOutMSec()))
         {
             qDebug() << socket.errorString();
             res.err.setConnectionError(socket.errorString(), socket.error());
             return res;
         }
         socket.write(send_data);
-        if (!socket.waitForBytesWritten())
+        if (!socket.waitForBytesWritten(Config::getTimeOutMSec()))
         {
             qDebug() << socket.errorString();
             res.err.setConnectionError(socket.errorString(), socket.error());
             return res;
         }
 
-        if (!socket.waitForReadyRead())
+        if (!socket.waitForReadyRead(Config::getTimeOutMSec()))
         {
             qDebug() << socket.errorString();
             res.err.setConnectionError(socket.errorString(), socket.error());
