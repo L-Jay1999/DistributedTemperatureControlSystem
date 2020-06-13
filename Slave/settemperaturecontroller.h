@@ -4,19 +4,25 @@
 #include <QString>
 #include <tuple>
 #include <QDebug>
+#include <QObject>
 
 #include "requests.h"
 
-class SetTemperatureController
+class SetTemperatureController : public QObject
 {
+    Q_OBJECT
+
 public:
     SetTemperatureController() = delete;
-    SetTemperatureController(const QString &RoomID, const double degree) : _RoomID(RoomID), _degree(degree) {}
+    explicit SetTemperatureController(QObject *parent = nullptr, const QString &RoomID = "", const double degree = 25.0);
     bool Set();
 
 private:
     QString _RoomID;
     double _degree;
+
+signals:
+    void AddTextTemp(QString s);
 };
 
 #endif // SETTEMPERATURECONTROLLER_H

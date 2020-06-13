@@ -6,6 +6,7 @@ SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
     ui(new Ui::SlaveControlWindow)
 {
     ui->setupUi(this);
+    this->setWindowTitle("从控机");
     _temperature_lcd = ui->_temperature_lcd;
     _roomtemperature_lcd = ui->_roomtemperature_lcd;
     _cost_lcd = ui->_cost_lcd;
@@ -13,6 +14,7 @@ SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
     _usage_lcd = ui->_usage_lcd;
     _mode_text = ui->_mode_text;
     _wind_text = ui->_wind;
+    _textbrowser = ui->textBrowser;
 
     _wind_text->clear();
     ShutDownDisplays();
@@ -118,6 +120,8 @@ void SlaveControlWindow::ShutDownDisplays()
     _roomtemperature_lcd->display(88.88);
     _usage_lcd->display(88.88);
     _cost_lcd->display(88.88);
+    _wind_text->clear();
+    _textbrowser->clear();
 }
 
 void SlaveControlWindow::setUser(User *value)
@@ -132,7 +136,7 @@ void SlaveControlWindow::on_shutdownbtn_clicked()
 {
     if (_is_open)
     {
-        ShutDownController shut_down(_user->getRoomID());
+        ShutDownController shut_down(this, _user->getRoomID());
         if (!shut_down.ShutDown())
         {
             // TODO handle connection fails
@@ -140,7 +144,6 @@ void SlaveControlWindow::on_shutdownbtn_clicked()
         }
         _timer->stop();
         ShutDownDisplays();
-        _wind_text->clear();
         _is_open = false;
         _sensor->setIsWind(false);
     }
@@ -186,7 +189,7 @@ void SlaveControlWindow::on_windspeedbtn_clicked()
     else{
         _windspeed += 1;
     }
-    SetSpeedController setspeedcontroller(_user->getRoomID(), WindSpeed(_windspeed));
+    SetSpeedController setspeedcontroller(this, _user->getRoomID(), WindSpeed(_windspeed));
     if(setspeedcontroller.Set()){
         _windspeed_lcd->display(_windspeed);
         _sensor->setWindSpeed(WindSpeed(_windspeed));
@@ -211,7 +214,7 @@ void SlaveControlWindow::on_uptemperaturebtn_clicked()
     if(_temperature >= _upperbound)
         return;
     _temperature += 1.0;
-    SetTemperatureController settemperaturecontroller(_user->getRoomID(), _temperature);
+    SetTemperatureController settemperaturecontroller(this, _user->getRoomID(), _temperature);
     if(settemperaturecontroller.Set()){
         _temperature_lcd->display(_temperature);
         _sensor->setTargetDegreeWithoutUpdate(_temperature);
@@ -233,7 +236,7 @@ void SlaveControlWindow::on_downtemperaturebtn_clicked()
     if(_temperature <= _lowerbound)
         return;
     _temperature -= 1.0;
-    SetTemperatureController settemperaturecontroller(_user->getRoomID(), _temperature);
+    SetTemperatureController settemperaturecontroller(this, _user->getRoomID(), _temperature);
     if(settemperaturecontroller.Set()){
         _temperature_lcd->display(_temperature);
         _sensor->setTargetDegreeWithoutUpdate(_temperature);
@@ -287,16 +290,18 @@ bool SlaveControlWindow::SendWind()
     qDebug() << "SendWind Function" << _temperature << _roomtemperature;
 
     if(_temperature < _roomtemperature && _mode == WorkingMode::HOT){
+        TextAppend("加热状态温度小于室温，阻止送风");
         qDebug() << "SendWind Fail!";
         return false;
     }
     else if(_temperature > _roomtemperature && _mode == WorkingMode::COLD){
+        TextAppend("制冷状态温度高于室温，阻止送风");
         qDebug() << "SendWind Fail!";
         return false;
     }
 
     if(std::abs(_temperature - _roomtemperature) >= 1.0){
-        WindController windcontroller(true, _user->getRoomID());
+        WindController windcontroller(this, true, _user->getRoomID());
         bool result = windcontroller.Send();
 //        bool result = true;
         if(result){
@@ -316,7 +321,7 @@ bool SlaveControlWindow::SendWind()
 void SlaveControlWindow::reachTargetDegree()
 {
     // TODO 停止送风请求
-    WindController windcontroller(false, _user->getRoomID());
+    WindController windcontroller(this, false, _user->getRoomID());
     bool result = windcontroller.Send();
 //    bool result = true;
     if(result){
@@ -330,7 +335,7 @@ void SlaveControlWindow::higherThanTargetDegreePlusOne()
 {
     if (_is_open)
     {
-        WindController windcontroller(true, _user->getRoomID());
+        WindController windcontroller(this, true, _user->getRoomID());
         bool result = windcontroller.Send();
 //        bool result = true;
         if (result)
@@ -364,6 +369,11 @@ void SlaveControlWindow::WindControlFromM(bool is_in_queue)
     }
     _sensor->setIsWindWithoutUpdate(_is_wind);
     WindDisplay();
+}
+
+void SlaveControlWindow::TextAppend(QString s)
+{
+    _textbrowser->append(s);
 }
 
 void SlaveControlWindow::GetUseandCost()

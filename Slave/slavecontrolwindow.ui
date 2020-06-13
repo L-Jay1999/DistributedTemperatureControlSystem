@@ -153,7 +153,32 @@
     <item>
      <widget class="QWidget" name="widget_2" native="true">
       <layout class="QGridLayout" name="gridLayout_2">
+       <item row="0" column="0" rowspan="3">
+        <widget class="QTextBrowser" name="textBrowser">
+         <property name="font">
+          <font>
+           <family>微软雅黑</family>
+          </font>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="1">
+        <widget class="QLabel" name="label_6">
+         <property name="font">
+          <font>
+           <family>微软雅黑</family>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>温度</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
         <widget class="QPushButton" name="uptemperaturebtn">
          <property name="minimumSize">
           <size>
@@ -183,49 +208,7 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="0">
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>318</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="font">
-          <font>
-           <family>微软雅黑</family>
-           <pointsize>14</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>温度</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="2">
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>317</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="2">
+       <item row="0" column="3">
         <widget class="QPushButton" name="downtemperaturebtn">
          <property name="minimumSize">
           <size>
@@ -252,7 +235,7 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
+       <item row="1" column="1">
         <widget class="QLabel" name="label_7">
          <property name="font">
           <font>
@@ -268,26 +251,7 @@
          </property>
         </widget>
        </item>
-       <item row="4" column="1">
-        <widget class="QPushButton" name="shutdownbtn">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>微软雅黑</family>
-           <pointsize>14</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>开/关</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
+       <item row="1" column="2">
         <widget class="QPushButton" name="windspeedbtn">
          <property name="minimumSize">
           <size>
@@ -311,6 +275,25 @@
          </property>
          <property name="text">
           <string>switch</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QPushButton" name="shutdownbtn">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>微软雅黑</family>
+           <pointsize>14</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>开/关</string>
          </property>
         </widget>
        </item>
