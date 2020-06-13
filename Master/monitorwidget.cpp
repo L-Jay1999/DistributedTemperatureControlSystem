@@ -24,11 +24,11 @@ void MonitorWidget::createView()
         standItemModel->setHeaderData(3,Qt::Horizontal,QStringLiteral("送风状态"));
         standItemModel->setHeaderData(4,Qt::Horizontal,QStringLiteral("当前风速"));
 
-        //向表格添加100行内容
+        //TODO 从DBAccess中拿到所有房间的数据
         for(int i=0;i<100;i++)
         {
             QStandardItem *standItem1 = new QStandardItem(tr("%1").arg(i+1));
-            QStandardItem *standItem2 = new QStandardItem((QString)tr("line %1").arg(i+1));
+            QStandardItem *standItem2 = new QStandardItem(tr("line %1").arg(i+1));
             standItemModel->setItem(i,0,standItem1);
             standItemModel->item(i,0)->setForeground(QBrush(QColor(255,0,0)));
             standItemModel->item(i,0)->setTextAlignment(Qt::AlignCenter);

@@ -1,5 +1,13 @@
 # 更新日志
 
+## 6.12 更新
+
+### ljy
+
+1. 增加sensor动态改变房间温度
+2. useandcost实时更新显示
+3. 使用useandcostcontroller的setUseandCost改变从控机的use和cost
+
 ## 6.11 更新
 
 ### zyl

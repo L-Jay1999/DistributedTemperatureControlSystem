@@ -10,7 +10,7 @@ public:
     double GetTemperature(double target);
 
 private:
-    const double _d = 0.1;
+    const double _d = 1.0;
     double _degree;
 };
 
