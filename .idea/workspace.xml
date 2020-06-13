@@ -33,10 +33,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c879fa30-8bae-46fc-8c38-ccaa639e5a28" name="Default Changelist" comment="merge from master">
-      <change beforePath="$PROJECT_DIR$/Master/monitorwidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/monitorwidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Master/parameterwidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/parameterwidget.cpp" afterDir="false" />
-    </list>
+    <list default="true" id="c879fa30-8bae-46fc-8c38-ccaa639e5a28" name="Default Changelist" comment="merge from master" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -49,6 +46,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1dD8nJADfTkdgREvUNNEBkPXW93" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -101,6 +99,16 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
   </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -123,10 +131,14 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="119" y="193" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1592034189098" />
-    <state x="403" y="172" key="MultipleFileMergeDialog" timestamp="1592038695891">
+    <state x="147" y="64" key="MergeDialog" timestamp="1592048270820">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="403" y="172" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1592038695891" />
+    <state x="147" y="64" key="MergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1592048270820" />
+    <state x="403" y="172" key="MultipleFileMergeDialog" timestamp="1592048270833">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="403" y="172" key="MultipleFileMergeDialog/0.0.1536.824@0.0.1536.824" timestamp="1592048270833" />
     <state x="270" y="56" key="SettingsEditor" timestamp="1591965672911">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
