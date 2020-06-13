@@ -102,6 +102,8 @@ namespace Config {
     {
         USE_COST = 0,
         MODE_ALTER,
+        GET_TEMPERATURE,
+        FORCE_SHUTDOWN
     };
 
     /**
@@ -178,6 +180,10 @@ namespace Config {
     void setSlaveControllerPointer(SlaveControllerType type, QObject *controller);
 
     QObject *getSlaveControllerPointer(SlaveControllerType ctrller_type);
+
+    void setTimeOutMsec(int timeout_ms);
+
+    int getTimeOutMSec();
 
 };
 #endif // COMMON_H
