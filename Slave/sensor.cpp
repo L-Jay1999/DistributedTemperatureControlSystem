@@ -109,7 +109,7 @@ void Sensor::UpdateTemperature()
 {
     std::lock_guard lock(sensor_update_mtx);
     qint64 now = QDateTime::currentMSecsSinceEpoch();
-    double diff_sec = (now - _last_update_time) / 300.0;
+    double diff_sec = (now - _last_update_time) / 1000.0;
     double degree_diff;
     if (_is_wind)
     {

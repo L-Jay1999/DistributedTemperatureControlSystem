@@ -2,7 +2,7 @@
 #define LOGINCONTROLLER_H
 #include <QString>
 #include <tuple>
-#include "../CommonLib/requests.h"
+#include "requests.h"
 
 class LoginController
 {

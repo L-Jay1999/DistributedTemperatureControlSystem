@@ -12,11 +12,6 @@ void UseAndCostController::setUseandCost(double use, double cost)
     emit UseandCostChanged();
 }
 
-//void UseAndCostController::setUser(User *user)
-//{
-//    _user = user;
-//}
-
 void UseAndCostController::test()
 {
     qDebug() << "test";

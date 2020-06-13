@@ -21,15 +21,14 @@ SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
 //    _windspeed = 1;
 //    _windspeed_lcd->display(_windspeed);
 
-//    WindDisplay();
     _sensor = new Sensor(this);
 //    _sensor->setTargetDegree(_temperature);
 //    _sensor->setWindSpeed(WindSpeed(_windspeed));
 //    _sensor->setWorkingMode(_mode);
 //    GetRoomTemperature();
 
-//    _timer = new QTimer(this);
-//    connect(_timer, SIGNAL(timeout()), this, SLOT(GetRoomTemperature()));
+    _timer = new QTimer(this);
+    connect(_timer, SIGNAL(timeout()), this, SLOT(GetRoomTemperature()));
 //    _timer->start(5000);
 
 //    _usage = _user->getUsage();
@@ -42,8 +41,8 @@ SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
 
 //    ModeDisplay();
 //    UpdateBound();
-//    _modealtercontroller = new ModeAlterController(this);
-//    connect(_modealtercontroller, SIGNAL(ModeChanged(WorkingMode)), this, SLOT(GetMode(WorkingMode)));
+    _modealtercontroller = new ModeAlterController(this);
+    connect(_modealtercontroller, SIGNAL(ModeChanged(WorkingMode)), this, SLOT(GetMode(WorkingMode)));
 
 //    WindDisplay();
 //    SendWind();
@@ -138,8 +137,6 @@ void SlaveControlWindow::setUser(User *value)
     _user = value;
     _usage = _user->getUsage();
     _cost = _user->getCost();
-    _usage_lcd->display(_usage);
-    _cost_lcd->display(_cost);
     _useandcostcontroller = new UseAndCostController(this, _user);
 //    Config::setSlaveControllerPointer(Config::SlaveControllerType::USE_COST, _useandcostcontroller);
     connect(_useandcostcontroller, SIGNAL(UseandCostChanged()), this, SLOT(GetUseandCost()));
@@ -172,6 +169,7 @@ void SlaveControlWindow::on_shutdownbtn_clicked()
 //        {
 //            // TODO handle connection fails
 //        }
+        _timer->stop();
         ShutDownDisplays();
         _wind_text->clear();
         _is_open = false;
@@ -183,15 +181,27 @@ void SlaveControlWindow::on_shutdownbtn_clicked()
         if (log_in_dialog->exec() == QDialog::Accepted)
         {
             _windspeed = WindSpeed(SpeedLevel::LOW);
-            _temperature_lcd->display(_temperature);
-            _windspeed_lcd->display(_windspeed);
-            _roomtemperature_lcd->display(_sensor->GetTemperature());
-            _wind_text->setText("送风中");
-            _sensor->setIsWindWithoutUpdate(true);
+
             _sensor->setTargetDegreeWithoutUpdate(_temperature);
             _sensor->setWindSpeed(WindSpeed(_windspeed));
             _sensor->setWorkingMode(_mode);
+            GetRoomTemperature();
+
+            _timer->start(1000);
+
+            _temperature_lcd->display(_temperature);
+            _windspeed_lcd->display(_windspeed);
+
+            _usage_lcd->display(_usage);
+            _cost_lcd->display(_cost);
             _is_open = true;
+
+            ModeDisplay();
+            UpdateBound();
+
+            WindDisplay();
+            SendWind();
+            _sensor->setIsWindWithoutUpdate(true);
         }
     }
 }

@@ -16,7 +16,7 @@
 #include "windcontroller.h"
 #include "modealtercontroller.h"
 #include "userlogindialog.h"
-#include "../CommonLib/common.h"
+#include "common.h"
 
 namespace Ui {
 class SlaveControlWindow;

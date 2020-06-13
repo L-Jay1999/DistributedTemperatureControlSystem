@@ -13,7 +13,6 @@ class UseAndCostController : public QObject
 public:
     explicit UseAndCostController(QObject *parent = nullptr, User *user = new User("", ""));
     void setUseandCost(double use, double cost);
-//    void setUser(User *user);
 
 private:
     User *_user;

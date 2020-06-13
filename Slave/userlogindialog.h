@@ -3,11 +3,14 @@
 
 #include <QDialog>
 #include <QLineEdit>
+#include <QWidget>
+#include <QMessageBox>
 
-#include "slavecontrolwindow.h"
+#include "logincontroller.h"
+#include "user.h"
 
-#include "../CommonLib/common.h"
-#include "../CommonLib/listener.h"
+#include "common.h"
+#include "listener.h"
 
 namespace Ui {
 class UserLoginDialog;

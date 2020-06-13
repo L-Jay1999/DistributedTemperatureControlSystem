@@ -1,14 +1,5 @@
 #include "userlogindialog.h"
 #include "ui_userlogindialog.h"
-#include "logincontroller.h"
-#include "slavecontrolwindow.h"
-#include "user.h"
-
-#include "../CommonLib/listener.h"
-
-
-
-#include <QMessageBox>
 
 UserLoginDialog::UserLoginDialog(QWidget *parent) :
     QDialog(parent),
@@ -25,7 +16,7 @@ UserLoginDialog::UserLoginDialog(QWidget *parent) :
 
     // connect(this, &UserLoginDialog::LoginSuccess, dynamic_cast<SlaveControlWindow*>(parent), &SlaveControlWindow::SetLoginUser);
     connect(this, SIGNAL(LoginSuccess(const QString &, const QString &, WorkingMode, double)),
-            dynamic_cast<SlaveControlWindow*>(parent), SLOT(SetLoginUser(const QString &, const QString &, WorkingMode, double)));
+            parent, SLOT(SetLoginUser(const QString &, const QString &, WorkingMode, double)));
 }
 
 UserLoginDialog::~UserLoginDialog()

@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "../CommonLib/common.h"
+#include "common.h"
 
 class ModeAlterController : public QObject
 {
