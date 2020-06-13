@@ -83,5 +83,8 @@ void ManagerControlPanel::switch_to_log()
 
 void ManagerControlPanel::switch_to_monitor()
 {
-
+    mw = new MonitorWidget;
+    mw->resize(960, 640);
+    mw->setWindowTitle(QString::fromUtf8("房间监控状况"));
+    mw->show();
 }

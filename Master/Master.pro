@@ -44,7 +44,8 @@ SOURCES += \
     manager.cpp \
     powersupplywidget.cpp \
     operationconfirmationdialog.cpp \
-    parameterwidget.cpp
+    parameterwidget.cpp \
+    monitorwidget.cpp
 
 HEADERS += \
     managerlogincontroller.h \
@@ -54,7 +55,8 @@ HEADERS += \
     manager.h \
     powersupplywidget.h \
     operationconfirmationdialog.h \
-    parameterwidget.h
+    parameterwidget.h \
+    monitorwidget.h
 
 
 FORMS += \

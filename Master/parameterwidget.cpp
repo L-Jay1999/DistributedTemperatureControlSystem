@@ -30,11 +30,12 @@ void ParameterWidget::confirm()
     if(ui->radioButton_hot->isChecked())
     {
         this->mode = "hot";
+        ui->lineEdit_temperature->setText("28");
     }else{
         this->mode = "cold";
+        ui->lineEdit_temperature->setText("22");
     }
-    getMode();
-    qDebug() << "Mode:" << mode;
+    //TODO 控制从控机mode and temperature
     emit confirm_signal();
     this->hide();
 }

@@ -37,26 +37,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c879fa30-8bae-46fc-8c38-ccaa639e5a28" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Master/monitorwidget.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Master/monitorwidget.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CommonLib/dbhelper.h" beforeDir="false" afterPath="$PROJECT_DIR$/CommonLib/dbhelper.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CommonLib/listener.h" beforeDir="false" afterPath="$PROJECT_DIR$/CommonLib/listener.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CommonLib/log.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/CommonLib/log.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Master/Master.pro" beforeDir="false" afterPath="$PROJECT_DIR$/Master/Master.pro" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Master/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Master/manager.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/manager.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Master/managercontrolpanel.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/managercontrolpanel.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Master/managercontrolpanel.h" beforeDir="false" afterPath="$PROJECT_DIR$/Master/managercontrolpanel.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Master/managercontrolpanel.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Master/managercontrolpanel.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Master/managerlogincontroller.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/managerlogincontroller.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Master/managerloginwidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/managerloginwidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Master/operationconfirmationdialog.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/operationconfirmationdialog.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Master/parametercontroller.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Master/parametercontroller.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Master/parameterwidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/parameterwidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Master/parameterwidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Master/parameterwidget.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Master/parameterwidget.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Master/parameterwidget.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Master/powersupplywidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/powersupplywidget.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Master/powersupplywidget.h" beforeDir="false" afterPath="$PROJECT_DIR$/Master/powersupplywidget.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Master/standbywidget.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Master/standbywidget.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +64,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="Git.Branch.Popup.ShowAllRemotes" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -123,6 +111,7 @@
       <workItem from="1591948470727" duration="368000" />
       <workItem from="1591948916201" duration="252000" />
       <workItem from="1591951592602" duration="8224000" />
+      <workItem from="1592034167755" duration="1069000" />
     </task>
     <servers />
   </component>
@@ -146,10 +135,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="new version update" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="119" y="193" key="FileChooserDialogImpl" timestamp="1591965666875">
+    <state x="119" y="193" key="FileChooserDialogImpl" timestamp="1592034189098">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="119" y="193" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1591965666875" />
+    <state x="119" y="193" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1592034189098" />
     <state x="403" y="172" key="MultipleFileMergeDialog" timestamp="1591951451893">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

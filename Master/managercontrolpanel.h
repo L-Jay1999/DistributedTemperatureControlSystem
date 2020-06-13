@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "powersupplywidget.h"
 #include "parameterwidget.h"
+#include "monitorwidget.h"
 
 namespace Ui {
 class ManagerControlPanel;
@@ -21,6 +22,7 @@ private:
     Ui::ManagerControlPanel *ui;
     PowerSupplyWidget *psw;//电源开关面板
     ParameterWidget *pw;//参数设置面板
+    MonitorWidget *mw;
     QString power;
     QString mode;
 private slots:
