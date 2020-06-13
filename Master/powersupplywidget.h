@@ -1,4 +1,4 @@
-#ifndef POWERSUPPLYWIDGET_H
+﻿#ifndef POWERSUPPLYWIDGET_H
 #define POWERSUPPLYWIDGET_H
 
 #include <QWidget>
@@ -15,10 +15,12 @@ class PowerSupplyWidget : public QWidget
 public:
     explicit PowerSupplyWidget(QWidget *parent = 0);
     ~PowerSupplyWidget();
-
+public:
+    QString getPower();
 private:
     Ui::PowerSupplyWidget *ui;
     OperationConfirmationDialog *ocd;
+    QString power = "close";
 private slots:
     void cancel();
     void StartSystem();

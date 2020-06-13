@@ -3,8 +3,10 @@
 
 #include <QMainWindow>
 #include <QLCDNumber>
+#include <QTimer>
 
 #include "user.h"
+#include "sensor.h"
 #include "shutdowncontroller.h"
 #include "setspeedcontroller.h"
 #include "settemperaturecontroller.h"
@@ -35,9 +37,18 @@ private slots:
 
     void on_downtemperaturebtn_clicked();
 
+    void GetRoomTemperature();
+
+public slots:
+    void GetUseandCost();
+
 private:
     Ui::SlaveControlWindow *ui;
     User *_user;
+    Sensor *_sensor;
+    QTimer *_timer;
+    UseAndCostController *_useandcostcontroller;
+
     QLCDNumber *_temperature_lcd;
     QLCDNumber *_windspeed_lcd;
     QLCDNumber *_roomtemperature_lcd;
@@ -51,6 +62,7 @@ private:
 
     int WindSpeed(SpeedLevel speedlevel);
     SpeedLevel WindSpeed(int speedlevel);
+
 };
 
 #endif // SLAVECONTROLWINDOW_H

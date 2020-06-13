@@ -2,7 +2,7 @@
 #define DBDEF_BASE_H
 
 #include <QString>
-#include <QSqlQuery>
+#include <QtSql/QSqlQuery>
 
 #include <vector>
 #include <variant>

@@ -19,7 +19,7 @@
      <x>30</x>
      <y>30</y>
      <width>251</width>
-     <height>171</height>
+     <height>203</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
@@ -27,6 +27,13 @@
      <widget class="QPushButton" name="pushButton_monitor">
       <property name="text">
        <string>监控信息</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>工作模式：</string>
       </property>
      </widget>
     </item>
@@ -44,13 +51,6 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="0">
-     <widget class="QPushButton" name="pushButton_power">
-      <property name="text">
-       <string>电源控制</string>
-      </property>
-     </widget>
-    </item>
     <item row="2" column="0">
      <widget class="QLabel" name="label_3">
       <property name="text">
@@ -65,10 +65,31 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_2">
+    <item row="3" column="0">
+     <widget class="QPushButton" name="pushButton_power">
       <property name="text">
-       <string>工作模式：</string>
+       <string>电源控制</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="label_power">
+      <property name="text">
+       <string>Close</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLabel" name="label_mode">
+      <property name="text">
+       <string>Cold</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QLabel" name="label_manager">
+      <property name="text">
+       <string>TextLabel</string>
       </property>
      </widget>
     </item>

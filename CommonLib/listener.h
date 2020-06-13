@@ -4,8 +4,8 @@
 #include <map>
 
 #include <QObject>
-#include <QTcpServer>
-#include <QTcpSocket>
+#include <QtNetwork//QTcpServer>
+#include <QtNetwork/QTcpSocket>
 #include <QJsonDocument>
 #include <QJsonObject>
 
