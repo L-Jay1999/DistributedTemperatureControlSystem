@@ -72,7 +72,9 @@ void Sensor::StartTimer()
     {
         double diff = std::fabs(_current_degree - _target_degree);
 
-        if (diff < kTempChangePerSecWind.at(_speed))
+        if (diff < epsilon)
+            _timer.start(kDefaultTimerInterval);
+        else if (diff < kTempChangePerSecWind.at(_speed))
             _timer.start(diff / kTempChangePerSecWind.at(_speed) * 1000.0);
         else
             _timer.start(kDefaultTimerInterval);
@@ -80,8 +82,9 @@ void Sensor::StartTimer()
     else
     {
         double diff = std::fabs(_current_degree - _room_init_degree);
-
-        if (diff < kTempChangePerSecRoom)
+        if (diff < epsilon)
+            _timer.start(kDefaultTimerInterval);
+        else if (diff < kTempChangePerSecRoom)
             _timer.start(diff / kTempChangePerSecRoom * 1000.0);
         else
             _timer.start(kDefaultTimerInterval);
