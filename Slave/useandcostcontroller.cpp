@@ -2,18 +2,15 @@
 
 UseAndCostController::UseAndCostController(QObject *parent) : QObject(parent)
 {
-    QTimer *timer = new QTimer(this);
-    connect(timer, SIGNAL(timeout()), this, SLOT(test()));
-    timer->start(5000);
-
-    connect(this, SIGNAL(UseandCostChanged()), parent, SLOT(GetUseandCost()));
+//    QTimer *timer = new QTimer(this);
+//    connect(timer, SIGNAL(timeout()), this, SLOT(test()));
+//    timer->start(5000);
 }
 
 void UseAndCostController::setUseandCost(double use, double cost)
 {
     _user->setCost(cost);
     _user->setUsage(use);
-    qDebug() << "cost and use";
     emit UseandCostChanged();
 }
 

@@ -11,6 +11,8 @@ SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
     _cost_lcd = ui->_cost_lcd;
     _windspeed_lcd = ui->_windspeed_lcd;
     _usage_lcd = ui->_usage_lcd;
+    _mode_text = ui->_mode_text;
+    _wind_text = ui->_wind;
 
     _temperature = 25.0;
     _temperature_lcd->display(_temperature);
@@ -26,10 +28,6 @@ SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
     connect(_timer, SIGNAL(timeout()), this, SLOT(GetRoomTemperature()));
     _timer->start(5000);
 
-    _useandcostcontroller = new UseAndCostController(this);
-    _useandcostcontroller->setUser(_user);
-//    Config::setSlaveControllerPointer(Config::SlaveControllerType::USE_COST, _useandcostcontroller);
-//    connect(_useandcostcontroller, SIGNAL(UseandCostChanged()), this, SLOT(GetUseandCost()));
     qDebug() << "slavecontrolwindow create";
 }
 
@@ -63,6 +61,44 @@ SpeedLevel SlaveControlWindow::WindSpeed(int speedlevel)
     }
 }
 
+void SlaveControlWindow::ModeDisplay()
+{
+    if(_mode == WorkingMode::COLD){
+        _mode_text->setText("制冷");
+    }
+    else{
+        _mode_text->setText("制热");
+    }
+}
+
+void SlaveControlWindow::WindDisplay()
+{
+    if(_is_wind){
+        _wind_text->setText("送风中");
+    }
+    else{
+        _wind_text->setText("暂停");
+    }
+
+}
+
+void SlaveControlWindow::UpdateBound()
+{
+    if(_mode == WorkingMode::COLD){
+        _upperbound = 25.0;
+        _lowerbound = 18.0;
+    }
+    else{
+        _upperbound = 30.0;
+        _lowerbound = 25.0;
+    }
+}
+
+void SlaveControlWindow::SetInterval()
+{
+    _timer->setInterval(_interval[_windspeed-1]);
+}
+
 void SlaveControlWindow::setUser(User *value)
 {
     _user = value;
@@ -70,6 +106,10 @@ void SlaveControlWindow::setUser(User *value)
     _cost = _user->getCost();
     _usage_lcd->display(_usage);
     _cost_lcd->display(_cost);
+    _useandcostcontroller = new UseAndCostController(this);
+    _useandcostcontroller->setUser(_user);
+//    Config::setSlaveControllerPointer(Config::SlaveControllerType::USE_COST, _useandcostcontroller);
+    connect(_useandcostcontroller, SIGNAL(UseandCostChanged()), this, SLOT(GetUseandCost()));
 }
 
 void SlaveControlWindow::on_shutdownbtn_clicked()
