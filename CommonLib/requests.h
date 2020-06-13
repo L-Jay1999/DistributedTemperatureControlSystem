@@ -37,13 +37,12 @@ public:
         }
         if (is_parsing_suc)
         {
-            if (response_payload.type == RequestType::LOGIN_RESPONSE)
-                return {is_parsing_suc, std::get<0>(response_payload.config.value()), std::get<1>(response_payload.config.value())};
+            if (response_payload.type == RequestType::LOGIN_RESPONSE && response_payload.result)
+                return {true, std::get<0>(response_payload.config.value()), std::get<1>(response_payload.config.value())};
             else
-                return {is_parsing_suc, WorkingMode(), double()};
+                return {false, WorkingMode(), double()};
         }
-
-        return {is_parsing_suc, WorkingMode(), double()};
+        return {false, WorkingMode(), double()};
     }
 
 protected:

@@ -2,8 +2,7 @@
 
 bool SetTemperatureController::Set()
 {
-    SetTemperatureRequest *settemperaturerequest = new SetTemperatureRequest(_RoomID, _degree);
-    bool result = settemperaturerequest->Send();
-    delete settemperaturerequest;
+    SetTemperatureRequest settemperaturerequest(_RoomID, _degree);
+    bool result = settemperaturerequest.Send();
     return result;
 }

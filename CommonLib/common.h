@@ -124,6 +124,9 @@ namespace Config {
      * @return true 已设定
      * @return false 未设定，需要至少调用一次 setSlaveListenerPort(port)
      */
+
+    void clearSlaveListenerPort();
+
     bool hasSlaveListenerPort();
 
     /**

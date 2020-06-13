@@ -2,8 +2,7 @@
 
 bool ShutDownController::ShutDown()
 {
-    ShutDownRequest *shutdownrequest = new ShutDownRequest(_RoomID);
-    bool result = shutdownrequest->Send();
-    delete shutdownrequest;
+    ShutDownRequest shutdownrequest(_RoomID);
+    bool result = shutdownrequest.Send();
     return result;
 }
