@@ -5,9 +5,3 @@ Rooms &getRooms()
 {
     return rooms;
 }
-
-static DBAccess db;
-DBAccess &getDB()
-{
-    return db;
-}
