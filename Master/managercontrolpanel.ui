@@ -36,6 +36,15 @@ background: white;
 QLabel {
 font-weight：bold;
 font-size：15px;
+}
+QPushButton:hover {
+    font-size: 18px;
+    color: white;
+    background: #d5d5d5; /* 悬停颜色 */
+}
+
+QPushButton:pressed {
+    background: #f2f2f2 /* 按下颜色 */
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">

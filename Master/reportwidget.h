@@ -12,6 +12,7 @@
 #include <QHeaderView>
 #include <QDateTime>
 #include "global.h"
+#include "report.h"
 #include <map>
 #include <utility>
 
@@ -25,12 +26,11 @@ class ReportWidget : public QWidget
 
 public:
     explicit ReportWidget(QWidget *parent = nullptr);
-    void createView();
+    void createReportView();
 
 private:
     Ui::ReportWidget *ui;
 //    Sensor sensor;
-    QPushButton *testBtn;
     QPushButton *m_PushButton;
     QVBoxLayout *mainLayout;
 //    QTreeView *treeView;

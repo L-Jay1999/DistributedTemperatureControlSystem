@@ -1,14 +1,16 @@
 ﻿#include "reportwidget.h"
-
+#include "report.h"
 ReportWidget::ReportWidget(QWidget *parent) :
     QWidget(parent)
 {
-    createView();
+    qDebug() << "!!!report widget";
+    createReportView();
 }
 
-void ReportWidget::createView()
+void ReportWidget::createReportView()
 {
-    mainLayout = new QVBoxLayout(this);
+        qDebug() << "!!!report widget";
+        mainLayout = new QVBoxLayout(this);
         mainLayout->setSpacing(10);
         mainLayout->setMargin(10);
 
@@ -23,10 +25,8 @@ void ReportWidget::createView()
         standItemModel->setHeaderData(4,Qt::Horizontal,QStringLiteral("当日总费用"));
 
         //增加按钮及相关数据
-        QDateTime begin, end;
-        begin.setDate(QDate::currentDate());
-        end.setDate(QDate::currentDate().addDays(1));
-        std::pair<bool, std::vector<StatPayload>> response = db.getRoomRequestStats(begin,end);//获取当日报表
+        const QDate today = QDate::currentDate();
+        std::pair<bool, std::vector<StatPayload>> response = Report::getTodayReport(today);
         int i = 0;
         for(auto it = response.second.begin(); it != response.second.end();it ++)
         {

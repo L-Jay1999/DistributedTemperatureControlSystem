@@ -31,6 +31,7 @@ void MonitorWidget::createView()
         for(auto it = response.second.begin(); it != response.second.end();it ++)
         {
             const char *room_id =  it->room_id.toLocal8Bit().data();
+            qDebug() << "roomid = " << room_id << endl;
             const char *room_temperature =  QByteArray::number(it->end_temperature).data();
             QString speed, power;
             if(it->speed_level == SpeedLevel::LOW)

@@ -38,6 +38,8 @@ private:
     QStandardItemModel *standItemModel;
     QTableView *tableView;
     DBAccess db;
+signals:
+    void cancel_signal();//退出信号
 };
 
 #endif // MONITORWIDGET_H

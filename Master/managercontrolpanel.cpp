@@ -31,6 +31,8 @@ ManagerControlPanel::ManagerControlPanel(const QString &manager_account, QWidget
     psw = new PowerSupplyWidget;
     umw = new UserManagementWidget;
     mw = new MonitorWidget;
+    rw = new ReportWidget;
+
     setModeLabelText();
     setPowerLabelText();
     ui->label_manager->setText(manager_account);
@@ -98,7 +100,9 @@ void ManagerControlPanel::switch_to_detail()
 
 void ManagerControlPanel::switch_to_report()
 {
-
+    rw->show();
+    this->hide();
+    connect(rw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
 }
 
 void ManagerControlPanel::switch_to_monitor()

@@ -6,7 +6,7 @@
 #include "usermanagementwidget.h"
 #include "parameterwidget.h"
 #include "monitorwidget.h"
-
+#include "reportwidget.h"
 #include "../CommonLib/common.h"
 
 namespace Ui {
@@ -34,6 +34,7 @@ private:
     UserManagementWidget *umw;//用户管理面板
     ParameterWidget *pw;//参数设置面板
     MonitorWidget *mw;//监控信息界面
+    ReportWidget *rw;//报表界面
 
 
     void setPowerLabelText();
