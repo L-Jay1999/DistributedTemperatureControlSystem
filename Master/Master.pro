@@ -42,6 +42,7 @@ SOURCES += \
     manager.cpp \
     powersupplywidget.cpp \
     operationconfirmationdialog.cpp \
+    userlogincontroller.cpp \
     usermanagementwidget.cpp \
     promptdialog.cpp \
     requestcontroller.cpp \
@@ -50,7 +51,10 @@ SOURCES += \
     schedule.cpp \
     parameterwidget.cpp \
     monitorwidget.cpp \
-    report.cpp
+    report.cpp \
+    usersetspeedcontroller.cpp \
+    usersettemperaturecontroller.cpp \
+    usershutdowncontroller.cpp
 
 HEADERS += \
     global.h \
@@ -61,6 +65,7 @@ HEADERS += \
     manager.h \
     powersupplywidget.h \
     operationconfirmationdialog.h \
+    userlogincontroller.h \
     usermanagementwidget.h \
     promptdialog.h \
     requestcontroller.h \
@@ -69,7 +74,10 @@ HEADERS += \
     schedule.h \
     parameterwidget.h \
     monitorwidget.h \
-    report.h
+    report.h \
+    usersetspeedcontroller.h \
+    usersettemperaturecontroller.h \
+    usershutdowncontroller.h
 
 FORMS += \
     managerloginwidget.ui \
