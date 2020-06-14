@@ -2,7 +2,7 @@
 #define GLOBAL_H
 
 #include "../CommonLib/common.h"
-
+#include "../CommonLib/dbaccess.h"
 #include <map>
 #include <set>
 #include <vector>
@@ -60,5 +60,7 @@ private:
 };
 
 Rooms &getRooms();
+
+DBAccess &getDB();
 
 #endif // GLOBAL_H

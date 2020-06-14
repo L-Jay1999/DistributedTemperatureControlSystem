@@ -11,21 +11,20 @@ Service::Service(const Service& ser)
     _config = ser.getConfig();
 }
 
-void Schedule::addRoom(const QString& RoomID,const Config::RoomConfig& conf)
+void Schedule::addRoom(const QString& RoomID)
 {
-    class Service s(RoomID,conf);
-    waiting_slave.push_back(s);
+    waiting_slave.push_back(RoomID);
 }
 
 void Schedule::delRoom(const QString &RoomID)
 {
-    auto it = find(waiting_slave,RoomID);
+    auto it = std::find(waiting_slave.begin(),waiting_slave.end(),RoomID);
     if(it != waiting_slave.end())
     {
         waiting_slave.erase(it);
         return;
     }
-    it = find(working_slave,RoomID);
+    it = std::find(working_slave.begin(),working_slave.end(),RoomID);
     if(it != working_slave.end())
     {
         working_slave.erase(it);
@@ -44,7 +43,7 @@ void Schedule::checkIdle()
         waiting_slave.erase(waiting_slave.begin());
     }
 }
-
+/*
 void Schedule::SetSpeed(const QString &RoomID, const SpeedLevel &Level)
 {
     Config::RoomConfig conf;
@@ -86,3 +85,4 @@ void Schedule::SetTemperature(const QString &RoomID, const double &Degree)
         return;
     }
 }
+*/
