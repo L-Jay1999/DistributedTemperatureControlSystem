@@ -8,12 +8,12 @@ MonitorWidget::MonitorWidget(QWidget *parent) :
 
 void MonitorWidget::createView()
 {
-    mainLayout = new QVBoxLayout;
+    mainLayout = new QVBoxLayout(this);
         mainLayout->setSpacing(10);
         mainLayout->setMargin(10);
 
-        tableView = new QTableView;
-        standItemModel = new QStandardItemModel();
+        tableView = new QTableView(this);
+        standItemModel = new QStandardItemModel(this);
 
         standItemModel->setColumnCount(5);
         standItemModel->setHeaderData(0,Qt::Horizontal,QStringLiteral("房间号"));

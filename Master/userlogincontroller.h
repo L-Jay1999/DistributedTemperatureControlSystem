@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <tuple>
+#include <QDebug>
 
 #include "global.h"
 #include "common.h"

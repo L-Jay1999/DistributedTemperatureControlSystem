@@ -5,7 +5,6 @@ UserLoginController::UserLoginController(QObject *parent, Schedule *schedule)
 {
     Config::setMasterControllerPointer(Config::MasterControllerType::LOGIN, this);
     _rooms = getRooms();
-    _db = getDB();
 }
 
 bool UserLoginController::UserLogin(const QString &UserID, const QString &RoomID)
@@ -18,13 +17,21 @@ bool UserLoginController::UserLogin(const QString &UserID, const QString &RoomID
         auto [error, result] = useandcostrequest.Send();
         if(error.hasError()){
             //重传
+            qDebug() << "UserLoginController error";
+            qDebug() << error.err_str;
             auto [error, result] = useandcostrequest.Send();
             if(error.hasError()){
                 return false;
             }
+            else{
+                _rooms.addRoom(RoomID);
+                return true;
+            }
         }
-        _rooms.addRoom(RoomID);
-        return true;
+        else{
+            _rooms.addRoom(RoomID);
+            return true;
+        }
     }
     return false;
 }

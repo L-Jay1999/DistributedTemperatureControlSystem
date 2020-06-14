@@ -5,11 +5,11 @@ Schedule::Schedule(QObject *parent) : QObject(parent)
 
 }
 
-//Service::Service(const Service& ser)
-//{
-//    _roomID = ser.getRoomID();
-//    _config = ser.getConfig();
-//}
+Service::Service(const Service& ser)
+{
+    _roomID = ser.getRoomID();
+    _config = ser.getConfig();
+}
 
 void Schedule::addRoom(const QString& RoomID)
 {
@@ -35,7 +35,7 @@ void Schedule::delRoom(const QString &RoomID)
 void Schedule::checkIdle()
 {
     //若有服务可提供，且有从机处于等待队列中
-    while(working_slave.size()<MAX_SERVICE && !waiting_slave.empty())
+    while(working_slave.size() < MAX_SERVICE && !waiting_slave.empty())
     {
         //将一台从机从等待队列移入服务区
         emit work_signal(waiting_slave.front());
