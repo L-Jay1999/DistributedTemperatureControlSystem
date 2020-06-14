@@ -2,7 +2,7 @@
 #define PARAMETERWIDGET_H
 #include <QWidget>
 #include<QDebug>
-
+#include "common.h"
 namespace Ui {
 class ParameterWidget;
 }
@@ -15,13 +15,13 @@ public:
     explicit ParameterWidget(QWidget *parent = nullptr);
     ~ParameterWidget();
     int getTemperature();
-    QString getMode();
-//    WorkingMode _mode;
+    WorkingMode getMode();
+
 
 private:
     Ui::ParameterWidget *ui;
     int temperature = 0;
-    QString mode = "cold";
+    WorkingMode _mode;
 
 
 private slots:
