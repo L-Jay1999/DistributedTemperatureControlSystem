@@ -211,13 +211,16 @@ bool DBAccess::addRoomRequestStat(const StatPayload &payload)
 
 std::pair<bool, std::vector<StatPayload> > DBAccess::getRoomRequestStats(const QDateTime &from, const QDateTime &to)
 {
-    const QString kSelSql = "select * from %1 where time between ? and ?;";
+    const QString kSelSql = "select * from %1 where start_time between ? and ?;";
     QSqlQuery q(QSqlDatabase::database(connection_name));
     q.prepare(kSelSql.arg(MasterRequestStatContract::TITLE));
+    // qDebug() << from.toSecsSinceEpoch() << ", " << to.toSecsSinceEpoch();
     QSqlError error = DBHelper::BindAndExec(q, {from.toSecsSinceEpoch(), to.toSecsSinceEpoch()});
     if (error.type() != QSqlError::NoError)
     {
-        qDebug() << error.text();
+//        qDebug() << error.text();
+//        qDebug() << q.lastQuery();
+//        qDebug() << q.executedQuery();
         return {false, {}};
     }
 
