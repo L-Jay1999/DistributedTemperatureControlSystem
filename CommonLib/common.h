@@ -84,7 +84,28 @@ inline QString getThreadIdStr()
 QString getRandomString(int length);
 
 namespace Config {
+    // 保存一个房间的设置信息
+    static class RoomConfig
+    {
+    private:
+        WorkingMode _mode;//工作模式
+        SpeedLevel _level;//风速
+        double _working_degree;//工作温度
+        double _current_degree;//当前温度
+    public:
+        RoomConfig() = delete;
+        RoomConfig(WorkingMode mode,SpeedLevel level,double wd,double cd)
+            :   _mode(mode),_level(level),_working_degree(wd),_current_degree(cd)   {}
+        void setMode(WorkingMode mode){_mode = mode;}
+        void setLevel(SpeedLevel level){_level = level;}
+        void setTemperature(double working_degree){_working_degree = working_degree;}
+        void setCurTemperature(double current_degree){_current_degree = current_degree;}
+        WorkingMode getMode(){return _mode;}
+        SpeedLevel getLevel(){return _level;}
+        double getTemperature(){return _working_degree;}
+        double getCurTemperature(){return _current_degree;}
 
+    };
     // 标记主机的地址和端口，用于从控机发送请求给中央空调
     static constexpr auto kMasterHostAddr = "localhost";
     static constexpr quint16 kMasterListenPort = 12345;
