@@ -1,9 +1,10 @@
-#ifndef MANAGERCONTROLPANEL_H
+﻿#ifndef MANAGERCONTROLPANEL_H
 #define MANAGERCONTROLPANEL_H
 
 #include <QWidget>
 #include "powersupplywidget.h"
 #include "usermanagementwidget.h"
+#include "parameterwidget.h"
 
 #include "../CommonLib/common.h"
 
@@ -29,6 +30,7 @@ private:
 
     PowerSupplyWidget *psw;//电源控制面板
     UserManagementWidget *umw;//用户管理面板
+    ParameterWidget *pw;//参数设置面板
 
     void setPowerLabelText();
     void setModeLabelText();

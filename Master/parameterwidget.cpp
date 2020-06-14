@@ -1,7 +1,5 @@
 ﻿#include "parameterwidget.h"
 #include "ui_parameterwidget.h"
-#include "../CommonLib/requests.h"
-#include "../CommonLib/common.h"
 ParameterWidget::ParameterWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ParameterWidget)
@@ -31,18 +29,15 @@ void ParameterWidget::confirm()
     if(ui->radioButton_hot->isChecked())
     {
         this->mode = "hot";
-        this->_mode = WorkingMode(1);
+//        this->_mode = WorkingMode(1);
         ui->lineEdit_temperature->setText("28");
         //TODO 将初始的所有空调模式更改设置
-        SetModeRequest *setmoderequest = new SetModeRequest(_mode);
-        bool result = setmoderequest->Send();
+//        SetModeRequest *setmoderequest = new SetModeRequest(_mode);
+//        bool result = setmoderequest->Send();
 
     }else{
         this->mode = "cold";
-        this->_mode = WorkingMode(0);
         ui->lineEdit_temperature->setText("22");
-        SetModeRequest *setmoderequest = new SetModeRequest(_mode);
-        bool result = setmoderequest->Send();
     }
     //TODO 控制从控机mode and temperature
     emit confirm_signal();

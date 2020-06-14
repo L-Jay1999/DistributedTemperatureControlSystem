@@ -1,10 +1,8 @@
 ﻿#ifndef PARAMETERWIDGET_H
 #define PARAMETERWIDGET_H
-
 #include <QWidget>
 #include<QDebug>
-#include "../CommonLib/requests.h"
-#include "../CommonLib/common.h"
+
 namespace Ui {
 class ParameterWidget;
 }
@@ -18,13 +16,12 @@ public:
     ~ParameterWidget();
     int getTemperature();
     QString getMode();
+//    WorkingMode _mode;
 
 private:
     Ui::ParameterWidget *ui;
     int temperature = 0;
     QString mode = "cold";
-    WorkingMode _mode;
-
 
 
 private slots:
