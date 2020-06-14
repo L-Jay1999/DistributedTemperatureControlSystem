@@ -21,6 +21,8 @@ ManagerControlPanel::ManagerControlPanel(const QString &manager_account, QWidget
     connect(ui->pushButton_user,&QPushButton::clicked,      this,&ManagerControlPanel::switch_to_user);     //用户管理
     psw = new PowerSupplyWidget;
     umw = new UserManagementWidget;
+    pw = new ParameterWidget;
+    mw = new MonitorWidget;
     setModeLabelText();
     setPowerLabelText();
     ui->label_manager->setText(manager_account);
@@ -96,7 +98,9 @@ void ManagerControlPanel::switch_to_report()
 
 void ManagerControlPanel::switch_to_monitor()
 {
-
+    mw->show();
+    this->hide();
+    connect(mw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
 }
 
 void ManagerControlPanel::switch_to_user()

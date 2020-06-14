@@ -47,7 +47,8 @@ SOURCES += \
     userinfocontroller.cpp \
     airsupplycontroller.cpp \
     schedule.cpp \
-    parameterwidget.cpp
+    parameterwidget.cpp \
+    monitorwidget.cpp
 
 HEADERS += \
     managerlogincontroller.h \
@@ -63,7 +64,8 @@ HEADERS += \
     userinfocontroller.h \
     airsupplycontroller.h \
     schedule.h \
-    parameterwidget.h
+    parameterwidget.h \
+    monitorwidget.h
 
 FORMS += \
     managerloginwidget.ui \

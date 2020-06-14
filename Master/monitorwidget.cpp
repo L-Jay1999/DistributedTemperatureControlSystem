@@ -11,8 +11,6 @@ void MonitorWidget::createView()
     mainLayout = new QVBoxLayout;
         mainLayout->setSpacing(10);
         mainLayout->setMargin(10);
-//        testBtn = new QPushButton("Test");
-//        m_PushButton = new QPushButton("PushButton");
 
         tableView = new QTableView;
         standItemModel = new QStandardItemModel();
@@ -32,7 +30,6 @@ void MonitorWidget::createView()
             standItemModel->setItem(i,0,standItem1);
             standItemModel->item(i,0)->setForeground(QBrush(QColor(255,0,0)));
             standItemModel->item(i,0)->setTextAlignment(Qt::AlignCenter);
-//            standItemModel->item(i,1)->setTextAlignment(Qt::AlignCenter);
             standItemModel->setItem(i,1,standItem2);
             standItemModel->setItem(i,2,standItem2);
 
@@ -53,17 +50,9 @@ void MonitorWidget::createView()
         tableView->setColumnWidth(4, 200);
 
         tableView->verticalHeader()->hide();    //隐藏默认显示的行头
-        tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);  //设置表格属性只读，不能编辑
-    //    tableView->setContextMenuPolicy(Qt::CustomContextMenu);         //需要在表格使用右键菜单，需要启动该属性
-    //    tableView->sortByColumn(0,Qt::AscendingOrder);                 //表格第0列，按降序排列
-
-//        tableView->setIndexWidget(standItemModel->index(10,1),m_PushButton);
-//        tableView->setIndexWidget(standItemModel->index(10,2),testBtn);
+        tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
         tableView->setShowGrid(false);
 
-//        standItemModel->removeRows(0,10);
-
-    //    mainLayout->addWidget(testBtn);
         mainLayout->addWidget(tableView);
         this->setLayout(mainLayout);
 }

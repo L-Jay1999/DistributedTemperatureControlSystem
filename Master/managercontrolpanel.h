@@ -5,6 +5,7 @@
 #include "powersupplywidget.h"
 #include "usermanagementwidget.h"
 #include "parameterwidget.h"
+#include "monitorwidget.h"
 
 #include "../CommonLib/common.h"
 
@@ -31,6 +32,7 @@ private:
     PowerSupplyWidget *psw;//电源控制面板
     UserManagementWidget *umw;//用户管理面板
     ParameterWidget *pw;//参数设置面板
+    MonitorWidget *mw;//监控信息界面
 
     void setPowerLabelText();
     void setModeLabelText();
