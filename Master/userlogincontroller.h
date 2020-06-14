@@ -9,7 +9,6 @@
 #include "common.h"
 #include "dbaccess.h"
 #include "requests.h"
-#include "schedule.h"
 
 class UserLoginController : public QObject
 {
@@ -18,9 +17,11 @@ public:
     explicit UserLoginController(QObject *parent = nullptr);
     std::tuple<bool, WorkingMode, double> UserLogin(const QString &UserID, const QString &RoomID)
     {
+        qDebug() << UserID << RoomID;
         if(!_db.isConnected())
             return {false, {}, {}};
         if(_db.hasUser(RoomID, UserID)){
+            qDebug() << "login success";
             _rooms.addRoom(RoomID);
             return {true, Config::getCurrentWorkingMode(), Config::getDefaultWorkingTemperature()};
             // return {false, {}, {}};

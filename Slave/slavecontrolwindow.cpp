@@ -149,6 +149,7 @@ void SlaveControlWindow::on_shutdownbtn_clicked()
     }
     else
     {
+        qDebug() << "login window";
         UserLoginDialog *log_in_dialog = new UserLoginDialog(this);
         if (log_in_dialog->exec() == QDialog::Accepted)
         {
@@ -283,6 +284,7 @@ void SlaveControlWindow::GetMode(WorkingMode mode)
             }
         }
     }
+    TextAppend("主控机传来模式修改信号");
 }
 
 bool SlaveControlWindow::SendWind()
@@ -369,6 +371,7 @@ void SlaveControlWindow::WindControlFromM(bool is_in_queue)
     }
     _sensor->setIsWindWithoutUpdate(_is_wind);
     WindDisplay();
+    TextAppend("主控机传来送风信号");
 }
 
 void SlaveControlWindow::TextAppend(QString s)
@@ -382,4 +385,5 @@ void SlaveControlWindow::GetUseandCost()
     _cost = _user->getCost();
     _usage_lcd->display(_usage);
     _cost_lcd->display(_cost);
+    TextAppend("主控机传来use和cost");
 }

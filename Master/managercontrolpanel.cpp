@@ -110,15 +110,15 @@ void ManagerControlPanel::switch_to_monitor()
 {
     mw = new MonitorWidget;
     mw->show();
-    this->hide();
-    connect(mw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
+//    this->hide();
+//    connect(mw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
 }
 
 void ManagerControlPanel::switch_to_user()
 {
     umw->show();
-    this->hide();
-    connect(umw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
+//    this->hide();
+//    connect(umw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
 }
 
 void ManagerControlPanel::set_power_label_text(bool has_power)

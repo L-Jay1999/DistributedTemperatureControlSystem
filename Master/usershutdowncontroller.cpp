@@ -9,6 +9,7 @@ UserShutDownController::UserShutDownController(QObject *parent)
 
 bool UserShutDownController::ShutDown(const QString &RoomID)
 {
+    qDebug() << RoomID << "shutdown request";
     _rooms.delRoomIfExists(RoomID);
     return true;
 }
