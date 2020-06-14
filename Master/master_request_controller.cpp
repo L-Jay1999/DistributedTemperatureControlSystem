@@ -2,6 +2,9 @@
 
 #include "../Master/userlogincontroller.h"
 #include "../Master/airsupplycontroller.h"
+#include "../Master/usersetspeedcontroller.h"
+#include "../Master/usersettemperaturecontroller.h"
+#include "../Master/usershutdowncontroller.h"
 
 #include <optional>
 
@@ -38,16 +41,37 @@ namespace MasterRequestController
                 auto [login_result, init_mode, init_temp] = controller->UserLogin(request_parsed.user_id.value(), request_parsed.room_id.value());
                 response.result = login_result;
                 response.config = {init_mode, init_temp};
+                if (login_result)
+                    Config::addSlavePort(request_parsed.room_id.value(), host_port);
                 break;
             }
             case RequestType::SET_SPEED:
             {
+                response.type = RequestType::ACK;
+                auto *controller =
+                        dynamic_cast<UserSetSpeedController *>(Config::getMasterControllerPointer(Config::MasterControllerType::SET_SPEED));
+                auto res = controller->Set(request_parsed.room_id.value(), request_parsed.speed_level.value());
+                response.result = res;
                 break;
             }
             case RequestType::SET_TEMP:
+            {
+                response.type = RequestType::ACK;
+                auto *controller =
+                        dynamic_cast<UserSetTemperatureController *>(Config::getMasterControllerPointer(Config::MasterControllerType::SET_TEMP));
+                auto res = controller->Set(request_parsed.room_id.value(), request_parsed.temperature.value());
+                response.result = res;
                 break;
+            }
             case RequestType::SHUTDOWN:
+            {
+                response.type = RequestType::ACK;
+                auto *controller =
+                        dynamic_cast<UserShutDownController *>(Config::getMasterControllerPointer(Config::MasterControllerType::SHUTDOWN));
+                auto res = controller->ShutDown(request_parsed.room_id.value());
+                response.result = res;
                 break;
+            }
             case RequestType::WIND:
             {
                 response.type = RequestType::ACK;

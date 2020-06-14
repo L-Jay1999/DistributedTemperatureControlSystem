@@ -273,6 +273,8 @@ protected:
         payload.type = RequestType::USE_AND_COST;
         payload.use = use_;
         payload.cost = cost_;
+        payload.target_host = Config::kMasterHostAddr; // localhost
+        payload.target_port = Config::getSlavePort(room_id_);
         return payload;
     }
 private:
@@ -315,6 +317,8 @@ protected:
         RequestPayload payload{};
         payload.type = RequestType::SET_MODE;
         payload.mode = mode_;
+        payload.target_host = Config::kMasterHostAddr; // localhost
+        payload.target_port = Config::getSlavePort(room_id_);
         return payload;
     }
 private:
@@ -353,6 +357,8 @@ protected:
     {
         RequestPayload payload{};
         payload.type = RequestType::FORCE_SHUTDOWN;
+        payload.target_host = Config::kMasterHostAddr; // localhost
+        payload.target_port = Config::getSlavePort(room_id_);
         return payload;
     }
 private:
@@ -390,6 +396,8 @@ protected:
     {
         RequestPayload payload{};
         payload.type = RequestType::GET_ROOM_TEMP;
+        payload.target_host = Config::kMasterHostAddr; // localhost
+        payload.target_port = Config::getSlavePort(room_id_);
         return payload;
     }
 private:
@@ -429,6 +437,8 @@ protected:
         RequestPayload payload{};
         payload.type = RequestType::SCHEDULE;
         payload.is_in_queue = is_in_queue_;
+        payload.target_host = Config::kMasterHostAddr; // localhost
+        payload.target_port = Config::getSlavePort(room_id_);
         return payload;
     }
 private:
