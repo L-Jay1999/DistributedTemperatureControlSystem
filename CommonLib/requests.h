@@ -35,7 +35,8 @@ public:
         {
             if (response.type == RequestType::LOGIN_RESPONSE)
             {
-                if (response.result)
+                qDebug() << "RESULT_VALUE: " << response.result.value();
+                if (response.result.value())
                     return {errs, true, std::get<0>(response.config.value()), std::get<1>(response.config.value())};
                 else
                     return {errs, false, {}, {}};
