@@ -28,15 +28,15 @@ void ParameterWidget::confirm()
     this->temperature = ui->lineEdit_temperature->text().toInt();
     if(ui->radioButton_hot->isChecked())
     {
-        this->mode = "hot";
 //        this->_mode = WorkingMode(1);
+        _mode = WorkingMode(1);
         ui->lineEdit_temperature->setText("28");
         //TODO 将初始的所有空调模式更改设置
 //        SetModeRequest *setmoderequest = new SetModeRequest(_mode);
 //        bool result = setmoderequest->Send();
 
     }else{
-        this->mode = "cold";
+        _mode = WorkingMode(0);
         ui->lineEdit_temperature->setText("22");
     }
     //TODO 控制从控机mode and temperature
@@ -49,10 +49,10 @@ int ParameterWidget::getTemperature()
     return temperature;
 }
 
-QString ParameterWidget::getMode()
+WorkingMode ParameterWidget::getMode()
 {
 //     qDebug() << "Mode:" << mode;
-    return mode;
+    return _mode;
 }
 
 

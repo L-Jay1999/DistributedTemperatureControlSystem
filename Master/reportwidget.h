@@ -25,7 +25,6 @@ class ReportWidget : public QWidget
 
 public:
     explicit ReportWidget(QWidget *parent = nullptr);
-    ~ReportWidget();
     void createView();
 
 private:

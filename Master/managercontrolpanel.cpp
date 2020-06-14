@@ -20,8 +20,8 @@ ManagerControlPanel::ManagerControlPanel(const QString &manager_account, QWidget
     connect(ui->pushButton_logout,&QPushButton::clicked,    this,&ManagerControlPanel::logout);             //管理员登出
     connect(ui->pushButton_power,&QPushButton::clicked,     this,&ManagerControlPanel::switch_to_power);    //电源控制
     connect(ui->pushButton_mode,&QPushButton::clicked,      this,&ManagerControlPanel::change_mode);//参数设置
-    connect(ui->pushButton_rate_up, &QPushButton::clicked,  this,&ManagerControlPanel::rate_up);
-    connect(ui->pushButton_rate_down, &QPushButton::clicked,this,&ManagerControlPanel::rate_down);
+    connect(ui->pushButton_rate_up, &QPushButton::clicked,  this,&ManagerControlPanel::rate_up);//减小频率
+    connect(ui->pushButton_rate_down, &QPushButton::clicked,this,&ManagerControlPanel::rate_down);//增大频率
     connect(ui->pushButton_detail,&QPushButton::clicked,    this,&ManagerControlPanel::switch_to_detail);   //查看详单
     connect(ui->pushButton_report,&QPushButton::clicked,    this,&ManagerControlPanel::switch_to_report);   //查看报表
     connect(ui->pushButton_monitor,&QPushButton::clicked,   this,&ManagerControlPanel::switch_to_monitor);  //监控信息
