@@ -39,7 +39,6 @@ SOURCES += \
     managerlogincontroller.cpp \
     managerloginwidget.cpp \
     master_request_controller.cpp \
-    monitor_dialog.cpp \
     scheduleinfocontroller.cpp \
     setmodecontroller.cpp \
     standbywidget.cpp \
@@ -69,7 +68,6 @@ HEADERS += \
     managerlogincontroller.h \
     managerloginwidget.h \
     master_request_controller.h \
-    monitor_dialog.h \
     scheduleinfocontroller.h \
     setmodecontroller.h \
     standbywidget.h \
@@ -94,7 +92,6 @@ HEADERS += \
 
 FORMS += \
     managerloginwidget.ui \
-    monitor_dialog.ui \
     standbywidget.ui \
     managercontrolpanel.ui \
     powersupplywidget.ui \

@@ -25,8 +25,11 @@ void ReportWidget::createReportView()
         standItemModel->setHeaderData(4,Qt::Horizontal,QStringLiteral("当日总费用"));
 
         //增加按钮及相关数据
-        const QDate today = QDate::currentDate();
-        std::pair<bool, std::vector<StatPayload>> response = Report::getTodayReport(today);
+        QDate today = QDate::currentDate();
+        QDateTime begin, end;
+        begin.setDate(QDate::currentDate());
+        end.setDate(QDate::currentDate().addDays(1));
+        std::pair<bool, std::vector<StatPayload>> response = db.getRoomRequestStats(begin,end);//获取当日报表
         int i = 0;
         for(auto it = response.second.begin(); it != response.second.end();it ++)
         {
