@@ -5,11 +5,11 @@ Schedule::Schedule(QObject *parent) : QObject(parent)
 
 }
 
-Service::Service(const Service& ser)
-{
-    _roomID = ser.getRoomID();
-    _config = ser.getConfig();
-}
+//Service::Service(const Service& ser)
+//{
+//    _roomID = ser.getRoomID();
+//    _config = ser.getConfig();
+//}
 
 void Schedule::addRoom(const QString& RoomID)
 {

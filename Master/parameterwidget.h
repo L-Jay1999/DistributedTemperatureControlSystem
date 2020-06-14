@@ -29,7 +29,7 @@ private slots:
     void confirm();
 signals:
     void cancel_signal();//点击返回
-    void confirm_signal();
+    void confirm_signal();//设置返回
 };
 
 #endif // PARAMETERWIDGET_H

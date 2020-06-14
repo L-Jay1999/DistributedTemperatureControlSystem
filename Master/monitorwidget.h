@@ -37,7 +37,7 @@ private:
 //    QTreeView *treeView;
     QStandardItemModel *standItemModel;
     QTableView *tableView;
-    DBAccess &db = getDB();
+    DBAccess db;
 };
 
 #endif // MONITORWIDGET_H

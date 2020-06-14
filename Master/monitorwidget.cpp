@@ -22,21 +22,50 @@ void MonitorWidget::createView()
         standItemModel->setHeaderData(3,Qt::Horizontal,QStringLiteral("送风状态"));
         standItemModel->setHeaderData(4,Qt::Horizontal,QStringLiteral("当前风速"));
 
-        //TODO 从DBAccess中拿到所有房间的数据
+        //从DBAccess中拿到所有房间的数据
         QDateTime begin, end;
         begin.setDate(QDate::currentDate());
         end.setDate(QDate::currentDate().addDays(1));
         std::pair<bool, std::vector<StatPayload>> response = db.getRoomRequestStats(begin,end);//获取当日报表
-//        for(auto i=response.second.begin();i!=response.second.end())
-//        {
-//            QStandardItem *standItem1 = new QStandardItem(tr(i->room_id).arg(i+1));
-//            QStandardItem *standItem2 = new QStandardItem(tr("line %1").arg(i+1));
-//            standItemModel->setItem(i,0,standItem1);
-//            standItemModel->item(i,0)->setForeground(QBrush(QColor(255,0,0)));
-//            standItemModel->item(i,0)->setTextAlignment(Qt::AlignCenter);
-//            standItemModel->setItem(i,1,standItem2);
-//            standItemModel->setItem(i,2,standItem2);
+        for(auto it = response.second.begin(); it != response.second.end();it ++)
+        {
+            int i = 0;
+            const char *room_id =  it->room_id.toLocal8Bit().data();
+            const char *room_temperature =  QByteArray::number(it->end_temperature).data();
+            QString speed, power;
+            if(it->speed_level == SpeedLevel::LOW)
+            {
+                speed = "low";
+            }else if(it->speed_level == SpeedLevel::MID)
+            {
+                speed = "mid";
+            }else{
+                speed = "high";
+            }
+            const char *room_speedlevel = speed.toLocal8Bit().data();
 
+            QDateTime current_date_time =QDateTime::currentDateTime();
+            if(current_date_time > it->start_time && it->end_time < it->start_time)
+            {
+                power = "open";
+            }else{
+                power = "close";
+            }
+            const char *room_power= power.toLocal8Bit().data();
+
+            QStandardItem *standItem1 = new QStandardItem(tr(room_id).arg(i+1));
+            QStandardItem *standItem2 = new QStandardItem(tr(room_power).arg(i+1));
+            QStandardItem *standItem3 = new QStandardItem(tr(room_temperature).arg(i+1));
+            QStandardItem *standItem5 = new QStandardItem(tr(room_speedlevel).arg(i+1));
+//            QStandardItem *standItem1 = new QStandardItem(tr(room_).arg(i+1));
+            standItemModel->item(i,0)->setForeground(QBrush(QColor(255,0,0)));
+            standItemModel->item(i,0)->setTextAlignment(Qt::AlignCenter);
+            standItemModel->setItem(i,0,standItem1);
+            standItemModel->setItem(i,1,standItem2);
+            standItemModel->setItem(i,2,standItem3);
+            standItemModel->setItem(i,4,standItem5);
+            i++;
+        }
 
 //        }
         for(auto it = response.second.begin(); it != response.second.end();)
