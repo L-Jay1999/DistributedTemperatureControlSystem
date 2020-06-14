@@ -16,7 +16,7 @@ class UserLoginController : public QObject
     Q_OBJECT
 public:
     explicit UserLoginController(QObject *parent = nullptr, Schedule *schedule = nullptr);
-    bool UserLogin(const QString &UserID, const QString &RoomID);
+    std::tuple<bool, WorkingMode, double>UserLogin(const QString &UserID, const QString &RoomID);
 
 private:
     Schedule *_schedule;

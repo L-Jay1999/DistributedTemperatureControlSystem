@@ -35,6 +35,7 @@ private:
     ParameterWidget *pw;//参数设置面板
     MonitorWidget *mw;//监控信息界面
 
+
     void setPowerLabelText();
     void setModeLabelText();
     void setRateLabelText();
