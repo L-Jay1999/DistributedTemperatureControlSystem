@@ -47,7 +47,8 @@ SOURCES += \
     requestcontroller.cpp \
     userinfocontroller.cpp \
     airsupplycontroller.cpp \
-    schedule.cpp
+    schedule.cpp \
+    parameterwidget.cpp
 
 HEADERS += \
     global.h \
@@ -63,7 +64,8 @@ HEADERS += \
     requestcontroller.h \
     userinfocontroller.h \
     airsupplycontroller.h \
-    schedule.h
+    schedule.h \
+    parameterwidget.h
 
 FORMS += \
     managerloginwidget.ui \
@@ -72,7 +74,8 @@ FORMS += \
     powersupplywidget.ui \
     operationconfirmationdialog.ui \
     usermanagementwidget.ui \
-    promptdialog.ui
+    promptdialog.ui \
+    parameterwidget.ui
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../CommonLib/release/ -lCommonLib
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../CommonLib/debug/ -lCommonLib

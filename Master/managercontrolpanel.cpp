@@ -1,4 +1,4 @@
-#include "managercontrolpanel.h"
+﻿#include "managercontrolpanel.h"
 #include "ui_managercontrolpanel.h"
 
 #include <QString>
@@ -79,7 +79,9 @@ void ManagerControlPanel::switch_to_power()
 
 void ManagerControlPanel::switch_to_parameter()
 {
-
+    pw->show();
+    this->hide();
+    connect(pw,SIGNAL(cancel_signal()),this,SLOT(reshow()));
 }
 
 void ManagerControlPanel::switch_to_detail()
