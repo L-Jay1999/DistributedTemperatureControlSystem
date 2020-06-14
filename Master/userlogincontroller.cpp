@@ -7,23 +7,23 @@ UserLoginController::UserLoginController(QObject *parent, Schedule *schedule)
     _rooms = getRooms();
 }
 
-bool UserLoginController::UserLogin(const QString &UserID, const QString &RoomID)
-{
-    if(!_db.isConnected())
-        return false;
-    if(_db.hasUser(RoomID, UserID)){
-        auto [res, use, cost] = _db.getUseAndCost(RoomID, UserID);
-        UseAndCostRequest useandcostrequest(use, cost);
-        auto [error, result] = useandcostrequest.Send();
-        if(error.hasError()){
-            //重传
-            auto [error, result] = useandcostrequest.Send();
-            if(error.hasError()){
-                return false;
-            }
-        }
-        _rooms.addRoom(RoomID);
-        return true;
-    }
-    return false;
-}
+//bool UserLoginController::UserLogin(const QString &UserID, const QString &RoomID)
+//{
+//    if(!_db.isConnected())
+//        return false;
+//    if(_db.hasUser(RoomID, UserID)){
+//        auto [res, use, cost] = _db.getUseAndCost(RoomID, UserID);
+//        UseAndCostRequest useandcostrequest(use, cost);
+//        auto [error, result] = useandcostrequest.Send();
+//        if(error.hasError()){
+//            //重传
+//            auto [error, result] = useandcostrequest.Send();
+//            if(error.hasError()){
+//                return false;
+//            }
+//        }
+//        _rooms.addRoom(RoomID);
+//        return true;
+//    }
+//    return false;
+//}
