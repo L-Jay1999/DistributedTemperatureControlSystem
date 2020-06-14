@@ -4,6 +4,7 @@
 #include <QObject>
 #include <tuple>
 #include <QDebug>
+#include <QString>
 
 #include "requests.h"
 #include "common.h"
@@ -13,7 +14,7 @@ class SetModeController : public QObject
     Q_OBJECT
 public:
     explicit SetModeController(QObject *parent = nullptr);
-    bool Set(WorkingMode mode);
+    bool Set(const WorkingMode mode, const QString &RoomID);
 
 signals:
 
