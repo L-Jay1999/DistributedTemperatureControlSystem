@@ -85,7 +85,7 @@ QString getRandomString(int length);
 
 namespace Config {
     // 保存一个房间的设置信息
-    static class RoomConfig
+    class RoomConfig
     {
     private:
         WorkingMode _mode;//工作模式
@@ -104,7 +104,6 @@ namespace Config {
         SpeedLevel getLevel(){return _level;}
         double getTemperature(){return _working_degree;}
         double getCurTemperature(){return _current_degree;}
-
     };
     // 标记主机的地址和端口，用于从控机发送请求给中央空调
     static constexpr auto kMasterHostAddr = "localhost";
@@ -219,6 +218,5 @@ namespace Config {
     void setTimeOutMsec(int timeout_ms);
 
     int getTimeOutMSec();
-
 };
 #endif // COMMON_H
