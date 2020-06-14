@@ -3,6 +3,9 @@
 #include "../Slave/gettemperaturecontroller.h"
 #include "../Slave/modealtercontroller.h"
 #include "../Slave/useandcostcontroller.h"
+#include "../Slave/windcontrollerfromm.h"
+#include "../Master/userlogincontroller.h"
+#include "../Master/airsupplycontroller.h"
 
 namespace RequestController
 {
@@ -30,15 +33,30 @@ namespace RequestController
             {
             // Slave to Master
             case RequestType::LOGIN:
+            {
+                response.type = RequestType::LOGIN_RESPONSE;
+                UserLoginController *controller =
+                        dynamic_cast<UserLoginController *>(Config::getMasterControllerPointer(Config::MasterControllerType::LOGIN));
+                // auto [login_result, config] = controller->UserLogin(request_parsed.user_id.value(), request_parsed.room_id.value());
                 break;
+            }
             case RequestType::SET_SPEED:
+            {
                 break;
+            }
             case RequestType::SET_TEMP:
                 break;
             case RequestType::SHUTDOWN:
                 break;
             case RequestType::WIND:
+            {
+                response.type = RequestType::ACK;
+                AirSupplyController *controller =
+                        dynamic_cast<AirSupplyController *>(Config::getMasterControllerPointer(Config::MasterControllerType::WIND_REQUEST));
+                controller->UpdateAirSupply(request_parsed.is_open.value(), request_parsed.room_id.value());
+                response.result = true;
                 break;
+            }
             // Master to Slave
             case RequestType::FORCE_SHUTDOWN:
             {
@@ -73,7 +91,11 @@ namespace RequestController
             }
             case RequestType::SCHEDULE:
             {
-                // TODO
+                response.type = RequestType::ACK;
+                WindControllerFromM *controller =
+                         dynamic_cast<WindControllerFromM *>(Config::getSlaveControllerPointer(Config::SlaveControllerType::WIND_SCHEDULE));
+                controller->Set(request_parsed.is_in_queue.value());
+                response.result = true;
                 break;
             }
             default:
