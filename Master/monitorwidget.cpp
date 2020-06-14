@@ -31,9 +31,10 @@ void MonitorWidget::createView()
         Report obj;
         if(obj.getDateReport(today))
         {
-            for(auto it = obj.getDetails(begin, end).second.begin(); it != obj.getDetails(begin, end).second.end(); it ++)
+            auto [is_suc, details] = obj.getDetails(begin, end);
+            for(const auto detail : details)
             {
-                qDebug() << "???room_id = " << it->room_id<<endl;
+                qDebug() << "???room_id = " << detail.room_id;
             }
         }
 
