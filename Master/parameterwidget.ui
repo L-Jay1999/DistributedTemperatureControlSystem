@@ -52,7 +52,7 @@ QLineEdit:!enabled {
 QPushButton{
         border-radius: 4px;
         border: none;
-        width: 75px;
+        width: 170px;
         height: 25px;
 }
 QPushButton:enabled {
@@ -72,22 +72,19 @@ QPushButton:hover {
 </string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="3" column="1">
+    <widget class="QRadioButton" name="radioButton_hot">
+     <property name="text">
+      <string>热</string>
+     </property>
+    </widget>
+   </item>
    <item row="2" column="1">
     <widget class="QRadioButton" name="radioButton_cold">
      <property name="text">
       <string>冷</string>
      </property>
     </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_temperature">
-     <property name="text">
-      <string>缺省温度：</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="lineEdit_temperature"/>
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="label_mode">
@@ -96,24 +93,36 @@ QPushButton:hover {
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
-    <widget class="QRadioButton" name="radioButton_hot">
-     <property name="text">
-      <string>热</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <widget class="QPushButton" name="pushButton_confirm">
-     <property name="text">
-      <string>确认</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="2">
+   <item row="4" column="2">
     <widget class="QPushButton" name="pushButton_cancel">
      <property name="text">
       <string>取消</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="lineEdit_temperature"/>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_temperature">
+     <property name="text">
+      <string>缺省温度：</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QPushButton" name="pushButton_confirm">
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>确认</string>
      </property>
     </widget>
    </item>
