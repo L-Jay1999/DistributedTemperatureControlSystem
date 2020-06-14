@@ -3,7 +3,7 @@
 
 std::tuple<bool, QString> ManagerLoginController::ManagerLogin()
 {
-    return {true, {}};
+//    return {true, {}};
 
     if (CheckArgs())
     {
