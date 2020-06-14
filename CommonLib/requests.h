@@ -241,8 +241,8 @@ private:
 class UseAndCostRequest : Request
 {
 public:
-    UseAndCostRequest(const double use, const double cost)
-        : use_(use), cost_(cost)
+    UseAndCostRequest(const double use, const double cost, const QString &room_id)
+        : use_(use), cost_(cost), room_id_(room_id)
     {}
 
     std::pair<ErrorPack, bool> Send()
@@ -278,12 +278,15 @@ protected:
 private:
     double use_{};
     double cost_{};
+    QString room_id_{};
 };
 
 class SetModeRequest : Request
 {
 public:
-    SetModeRequest(const WorkingMode mode) : mode_(mode) {}
+    SetModeRequest(const WorkingMode mode, const QString &room_id)
+        : mode_(mode), room_id_(room_id)
+    {}
 
     std::pair<ErrorPack, bool> Send()
     {
@@ -316,12 +319,13 @@ protected:
     }
 private:
     WorkingMode mode_{};
+    QString room_id_{};
 };
 
 class ForceShutDownRequest : Request
 {
 public:
-    ForceShutDownRequest(){}
+    ForceShutDownRequest(QString &room_id) : room_id_(room_id) {}
 
     std::pair<ErrorPack, bool> Send()
     {
@@ -352,12 +356,13 @@ protected:
         return payload;
     }
 private:
+    QString room_id_{};
 };
 
 class GetRoomTemperatureRequest : Request
 {
 public:
-    GetRoomTemperatureRequest(){}
+    GetRoomTemperatureRequest(const QString &room_id) : room_id_(room_id) {}
 
     std::pair<ErrorPack, double> Send()
     {
@@ -388,12 +393,14 @@ protected:
         return payload;
     }
 private:
+    QString room_id_{};
 };
 
 class ScheduleInfoRequest : Request
 {
 public:
-    ScheduleInfoRequest(bool is_in_queue) : is_in_queue_(is_in_queue) {}
+    ScheduleInfoRequest(bool is_in_queue, const QString &room_id)
+        : is_in_queue_(is_in_queue), room_id_(room_id) {}
 
     std::pair<ErrorPack, bool> Send()
     {
@@ -426,6 +433,7 @@ protected:
     }
 private:
     bool is_in_queue_{};
+    QString room_id_{};
 };
 
 static inline RequestPayload getAckResponse(const bool result = true)

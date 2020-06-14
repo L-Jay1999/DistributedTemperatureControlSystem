@@ -27,9 +27,9 @@ void MonitorWidget::createView()
         begin.setDate(QDate::currentDate());
         end.setDate(QDate::currentDate().addDays(1));
         std::pair<bool, std::vector<StatPayload>> response = db.getRoomRequestStats(begin,end);//获取当日报表
+        int i = 0;
         for(auto it = response.second.begin(); it != response.second.end();it ++)
         {
-            int i = 0;
             const char *room_id =  it->room_id.toLocal8Bit().data();
             const char *room_temperature =  QByteArray::number(it->end_temperature).data();
             QString speed, power;
@@ -64,21 +64,6 @@ void MonitorWidget::createView()
             standItemModel->setItem(i,1,standItem2);
             standItemModel->setItem(i,2,standItem3);
             standItemModel->setItem(i,4,standItem5);
-            i++;
-        }
-
-//        }
-        for(auto it = response.second.begin(); it != response.second.end();)
-        {
-            int i = 0;
-            QString room_id = it->room_id;
-            const char *c_roomid = room_id.toLocal8Bit().data();
-            QDateTime room_endtime = it->end_time;
-            QDateTime room_starttime = it->start_time;
-
-            QStandardItem *standItem1 = new QStandardItem(tr(c_roomid).arg(i+1));
-            standItemModel->setItem(i,0,standItem1);
-            it++;
             i++;
         }
 

@@ -6,8 +6,14 @@ Rooms &getRooms()
     return rooms;
 }
 
-static Schedule schedule;
-Schedule &getSchedule()
+static WorkingMode mode;
+
+WorkingMode getCurrentWorkingMode()
 {
-    return schedule;
+    return mode;
+}
+
+void setCurrentWorkingMode(const WorkingMode working_mode)
+{
+   mode = working_mode;
 }
