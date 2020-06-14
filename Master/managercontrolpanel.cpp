@@ -15,7 +15,8 @@ ManagerControlPanel::ManagerControlPanel(const QString &manager_account, QWidget
     connect(ui->pushButton_logout,&QPushButton::clicked,    this,&ManagerControlPanel::logout);             //管理员登出
     connect(ui->pushButton_power,&QPushButton::clicked,     this,&ManagerControlPanel::switch_to_power);    //电源控制
     connect(ui->pushButton_parameter,&QPushButton::clicked, this,&ManagerControlPanel::switch_to_parameter);//参数设置
-    connect(ui->pushButton_log,&QPushButton::clicked,       this,&ManagerControlPanel::switch_to_log);      //运行日志
+    connect(ui->pushButton_detail,&QPushButton::clicked,    this,&ManagerControlPanel::switch_to_detail);   //查看详单
+    connect(ui->pushButton_report,&QPushButton::clicked,    this,&ManagerControlPanel::switch_to_report);   //查看报表
     connect(ui->pushButton_monitor,&QPushButton::clicked,   this,&ManagerControlPanel::switch_to_monitor);  //监控信息
     connect(ui->pushButton_user,&QPushButton::clicked,      this,&ManagerControlPanel::switch_to_user);     //用户管理
     psw = new PowerSupplyWidget;
@@ -81,7 +82,12 @@ void ManagerControlPanel::switch_to_parameter()
 
 }
 
-void ManagerControlPanel::switch_to_log()
+void ManagerControlPanel::switch_to_detail()
+{
+
+}
+
+void ManagerControlPanel::switch_to_report()
 {
 
 }
