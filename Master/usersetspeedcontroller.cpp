@@ -10,6 +10,6 @@ UserSetSpeedController::UserSetSpeedController(QObject *parent, Schedule *schedu
 bool UserSetSpeedController::Set(const QString &RoomID, const SpeedLevel level)
 {
 //    _schedule->SetSpeed(RoomID, level);
-    _rooms.SetSpeed(RoomID, level);
+    // _rooms.SetSpeed(RoomID, level);
     return true;
 }

@@ -5,7 +5,6 @@ UserLoginController::UserLoginController(QObject *parent, Schedule *schedule)
 {
     Config::setMasterControllerPointer(Config::MasterControllerType::LOGIN, this);
     _rooms = getRooms();
-    _db = getDB();
 }
 
 bool UserLoginController::UserLogin(const QString &UserID, const QString &RoomID)

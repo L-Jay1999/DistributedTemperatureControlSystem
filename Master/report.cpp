@@ -1,5 +1,7 @@
 #include "report.h"
 
+#include <utility>
+
 Report::Report()
 {
 
@@ -28,11 +30,12 @@ bool Report::getTodayReport()
     begin.setDate(QDate::currentDate());
     end.setDate(QDate::currentDate().addDays(1));
     std::pair<bool, std::vector<StatPayload>> response = db.getRoomRequestStats(begin,end);//获取当日报表
-    if(response.first == false)return false;
+    if(response.first == false)
+        return false;
     _details.clear();
     for(auto it = response.second.begin(); it != response.second.end(); it++)//将报表按照房间号拆分
     {
-        _details.insert(pair<QString,std::vector<StatPayload>>(it->room_id, *it));
+        _details[it->room_id].push_back(*it);
     }
 
 }
@@ -45,7 +48,7 @@ bool Report::writeDetail(const StatPayload &detail)
 std::vector<StatPayload> Report::getRoomReport(const QString &roomID)
 {
     auto it = _details.find(roomID);
-    if(it != _details.end())return it->secend;
-    std::vector<StatPayload> result;
-    return result;
+    if(it != _details.end())
+        return it->second;
+    return {};
 }

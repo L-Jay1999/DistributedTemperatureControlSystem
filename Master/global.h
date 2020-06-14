@@ -61,6 +61,4 @@ private:
 
 Rooms &getRooms();
 
-DBAccess &getDB();
-
 #endif // GLOBAL_H
