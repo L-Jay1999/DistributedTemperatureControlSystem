@@ -11,7 +11,7 @@
 struct Room
 {
     Config::RoomConfig config{};
-    bool is_open{false};
+    //bool is_open{false};
     bool has_wind{false};
     QString room_id{};
 };

@@ -24,7 +24,7 @@ background: white;
 QPushButton{
         border-radius: 4px;
         border: none;
-        width: 75px;
+        width: 100px;
         height: 25px;
 }
 QPushButton:enabled {
