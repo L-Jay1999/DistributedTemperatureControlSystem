@@ -40,3 +40,8 @@ void Schedule::checkIdle()
         waiting_slave.erase(waiting_slave.begin());
     }
 }
+
+void Schedule::change_power(bool is_working)
+{
+
+}

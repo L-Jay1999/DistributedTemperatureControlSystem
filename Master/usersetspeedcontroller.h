@@ -11,11 +11,10 @@ class UserSetSpeedController : public QObject
 {
     Q_OBJECT
 public:
-    explicit UserSetSpeedController(QObject *parent = nullptr, Schedule *schedule = nullptr);
+    explicit UserSetSpeedController(QObject *parent = nullptr);
     bool Set(const QString &RoomID, const SpeedLevel level);
 
 private:
-    Schedule *_schedule;
     Rooms _rooms;
 
 signals:

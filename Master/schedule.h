@@ -6,10 +6,11 @@
 #include <vector>
 #include <deque>
 #include <algorithm>
-#include "../CommonLib/common.h"
+#include "common.h"
 #include "scheduleinfocontroller.h"
 #include "airsupplycontroller.h"
 
+class AirSupplyController;
 class Schedule : public QObject
 {
     Q_OBJECT
@@ -17,7 +18,7 @@ private:
     bool _is_working;//是否工作
     const int MAX_SERVICE = 3;//最大同时服务数量
     std::deque<QString> waiting_slave;//等待服务队列
-    std::vector<QString> working_slave;//服务区
+    std::deque<QString> working_slave;//服务区
     AirSupplyController *asc;   //送风请求接收控制器
     ScheduleInfoController *sic;//送风请求回复控制器
 public:

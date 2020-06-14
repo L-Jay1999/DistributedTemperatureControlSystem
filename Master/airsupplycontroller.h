@@ -2,16 +2,17 @@
 #define AIRSUPPLYCONTROLLER_H
 
 #include <QObject>
-#include "schedule.h"
 
+#include "schedule.h"
 #include "common.h"
 
+class Schedule;
 class AirSupplyController : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit AirSupplyController(QObject *parent = nullptr, Schedule *schedule = nullptr);
+    explicit AirSupplyController(QObject *parent = nullptr);
     void UpdateAirSupply(bool OpenorClose, const QString &RoomID);
 
 private:
