@@ -2,18 +2,13 @@
 
 Schedule::Schedule(QObject *parent) : QObject(parent)
 {
-
+    asc = new AirSupplyController(this);
 }
-
-//Service::Service(const Service& ser)
-//{
-//    _roomID = ser.getRoomID();
-//    _config = ser.getConfig();
-//}
 
 void Schedule::addRoom(const QString& RoomID)
 {
     waiting_slave.push_back(RoomID);
+    checkIdle();
 }
 
 void Schedule::delRoom(const QString &RoomID)
@@ -28,6 +23,7 @@ void Schedule::delRoom(const QString &RoomID)
     if(it != working_slave.end())
     {
         working_slave.erase(it);
+        checkIdle();//此时服务区有空闲，需要进行调度
         return;
     }
 }
@@ -38,9 +34,8 @@ void Schedule::checkIdle()
     while(working_slave.size() < MAX_SERVICE && !waiting_slave.empty())
     {
         //将一台从机从等待队列移入服务区
-        //sic.Send(true);
+        //TODO 发送request通知从控机开始送风
         working_slave.push_back(waiting_slave.front());
         waiting_slave.erase(waiting_slave.begin());
     }
 }
-

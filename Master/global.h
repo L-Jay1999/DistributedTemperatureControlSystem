@@ -6,6 +6,7 @@
 #include <map>
 #include <set>
 #include <vector>
+#include "schedule.h"
 
 struct Room
 {
@@ -80,4 +81,5 @@ private:
 
 Rooms &getRooms();
 
+Schedule &getSchedule();
 #endif // GLOBAL_H

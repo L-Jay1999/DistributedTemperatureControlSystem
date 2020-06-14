@@ -4,19 +4,22 @@
 #include <QObject>
 #include <QString>
 #include <vector>
+#include <deque>
 #include <algorithm>
 #include "../CommonLib/common.h"
 #include "scheduleinfocontroller.h"
+#include "airsupplycontroller.h"
 
 class Schedule : public QObject
 {
     Q_OBJECT
 private:
-    Config::RoomConfig defConf;//房间默认参数
+    bool _is_working;//是否工作
     const int MAX_SERVICE = 3;//最大同时服务数量
-    std::vector<QString> waiting_slave;//等待服务队列
+    std::deque<QString> waiting_slave;//等待服务队列
     std::vector<QString> working_slave;//服务区
-    ScheduleInfoController sic;
+    AirSupplyController *asc;   //送风请求接收控制器
+    ScheduleInfoController *sic;//送风请求回复控制器
 public:
     explicit Schedule(QObject *parent = nullptr);
     // 各操作的回复由上级controller完成
@@ -24,6 +27,8 @@ public:
     void delRoom(const QString& RoomID);//将完成服务或已关闭的从机移出
     void checkIdle();//检查是否有空闲的服务区，若有则将等待队列头部的从机移入服务区
 public slots:
+    void change_power(bool is_working);
+signals:
 };
 
 #endif // SCHEDULE_H

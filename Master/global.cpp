@@ -5,3 +5,9 @@ Rooms &getRooms()
 {
     return rooms;
 }
+
+static Schedule schedule;
+Schedule &getSchedule()
+{
+    return schedule;
+}
