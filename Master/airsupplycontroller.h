@@ -2,7 +2,7 @@
 #define AIRSUPPLYCONTROLLER_H
 
 #include <QObject>
-#include <schedule.h>
+#include "schedule.h"
 
 #include "common.h"
 
