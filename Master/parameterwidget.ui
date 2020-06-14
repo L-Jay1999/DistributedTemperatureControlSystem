@@ -14,7 +14,14 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QRadioButton{
+   <string notr="true">#ParameterWidget{
+
+border: 3px solid gray;
+border-radius: 40px;
+background: white;
+
+}
+QRadioButton{
         spacing: 5px;
 }
 QRadioButton:enabled:checked{

@@ -14,7 +14,14 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QLineEdit {
+   <string notr="true">#UserManagementWidget{
+
+border: 3px solid gray;
+border-radius: 20px;
+background: white;
+}
+
+QLineEdit {
         border-radius: 4px;
         height: 25px;
         border: 1px solid rgb(111, 156, 207);

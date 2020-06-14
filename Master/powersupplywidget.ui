@@ -14,7 +14,15 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QPushButton{
+   <string notr="true">#PowerSupplyWidget{
+
+border: 3px solid gray;
+border-radius: 40px;
+background: white;
+
+}
+
+QPushButton{
         border-radius: 4px;
         border: none;
         width: 75px;
