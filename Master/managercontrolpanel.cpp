@@ -1,4 +1,4 @@
-﻿#include "managercontrolpanel.h"
+#include "managercontrolpanel.h"
 #include "ui_managercontrolpanel.h"
 
 #include <QString>
@@ -15,7 +15,8 @@ ManagerControlPanel::ManagerControlPanel(const QString &manager_account, QWidget
     connect(ui->pushButton_logout,&QPushButton::clicked,    this,&ManagerControlPanel::logout);             //管理员登出
     connect(ui->pushButton_power,&QPushButton::clicked,     this,&ManagerControlPanel::switch_to_power);    //电源控制
     connect(ui->pushButton_parameter,&QPushButton::clicked, this,&ManagerControlPanel::switch_to_parameter);//参数设置
-    connect(ui->pushButton_log,&QPushButton::clicked,       this,&ManagerControlPanel::switch_to_log);      //运行日志
+    connect(ui->pushButton_detail,&QPushButton::clicked,    this,&ManagerControlPanel::switch_to_detail);   //查看详单
+    connect(ui->pushButton_report,&QPushButton::clicked,    this,&ManagerControlPanel::switch_to_report);   //查看报表
     connect(ui->pushButton_monitor,&QPushButton::clicked,   this,&ManagerControlPanel::switch_to_monitor);  //监控信息
     connect(ui->pushButton_user,&QPushButton::clicked,      this,&ManagerControlPanel::switch_to_user);     //用户管理
     psw = new PowerSupplyWidget;
@@ -33,15 +34,15 @@ ManagerControlPanel::~ManagerControlPanel()
 
 void ManagerControlPanel::setPowerLabelText()
 {
-    ui->label_power->setText(_has_power ? QStringLiteral("开机") :QStringLiteral("关机"));
+    ui->label_power->setText(_has_power ? "开机" : "关机");
 }
 
 void ManagerControlPanel::setModeLabelText()
 {
     if (_mode == WorkingMode::COLD)
-        ui->label_mode->setText(QStringLiteral("制冷"));
+        ui->label_mode->setText("制冷");
     else
-        ui->label_mode->setText(QStringLiteral("制热"));
+        ui->label_mode->setText("制热");
 }
 
 void ManagerControlPanel::setRateLabelText()
@@ -64,12 +65,12 @@ void ManagerControlPanel::reshow()
 
 void ManagerControlPanel::switch_to_power()
 {
-    QString msg = QStringLiteral("确定要将电源状态改变为%1状态吗？");
+    QString msg = "确定要将电源状态改变为%1状态吗？";
     if (_has_power)
-        msg = msg.arg(QStringLiteral("关闭"));
+        msg = msg.arg("关闭");
     else
-        msg = msg.arg(QStringLiteral("开启"));
-    if(QMessageBox::Yes == QMessageBox::warning(this, QStringLiteral("改变电源状态"), msg, QMessageBox::Yes | QMessageBox::No))
+        msg = msg.arg("开启");
+    if(QMessageBox::Yes == QMessageBox::warning(this, "改变电源状态", msg, QMessageBox::Yes | QMessageBox::No))
     {
         _has_power = !_has_power;
         setPowerLabelText();
@@ -81,7 +82,12 @@ void ManagerControlPanel::switch_to_parameter()
 
 }
 
-void ManagerControlPanel::switch_to_log()
+void ManagerControlPanel::switch_to_detail()
+{
+
+}
+
+void ManagerControlPanel::switch_to_report()
 {
 
 }
@@ -100,5 +106,5 @@ void ManagerControlPanel::switch_to_user()
 
 void ManagerControlPanel::set_power(bool has_power)
 {
-    ui->label_power->setText(has_power ? QStringLiteral("开启") : QStringLiteral("关闭"));
+    ui->label_power->setText(has_power ? "开启" : "关闭");
 }

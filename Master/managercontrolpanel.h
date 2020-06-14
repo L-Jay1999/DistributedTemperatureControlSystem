@@ -39,7 +39,8 @@ private slots:
     void reshow();                  //回显
     void switch_to_power();         //切换到电源控制
     void switch_to_parameter();     //切换到参数设置
-    void switch_to_log();           //切换到日志
+    void switch_to_detail();        //切换到详单查看
+    void switch_to_report();        //切换到报表查看
     void switch_to_monitor();       //切换到监控
     void switch_to_user();          //切换到用户管理
     void set_power(bool has_power);

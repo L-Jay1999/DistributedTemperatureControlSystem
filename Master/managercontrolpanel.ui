@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>311</width>
-    <height>292</height>
+    <height>320</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,16 +31,9 @@
      </widget>
     </item>
     <item row="5" column="0">
-     <widget class="QPushButton" name="pushButton_log">
+     <widget class="QPushButton" name="pushButton_detail">
       <property name="text">
-       <string>运行日志</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="1">
-     <widget class="QPushButton" name="pushButton_monitor">
-      <property name="text">
-       <string>监控信息</string>
+       <string>查看详单</string>
       </property>
      </widget>
     </item>
@@ -79,13 +72,6 @@
       </property>
      </widget>
     </item>
-    <item row="6" column="1">
-     <widget class="QPushButton" name="pushButton_logout">
-      <property name="text">
-       <string>管理员登出</string>
-      </property>
-     </widget>
-    </item>
     <item row="2" column="1">
      <widget class="QLabel" name="label_manager">
       <property name="text">
@@ -121,7 +107,34 @@
       </property>
      </widget>
     </item>
+    <item row="6" column="1">
+     <widget class="QPushButton" name="pushButton_monitor">
+      <property name="text">
+       <string>监控信息</string>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QPushButton" name="pushButton_report">
+      <property name="text">
+       <string>查看报表</string>
+      </property>
+     </widget>
+    </item>
    </layout>
+  </widget>
+  <widget class="QPushButton" name="pushButton_logout">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>280</y>
+     <width>121</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>管理员登出</string>
+   </property>
   </widget>
  </widget>
  <resources/>

@@ -1,9 +1,15 @@
-﻿#include "schedule.h"
+#include "schedule.h"
 
-//Schedule::Schedule(QObject *parent) : QObject(parent)
-//{
+Schedule::Schedule(QObject *parent) : QObject(parent)
+{
 
-//}
+}
+
+Service::Service(const Service& ser)
+{
+    _roomID = ser.getRoomID();
+    _config = ser.getConfig();
+}
 
 void Schedule::addRoom(const QString& RoomID,const Config::RoomConfig& conf)
 {
@@ -13,21 +19,17 @@ void Schedule::addRoom(const QString& RoomID,const Config::RoomConfig& conf)
 
 void Schedule::delRoom(const QString &RoomID)
 {
-    for(auto it = waiting_slave.begin();it != waiting_slave.end();it++)
+    auto it = find(waiting_slave,RoomID);
+    if(it != waiting_slave.end())
     {
-        if((*it).getRoomID() == RoomID)
-        {
-            waiting_slave.erase(it);
-            return;
-        }
+        waiting_slave.erase(it);
+        return;
     }
-    for(auto it = working_slave.begin();it != working_slave.end();it++)
+    it = find(working_slave,RoomID);
+    if(it != working_slave.end())
     {
-        if((*it).getRoomID() == RoomID)
-        {
-            working_slave.erase(it);
-            return;
-        }
+        working_slave.erase(it);
+        return;
     }
 }
 
@@ -45,5 +47,42 @@ void Schedule::checkIdle()
 
 void Schedule::SetSpeed(const QString &RoomID, const SpeedLevel &Level)
 {
+    Config::RoomConfig conf;
+    auto it = find(waiting_slave,RoomID);
+    if(it != waiting_slave.end())
+    {
+        conf = (*it).getConfig();
+        conf.setLevel(Level);
+        (*it).updateConfig(conf);
+        return;
+    }
+    it = find(working_slave,RoomID);
+    if(it != working_slave.end())
+    {
+        conf = (*it).getConfig();
+        conf.setLevel(Level);
+        (*it).updateConfig(conf);
+        return;
+    }
+}
 
+void Schedule::SetTemperature(const QString &RoomID, const double &Degree)
+{
+    Config::RoomConfig conf;
+    auto it = find(waiting_slave,RoomID);
+    if(it != waiting_slave.end())
+    {
+        conf = (*it).getConfig();
+        conf.setTemperature();
+        (*it).updateConfig(conf);
+        return;
+    }
+    it = find(working_slave,RoomID);
+    if(it != working_slave.end())
+    {
+        conf = (*it).getConfig();
+        conf.setTemperature();
+        (*it).updateConfig(conf);
+        return;
+    }
 }
