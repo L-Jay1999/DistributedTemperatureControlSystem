@@ -32,51 +32,9 @@ void Schedule::checkIdle()
     while(working_slave.size() < MAX_SERVICE && !waiting_slave.empty())
     {
         //将一台从机从等待队列移入服务区
-        emit work_signal(waiting_slave.front());
+        //sic.Send(true);
         working_slave.push_back(waiting_slave.front());
         waiting_slave.erase(waiting_slave.begin());
     }
 }
-/*
-void Schedule::SetSpeed(const QString &RoomID, const SpeedLevel &Level)
-{
-    Config::RoomConfig conf;
-    auto it = find(waiting_slave,RoomID);
-    if(it != waiting_slave.end())
-    {
-        conf = (*it).getConfig();
-        conf.setLevel(Level);
-        (*it).updateConfig(conf);
-        return;
-    }
-    it = find(working_slave,RoomID);
-    if(it != working_slave.end())
-    {
-        conf = (*it).getConfig();
-        conf.setLevel(Level);
-        (*it).updateConfig(conf);
-        return;
-    }
-}
 
-void Schedule::SetTemperature(const QString &RoomID, const double &Degree)
-{
-    Config::RoomConfig conf;
-    auto it = find(waiting_slave,RoomID);
-    if(it != waiting_slave.end())
-    {
-        conf = (*it).getConfig();
-        conf.setTemperature();
-        (*it).updateConfig(conf);
-        return;
-    }
-    it = find(working_slave,RoomID);
-    if(it != working_slave.end())
-    {
-        conf = (*it).getConfig();
-        conf.setTemperature();
-        (*it).updateConfig(conf);
-        return;
-    }
-}
-*/
