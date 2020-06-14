@@ -55,7 +55,6 @@ SOURCES += \
     airsupplycontroller.cpp \
     schedule.cpp \
     parameterwidget.cpp \
-    monitorwidget.cpp \
     report.cpp \
     usersetspeedcontroller.cpp \
     usersettemperaturecontroller.cpp \
@@ -85,7 +84,6 @@ HEADERS += \
     airsupplycontroller.h \
     schedule.h \
     parameterwidget.h \
-    monitorwidget.h \
     report.h \
     usersetspeedcontroller.h \
     usersettemperaturecontroller.h \

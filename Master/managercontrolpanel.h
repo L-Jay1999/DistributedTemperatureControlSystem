@@ -5,7 +5,6 @@
 #include "powersupplywidget.h"
 #include "usermanagementwidget.h"
 #include "parameterwidget.h"
-#include "monitorwidget.h"
 #include "reportwidget.h"
 #include "monitordialog.h"
 #include "../CommonLib/common.h"

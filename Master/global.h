@@ -25,7 +25,7 @@ public:
         if (!_connected_rooms.count(room_id))
         {
             _connected_rooms.insert(room_id);
-            _rooms[room_id] = {{}, {}, {}, room_id};
+            _rooms[room_id] = {{}, {}, room_id};
         }
     }
 
