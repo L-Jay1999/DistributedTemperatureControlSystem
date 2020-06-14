@@ -33,6 +33,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+    global.cpp \
         main.cpp \
     managerlogincontroller.cpp \
     managerloginwidget.cpp \
@@ -49,6 +50,7 @@ SOURCES += \
     schedule.cpp
 
 HEADERS += \
+    global.h \
     managerlogincontroller.h \
     managerloginwidget.h \
     standbywidget.h \
