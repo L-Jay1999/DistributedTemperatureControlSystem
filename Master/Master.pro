@@ -101,7 +101,8 @@ FORMS += \
     operationconfirmationdialog.ui \
     usermanagementwidget.ui \
     promptdialog.ui \
-    parameterwidget.ui
+    parameterwidget.ui \
+    reportwidget.ui
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../CommonLib/release/ -lCommonLib
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../CommonLib/debug/ -lCommonLib

@@ -1,20 +1,8 @@
-﻿#ifndef REPORTWIDGET_H
+#ifndef REPORTWIDGET_H
 #define REPORTWIDGET_H
 
 #include <QWidget>
-
-#include <QVBoxLayout>
-#include <QPushButton>
-#include <QStandardItem>
-#include <QStandardItemModel>
-#include <QTreeView>
-#include <QTableView>
-#include <QHeaderView>
-#include <QDateTime>
-#include "global.h"
 #include "report.h"
-#include <map>
-#include <utility>
 
 namespace Ui {
 class ReportWidget;
@@ -25,19 +13,16 @@ class ReportWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit ReportWidget(QWidget *parent = nullptr);
-    void createReportView();
+    explicit ReportWidget(QWidget *parent = 0);
+    ~ReportWidget();
 
 private:
     Ui::ReportWidget *ui;
-//    Sensor sensor;
-    QPushButton *m_PushButton;
-    QVBoxLayout *mainLayout;
-//    QTreeView *treeView;
-    QStandardItemModel *standItemModel;
-    QTableView *tableView;
-    QPushButton *download_btn;
-    DBAccess db;
+    Report _report;
+private slots:
+    void GetReport();//点击查询
+signals:
+    void cancel_signal();
 };
 
 #endif // REPORTWIDGET_H
