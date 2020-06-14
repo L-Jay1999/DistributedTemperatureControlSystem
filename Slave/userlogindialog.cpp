@@ -41,11 +41,6 @@ void UserLoginDialog::on_confirmbutton_clicked()
     qDebug() << _room_id_input->text();
     LoginController logincontroller(_id_input->text(), _room_id_input->text(), Config::getSlaveListenerPortValue());
     auto [error, is_suc, init_mode, init_temp] = logincontroller.Login();
-//    auto [is_suc, err_str, init_mode, init_temp] = {true, "", WorkingMode::COLD, 25.0};
-//    auto is_suc = true;
-//    auto err_str = "";
-//    auto init_mode = WorkingMode::COLD;
-//    auto init_temp = 25.0;
     qDebug() << "111";
     if (error.hasError())
     {

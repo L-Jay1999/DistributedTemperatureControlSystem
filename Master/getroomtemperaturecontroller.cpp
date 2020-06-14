@@ -2,7 +2,10 @@
 
 GetRoomTemperatureController::GetRoomTemperatureController(QObject *parent) : QObject(parent)
 {
-
+    _rooms = getRooms();
+    _timer = new QTimer(this);
+    connect(_timer, SIGNAL(timeout()), this, SLOT(GetALL()));
+    _timer->start(1500);
 }
 
 double GetRoomTemperatureController::Get(const QString &RoomID)
@@ -14,4 +17,13 @@ double GetRoomTemperatureController::Get(const QString &RoomID)
         qDebug() << error.err_str;
     }
     return degree;
+}
+
+void GetRoomTemperatureController::GetALL()
+{
+    std::vector<QString> res = _rooms.getRoomIDs();
+    for(auto i : res){
+        double degree = Get(i);
+        _rooms.getRoom(i).config.setCurTemperature(degree);
+    }
 }

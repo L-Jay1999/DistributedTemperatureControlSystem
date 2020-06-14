@@ -5,6 +5,7 @@
 
 #include "schedule.h"
 #include "common.h"
+#include "global.h"
 
 class Schedule;
 class AirSupplyController : public QObject
@@ -17,6 +18,7 @@ public:
 
 private:
     Schedule *_schedule;
+    Rooms _rooms;
 
 signals:
 
