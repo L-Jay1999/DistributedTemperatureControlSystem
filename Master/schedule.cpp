@@ -1,9 +1,9 @@
-#include "schedule.h"
+﻿#include "schedule.h"
 
-Schedule::Schedule(QObject *parent) : QObject(parent)
-{
+//Schedule::Schedule(QObject *parent) : QObject(parent)
+//{
 
-}
+//}
 
 void Schedule::addRoom(const QString& RoomID,const Config::RoomConfig& conf)
 {
@@ -15,7 +15,7 @@ void Schedule::delRoom(const QString &RoomID)
 {
     for(auto it = waiting_slave.begin();it != waiting_slave.end();it++)
     {
-        if((*it).getRoomID == RoomID)
+        if((*it).getRoomID() == RoomID)
         {
             waiting_slave.erase(it);
             return;
@@ -23,7 +23,7 @@ void Schedule::delRoom(const QString &RoomID)
     }
     for(auto it = working_slave.begin();it != working_slave.end();it++)
     {
-        if((*it).getRoomID == RoomID)
+        if((*it).getRoomID() == RoomID)
         {
             working_slave.erase(it);
             return;

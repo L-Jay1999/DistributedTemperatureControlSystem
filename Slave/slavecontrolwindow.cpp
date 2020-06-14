@@ -1,4 +1,4 @@
-#include "slavecontrolwindow.h"
+﻿#include "slavecontrolwindow.h"
 #include "ui_slavecontrolwindow.h"
 
 SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
@@ -6,7 +6,7 @@ SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
     ui(new Ui::SlaveControlWindow)
 {
     ui->setupUi(this);
-    this->setWindowTitle("从控机");
+    this->setWindowTitle(QStringLiteral("从控机"));
     _temperature_lcd = ui->_temperature_lcd;
     _roomtemperature_lcd = ui->_roomtemperature_lcd;
     _cost_lcd = ui->_cost_lcd;

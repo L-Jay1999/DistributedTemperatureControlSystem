@@ -1,4 +1,4 @@
-
+﻿
 #include "managerlogincontroller.h"
 
 std::tuple<bool, QString> ManagerLoginController::ManagerLogin()
@@ -10,11 +10,11 @@ std::tuple<bool, QString> ManagerLoginController::ManagerLogin()
         bool result = db.hasManager(_Account,_Password);
         if (result)
         {
-            return {true, "登录成功"};
+            return {true, QStringLiteral("登录成功")};
         }
         else
         {
-            return {false, "账户不存在或密码错误"};
+            return {false, QStringLiteral("账户不存在或密码错误")};
         }
     }
     else
