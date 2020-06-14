@@ -6,10 +6,11 @@
 #include <vector>
 #include <deque>
 #include <algorithm>
-#include "../CommonLib/common.h"
+#include "common.h"
 #include "scheduleinfocontroller.h"
 #include "airsupplycontroller.h"
 
+class AirSupplyController;
 class Schedule : public QObject
 {
     Q_OBJECT

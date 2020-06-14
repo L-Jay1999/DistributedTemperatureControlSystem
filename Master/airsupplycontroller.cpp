@@ -1,11 +1,10 @@
 #include "airsupplycontroller.h"
 
-#include "schedule.h"
-
-AirSupplyController::AirSupplyController(QObject *parent, Schedule *schedule)
-    : QObject(parent), _schedule(schedule)
+AirSupplyController::AirSupplyController(QObject *parent)
+    : QObject(parent)
 {
     Config::setMasterControllerPointer(Config::MasterControllerType::WIND_REQUEST, this);
+    _schedule = (Schedule *)parent;
 }
 
 void AirSupplyController::UpdateAirSupply(bool OpenorClose, const QString &RoomID)

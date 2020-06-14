@@ -1,7 +1,7 @@
 #include "usershutdowncontroller.h"
 
-UserShutDownController::UserShutDownController(QObject *parent, Schedule *schedule)
-    : QObject(parent), _schedule(schedule)
+UserShutDownController::UserShutDownController(QObject *parent)
+    : QObject(parent)
 {
     Config::setMasterControllerPointer(Config::MasterControllerType::SHUTDOWN, this);
     _rooms = getRooms();
