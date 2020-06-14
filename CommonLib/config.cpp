@@ -134,4 +134,27 @@ namespace Config
         std::shared_lock lock(timeout_ms_rw_mutex);
         return timeout_msec;
     }
+
+    static WorkingMode mode;
+
+    WorkingMode getCurrentWorkingMode()
+    {
+        return mode;
+    }
+
+    void setCurrentWorkingMode(const WorkingMode working_mode)
+    {
+       mode = working_mode;
+    }
+
+    static double working_degree = 25.0;
+    double getDefaultWorkingTemperature()
+    {
+        return working_degree;
+    }
+
+    void setDefaultWorkingTemperature(double degree)
+    {
+        working_degree = degree;
+    }
 } // namespace Config

@@ -1,5 +1,7 @@
 #include "airsupplycontroller.h"
 
+#include "schedule.h"
+
 AirSupplyController::AirSupplyController(QObject *parent, Schedule *schedule)
     : QObject(parent), _schedule(schedule)
 {

@@ -2,9 +2,10 @@
 #define AIRSUPPLYCONTROLLER_H
 
 #include <QObject>
-#include "schedule.h"
 
 #include "common.h"
+
+class Schedule;
 
 class AirSupplyController : public QObject
 {

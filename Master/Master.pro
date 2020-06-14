@@ -35,7 +35,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     getroomtemperaturecontroller.cpp \
     global.cpp \
-        main.cpp \
+    main.cpp \
     managerlogincontroller.cpp \
     managerloginwidget.cpp \
     scheduleinfocontroller.cpp \

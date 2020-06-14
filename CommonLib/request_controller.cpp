@@ -7,6 +7,8 @@
 #include "../Master/userlogincontroller.h"
 #include "../Master/airsupplycontroller.h"
 
+#include <optional>
+
 namespace RequestController
 {
     QByteArray HandleRequest(const QByteArray &request, const QString &host_addr, const quint16 host_port)
@@ -37,7 +39,9 @@ namespace RequestController
                 response.type = RequestType::LOGIN_RESPONSE;
                 UserLoginController *controller =
                         dynamic_cast<UserLoginController *>(Config::getMasterControllerPointer(Config::MasterControllerType::LOGIN));
-                // auto [login_result, config] = controller->UserLogin(request_parsed.user_id.value(), request_parsed.room_id.value());
+                auto [login_result, init_mode, init_temp] = controller->UserLogin(request_parsed.user_id.value(), request_parsed.room_id.value());
+                response.result = login_result;
+                response.config = {init_mode, init_temp};
                 break;
             }
             case RequestType::SET_SPEED:
@@ -53,7 +57,6 @@ namespace RequestController
                 response.type = RequestType::ACK;
                 AirSupplyController *controller =
                         dynamic_cast<AirSupplyController *>(Config::getMasterControllerPointer(Config::MasterControllerType::WIND_REQUEST));
-                controller->UpdateAirSupply(request_parsed.is_open.value(), request_parsed.room_id.value());
                 response.result = true;
                 break;
             }

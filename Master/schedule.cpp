@@ -13,7 +13,7 @@ void Schedule::addRoom(const QString& RoomID)
 
 void Schedule::delRoom(const QString &RoomID)
 {
-    auto it = std::find(waiting_slave.begin(),waiting_slave.end(),RoomID);
+    auto it = std::find(waiting_slave.begin(), waiting_slave.end(), RoomID);
     if(it != waiting_slave.end())
     {
         waiting_slave.erase(it);
@@ -39,4 +39,9 @@ void Schedule::checkIdle()
         working_slave.push_back(waiting_slave.front());
         waiting_slave.erase(waiting_slave.begin());
     }
+}
+
+void Schedule::change_power(bool is_working)
+{
+
 }

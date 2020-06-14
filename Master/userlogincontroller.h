@@ -16,13 +16,23 @@ class UserLoginController : public QObject
     Q_OBJECT
 public:
     explicit UserLoginController(QObject *parent = nullptr, Schedule *schedule = nullptr);
-    std::tuple<bool, WorkingMode, double>UserLogin(const QString &UserID, const QString &RoomID);
+    std::tuple<bool, WorkingMode, double> UserLogin(const QString &UserID, const QString &RoomID)
+    {
+        if(!_db.isConnected())
+            return {false, {}, {}};
+        if(_db.hasUser(RoomID, UserID)){
+            _rooms.addRoom(RoomID);
+            return {true, Config::getCurrentWorkingMode(), Config::getDefaultWorkingTemperature()};
+            // return {false, {}, {}};
+        }
+        return {false, {}, {}};
+    }
+
 
 private:
     Schedule *_schedule;
     Rooms _rooms;
     DBAccess _db;
-
 signals:
 
 };

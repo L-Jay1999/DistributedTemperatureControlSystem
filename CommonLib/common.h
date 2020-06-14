@@ -225,5 +225,13 @@ namespace Config {
     void setTimeOutMsec(int timeout_ms);
 
     int getTimeOutMSec();
+
+    WorkingMode getCurrentWorkingMode();
+
+    void setCurrentWorkingMode();
+
+    double getDefaultWorkingTemperature();
+
+    void setDefaultWorkingTemperature(double degree);
 };
 #endif // COMMON_H
