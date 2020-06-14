@@ -10,6 +10,10 @@
 #include <QTableView>
 #include <QHeaderView>
 //#include "../Slave/sensor.h"
+#include <QDateTime>
+#include "global.h"
+#include <map>
+#include <utility>
 
 namespace Ui {
 class MonitorWidget;
@@ -33,6 +37,7 @@ private:
 //    QTreeView *treeView;
     QStandardItemModel *standItemModel;
     QTableView *tableView;
+    DBAccess &db = getDB();
 };
 
 #endif // MONITORWIDGET_H

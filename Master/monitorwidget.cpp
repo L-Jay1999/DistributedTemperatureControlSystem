@@ -23,16 +23,34 @@ void MonitorWidget::createView()
         standItemModel->setHeaderData(4,Qt::Horizontal,QStringLiteral("当前风速"));
 
         //TODO 从DBAccess中拿到所有房间的数据
-        for(int i=0;i<100;i++)
-        {
-            QStandardItem *standItem1 = new QStandardItem(tr("%1").arg(i+1));
-            QStandardItem *standItem2 = new QStandardItem(tr("line %1").arg(i+1));
-            standItemModel->setItem(i,0,standItem1);
-            standItemModel->item(i,0)->setForeground(QBrush(QColor(255,0,0)));
-            standItemModel->item(i,0)->setTextAlignment(Qt::AlignCenter);
-            standItemModel->setItem(i,1,standItem2);
-            standItemModel->setItem(i,2,standItem2);
+        QDateTime begin, end;
+        begin.setDate(QDate::currentDate());
+        end.setDate(QDate::currentDate().addDays(1));
+        std::pair<bool, std::vector<StatPayload>> response = db.getRoomRequestStats(begin,end);//获取当日报表
+//        for(auto i=response.second.begin();i!=response.second.end())
+//        {
+//            QStandardItem *standItem1 = new QStandardItem(tr(i->room_id).arg(i+1));
+//            QStandardItem *standItem2 = new QStandardItem(tr("line %1").arg(i+1));
+//            standItemModel->setItem(i,0,standItem1);
+//            standItemModel->item(i,0)->setForeground(QBrush(QColor(255,0,0)));
+//            standItemModel->item(i,0)->setTextAlignment(Qt::AlignCenter);
+//            standItemModel->setItem(i,1,standItem2);
+//            standItemModel->setItem(i,2,standItem2);
 
+
+//        }
+        for(auto it = response.second.begin(); it != response.second.end();)
+        {
+            int i = 0;
+            QString room_id = it->room_id;
+            const char *c_roomid = room_id.toLocal8Bit().data();
+            QDateTime room_endtime = it->end_time;
+            QDateTime room_starttime = it->start_time;
+
+            QStandardItem *standItem1 = new QStandardItem(tr(c_roomid).arg(i+1));
+            standItemModel->setItem(i,0,standItem1);
+            it++;
+            i++;
         }
 
         tableView->setModel(standItemModel);
