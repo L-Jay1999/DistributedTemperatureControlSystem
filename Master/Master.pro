@@ -33,10 +33,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
+    getroomtemperaturecontroller.cpp \
     global.cpp \
         main.cpp \
     managerlogincontroller.cpp \
     managerloginwidget.cpp \
+    scheduleinfocontroller.cpp \
+    setmodecontroller.cpp \
     standbywidget.cpp \
     managercontrolpanel.cpp \
     manager.cpp \
@@ -45,7 +48,6 @@ SOURCES += \
     userlogincontroller.cpp \
     usermanagementwidget.cpp \
     promptdialog.cpp \
-    requestcontroller.cpp \
     userinfocontroller.cpp \
     airsupplycontroller.cpp \
     schedule.cpp \
@@ -57,9 +59,12 @@ SOURCES += \
     usershutdowncontroller.cpp
 
 HEADERS += \
+    getroomtemperaturecontroller.h \
     global.h \
     managerlogincontroller.h \
     managerloginwidget.h \
+    scheduleinfocontroller.h \
+    setmodecontroller.h \
     standbywidget.h \
     managercontrolpanel.h \
     manager.h \
@@ -68,7 +73,6 @@ HEADERS += \
     userlogincontroller.h \
     usermanagementwidget.h \
     promptdialog.h \
-    requestcontroller.h \
     userinfocontroller.h \
     airsupplycontroller.h \
     schedule.h \

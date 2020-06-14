@@ -4,7 +4,6 @@
 
 Report::Report()
 {
-
 }
 
 std::pair<bool,std::vector<StatPayload>> Report::getDetails(const QDateTime &begin,const QDateTime &end,const QString &roomID)
@@ -24,11 +23,11 @@ std::pair<bool,std::vector<StatPayload>> Report::getDetails(const QDateTime &beg
     return response;
 }
 
-bool Report::getTodayReport()
+bool Report::getTodayReport(const QDate &date)
 {
     QDateTime begin, end;
-    begin.setDate(QDate::currentDate());
-    end.setDate(QDate::currentDate().addDays(1));
+    begin.setDate(date);
+    end.setDate(date.addDays(1));
     std::pair<bool, std::vector<StatPayload>> response = db.getRoomRequestStats(begin,end);//获取当日报表
     if(response.first == false)
         return false;
