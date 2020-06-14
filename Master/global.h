@@ -54,6 +54,25 @@ public:
             _rooms.erase(_rooms.find(room_id));
         }
     }
+
+    void SetSpeed(const QString& RoomID, const SpeedLevel& Level)//设置从控机风速
+    {
+        auto iter = _rooms.find(RoomID);
+        if(iter != _rooms.end())
+        {
+            iter->secend.config.SetLevel(Level);
+        }
+    }
+
+    void SetTemperature(const QString& RoomID, const double& Degree)//设置从控机工作温度
+    {
+        auto iter = _rooms.find(RoomID);
+        if(iter != _rooms.end())
+        {
+            iter->secend.config.SetTemperature(Degree);
+        }
+    }
+
 private:
     std::map<QString, Room> _rooms;
     std::set<QString> _connected_rooms;
