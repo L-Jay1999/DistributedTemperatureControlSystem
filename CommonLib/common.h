@@ -96,6 +96,13 @@ namespace Config {
         RoomConfig() = delete;
         RoomConfig(WorkingMode mode,SpeedLevel level,double wd,double cd)
             :   _mode(mode),_level(level),_working_degree(wd),_current_degree(cd)   {}
+        RoomConfig(const RoomConfig& conf)
+        {
+            _mode = conf.getMode();
+            _level = conf.getLevel();
+            _working_degree = conf.getTemperature();
+            _current_degree = conf.getCurTemperature();
+        }
         void setMode(WorkingMode mode){_mode = mode;}
         void setLevel(SpeedLevel level){_level = level;}
         void setTemperature(double working_degree){_working_degree = working_degree;}
