@@ -15,7 +15,7 @@ class UserLoginController : public QObject
 {
     Q_OBJECT
 public:
-    explicit UserLoginController(QObject *parent = nullptr, Schedule *schedule = nullptr);
+    explicit UserLoginController(QObject *parent = nullptr);
     std::tuple<bool, WorkingMode, double> UserLogin(const QString &UserID, const QString &RoomID)
     {
         if(!_db.isConnected())

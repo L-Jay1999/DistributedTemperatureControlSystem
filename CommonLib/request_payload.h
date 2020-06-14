@@ -12,6 +12,7 @@
 #include <QJsonDocument>
 
 #include "common.h"
+#include "log.h"
 
 enum class RequestType
 {
@@ -129,7 +130,8 @@ public:
      */
     static std::pair<bool, RequestPayload> ParseBase64(const QByteArray &obj_str)
     {
-        return Parse(QByteArray::fromBase64(obj_str));
+        // return Parse(QByteArray::fromBase64(obj_str));
+        return Parse(obj_str);
     }
 
     /**
@@ -147,6 +149,7 @@ public:
 
         if (json_err.error == QJsonParseError::NoError && !document.isNull())
         {
+            Log::addLog(Log::LogLevel::ERROR, QString("IN_PARSE: ") + document.toJson());
             assert(document.isObject());
             payload.fromQJsonObject(document.object());
         }

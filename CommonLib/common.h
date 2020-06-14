@@ -113,7 +113,7 @@ namespace Config {
         double getCurTemperature() const {return _current_degree;}
     };
     // 标记主机的地址和端口，用于从控机发送请求给中央空调
-    static constexpr auto kMasterHostAddr = "localhost";
+    static constexpr auto kMasterHostAddr = "127.0.0.1";
     static constexpr quint16 kMasterListenPort = 12345;
 
     // 设定传输失败时重传次数
