@@ -8,6 +8,7 @@
 #include "monitorwidget.h"
 
 #include "../CommonLib/common.h"
+#include "./listener.h"
 
 namespace Ui {
 class ManagerControlPanel;
@@ -24,6 +25,7 @@ public:
 private:
     Ui::ManagerControlPanel *ui;
     QString _account;
+    Listener _listener;
 
     bool _has_power{false};
     int _rate{10};

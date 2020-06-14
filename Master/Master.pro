@@ -35,9 +35,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     getroomtemperaturecontroller.cpp \
     global.cpp \
-        main.cpp \
+    main.cpp \
     managerlogincontroller.cpp \
     managerloginwidget.cpp \
+    master_request_controller.cpp \
     scheduleinfocontroller.cpp \
     setmodecontroller.cpp \
     standbywidget.cpp \
@@ -63,8 +64,10 @@ SOURCES += \
 HEADERS += \
     getroomtemperaturecontroller.h \
     global.h \
+    listener.h \
     managerlogincontroller.h \
     managerloginwidget.h \
+    master_request_controller.h \
     scheduleinfocontroller.h \
     setmodecontroller.h \
     standbywidget.h \

@@ -4,18 +4,16 @@
 #include <QObject>
 
 #include "common.h"
-#include "schedule.h"
 #include "global.h"
 
 class UserSetTemperatureController : public QObject
 {
     Q_OBJECT
 public:
-    explicit UserSetTemperatureController(QObject *parent = nullptr, Schedule *schedule = nullptr);
+    explicit UserSetTemperatureController(QObject *parent = nullptr);
     bool Set(const QString &RoomID, const double degree);
 
 private:
-    Schedule *_schedule;
     Rooms _rooms;
 
 signals:

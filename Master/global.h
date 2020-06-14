@@ -3,6 +3,7 @@
 
 #include "../CommonLib/common.h"
 #include "../CommonLib/dbaccess.h"
+
 #include <map>
 #include <set>
 #include <vector>
@@ -78,11 +79,8 @@ private:
     std::set<QString> _connected_rooms;
 };
 
-WorkingMode getCurrentWorkingMode();
 
-inline constexpr double getDefaultWorkingTemperature() { return 25.0; }
 
-void setCurrentWorkingMode();
 
 Rooms &getRooms();
 
