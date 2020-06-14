@@ -157,4 +157,23 @@ namespace Config
     {
         working_degree = degree;
     }
+
+    static std::map<QString, quint16> room_to_port{};
+    void addSlavePort(const QString &room_id, quint16 port)
+    {
+        room_to_port[room_id] = port;
+    }
+
+    quint16 getSlavePort(const QString &room_id)
+    {
+        if (room_to_port.count(room_id))
+            return room_to_port[room_id];
+        return {};
+    }
+
+    void delSlavePort(const QString &room_id)
+    {
+        if (auto iter = room_to_port.find(room_id); iter != room_to_port.end())
+            room_to_port.erase(iter);
+    }
 } // namespace Config

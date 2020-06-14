@@ -34,7 +34,6 @@ SOURCES += \
     dbaccess.cpp \
     dbhelper.cpp \
     log.cpp \
-    request_controller.cpp \
     request_payload.cpp
 
 HEADERS += \
@@ -42,11 +41,9 @@ HEADERS += \
     database_defs.h \
     dbaccess.h \
     dbhelper.h \
-    listener.h \
     log.h \
     msg_queen.h \
     request_base.h \
-    request_controller.h \
     request_payload.h \
     requests.h
 

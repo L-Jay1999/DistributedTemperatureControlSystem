@@ -188,7 +188,7 @@ QPushButton:pressed {
       <string notr="true"/>
      </property>
      <property name="text">
-      <string>参数设置</string>
+      <string>改变工作模式</string>
      </property>
     </widget>
    </item>

@@ -233,5 +233,11 @@ namespace Config {
     double getDefaultWorkingTemperature();
 
     void setDefaultWorkingTemperature(double degree);
+
+    void addSlavePort(const QString &room_id, quint16 port);
+
+    quint16 getSlavePort(const QString &room_id);
+
+    void delSlavePort(const QString &room_id);
 };
 #endif // COMMON_H

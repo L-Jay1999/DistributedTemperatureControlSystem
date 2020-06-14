@@ -37,6 +37,8 @@ ManagerControlPanel::ManagerControlPanel(const QString &manager_account, QWidget
     setPowerLabelText();
     ui->label_manager->setText(manager_account);
     setRateLabelText();
+    if (_listener.Listen())
+        emit SetErrorInfoTextSignal("监听端口成功，端口号 " + QString::number(Config::kMasterListenPort));
 }
 
 ManagerControlPanel::~ManagerControlPanel()
