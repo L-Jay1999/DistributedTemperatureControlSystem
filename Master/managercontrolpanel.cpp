@@ -30,7 +30,6 @@ ManagerControlPanel::ManagerControlPanel(const QString &manager_account, QWidget
     connect(&clear_error_info_timer, &QTimer::timeout, this, &ManagerControlPanel::clear_error_info_text);
     psw = new PowerSupplyWidget;
     umw = new UserManagementWidget;
-    mw = new MonitorWidget;
     rw = new ReportWidget;
 
     setModeLabelText();
@@ -109,6 +108,7 @@ void ManagerControlPanel::switch_to_report()
 
 void ManagerControlPanel::switch_to_monitor()
 {
+    mw = new MonitorWidget;
     mw->show();
     this->hide();
     connect(mw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
