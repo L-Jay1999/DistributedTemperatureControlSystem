@@ -6,6 +6,8 @@
 #include "../Master/usersettemperaturecontroller.h"
 #include "../Master/usershutdowncontroller.h"
 
+#include "log.h"
+
 #include <optional>
 
 namespace MasterRequestController
@@ -14,7 +16,7 @@ namespace MasterRequestController
     {
         RequestPayload response;
 
-        auto [is_parsing_suc, request_parsed] = RequestParser::Parse(request);
+        auto [is_parsing_suc, request_parsed] = RequestParser::ParseBase64(request);
         if (!is_parsing_suc)
         {
             auto fail_response = getAckResponse(false);
@@ -26,6 +28,7 @@ namespace MasterRequestController
         }
         else
         {
+            Log::addLog(Log::LogLevel::ERROR, QString("REQUEST: ") + request_parsed.toString());
             response.target_host = host_addr;
             response.target_port = host_port;
             response.source_host = request_parsed.target_host;
@@ -38,6 +41,7 @@ namespace MasterRequestController
                 response.type = RequestType::LOGIN_RESPONSE;
                 UserLoginController *controller =
                         dynamic_cast<UserLoginController *>(Config::getMasterControllerPointer(Config::MasterControllerType::LOGIN));
+
                 auto [login_result, init_mode, init_temp] = controller->UserLogin(request_parsed.user_id.value(), request_parsed.room_id.value());
                 response.result = login_result;
                 response.config = {init_mode, init_temp};
@@ -86,7 +90,7 @@ namespace MasterRequestController
                 throw getTypeStr(request_parsed.type);
             }
         }
-
+        Log::addLog(Log::LogLevel::ERROR, QString("RESPONSE: ") + response.toBase64ByteArray());
         return response.toBase64ByteArray();
     }
 } // namespace RequestController

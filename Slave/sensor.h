@@ -17,7 +17,6 @@ public:
 
     void setIsWindWithoutUpdate(bool is_wind);
 
-
     void setTargetDegreeWithoutUpdate(double target_degree);
 
     void setTargetDegree(double target_degree);

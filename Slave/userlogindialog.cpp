@@ -45,8 +45,19 @@ void UserLoginDialog::on_confirmbutton_clicked()
 //    auto err_str = "";
 //    auto init_mode = WorkingMode::COLD;
 //    auto init_temp = 25.0;
-    if(is_suc)
+    qDebug() << "111";
+    if (error.hasError())
     {
+        qDebug() << "222";
+        QMessageBox *err_msg = new QMessageBox("登录失败", error.err_str,
+                                               QMessageBox::Critical, QMessageBox::Ok,
+                                               QMessageBox::NoButton, QMessageBox::NoButton,
+                                               this);
+        err_msg->exec();
+    }
+    else if(is_suc)
+    {
+        qDebug() << "333";
         emit LoginSuccess(_room_id_input->text(), _id_input->text(), init_mode, init_temp);
         std::this_thread::sleep_for(200ms);
         emit accept();
@@ -54,7 +65,8 @@ void UserLoginDialog::on_confirmbutton_clicked()
     }
     else
     {
-        QMessageBox *err_msg = new QMessageBox("登录失败", error.err_str,
+        qDebug() << "444";
+        QMessageBox *err_msg = new QMessageBox("登录失败", "身份证号或房间号错误",
                                                QMessageBox::Critical, QMessageBox::Ok,
                                                QMessageBox::NoButton, QMessageBox::NoButton,
                                                this);

@@ -11,6 +11,7 @@
 #include "request_base.h"
 #include "request_payload.h"
 #include "common.h"
+#include "log.h"
 
 class LoginRequest : Request
 {
@@ -25,6 +26,7 @@ public:
         auto payload = BuildPayload();
 
         auto [errs, response] = SendRequest(payload);
+
         if (errs.hasError())
         {
             return {errs, {}, {}, {}};

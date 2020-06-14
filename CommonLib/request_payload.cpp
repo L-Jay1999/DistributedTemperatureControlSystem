@@ -24,6 +24,13 @@ const QString &getTypeStr(const RequestType type)
     return kTypeStr.at(type);
 }
 
+static const RequestType getTypeFromStr(const QString &type_str)
+{
+    for (const auto &[type, str] : kTypeStr)
+        if (str == type_str)
+            return type;
+}
+
 QJsonObject RequestPayload::toQJsonObject() const
 {
     assert(CheckParams());
@@ -43,7 +50,7 @@ QJsonObject RequestPayload::toQJsonObject() const
         const auto [default_mode, default_temp] = config.value();
         config_obj.insert(kModeKey, EnumToInt(default_mode));
         config_obj.insert(kTemperatureKey, default_temp);
-        obj.insert(kTemperatureKey, config_obj);
+        obj.insert(kConfigKey, config_obj);
     }
     if (mode.has_value())
         obj.insert(kModeKey, EnumToInt(mode.value()));
@@ -69,7 +76,7 @@ QJsonObject RequestPayload::toQJsonObject() const
 void RequestPayload::fromQJsonObject(const QJsonObject &obj)
 {
     assert(obj.contains(kTypeKey));
-    type = static_cast<decltype(type)>(obj.value(kTypeKey).toInt());
+    type = getTypeFromStr(obj.value(kTypeKey).toString());
     if (obj.contains(kResultKey))
         result = obj.value(kResultKey).toBool();
     if (obj.contains(kTemperatureKey))
@@ -100,11 +107,11 @@ void RequestPayload::fromQJsonObject(const QJsonObject &obj)
     if (obj.contains(kSrcHostKey))
         source_host = obj.value(kSrcHostKey).toString();
     if (obj.contains(kSrcPortKey))
-        source_host = static_cast<quint16>(obj.value(kSrcPortKey).toInt());
+        source_port = static_cast<quint16>(obj.value(kSrcPortKey).toInt());
     if (obj.contains(kTargetHostKey))
-        source_host = obj.value(kTargetHostKey).toString();
+        target_host = obj.value(kTargetHostKey).toString();
     if (obj.contains(kTargetPortKey))
-        source_host = static_cast<quint16>(obj.value(kTargetPortKey).toInt());
+        target_port = static_cast<quint16>(obj.value(kTargetPortKey).toInt());
     if (obj.contains(kIsInQueueKey))
         is_in_queue = obj.value(kIsInQueueKey).toBool();
     assert(CheckParams());
@@ -117,11 +124,14 @@ QString RequestPayload::toString() const
 
 QByteArray RequestPayload::toBase64ByteArray() const
 {
-    return QJsonDocument(toQJsonObject()).toJson().toBase64();
+    return QJsonDocument(toQJsonObject()).toJson();
+    // return QJsonDocument(toQJsonObject()).toJson().toBase64();
 }
 
 bool RequestPayload::CheckParams() const
 {
+
+    return true;
     switch (type)
     {
     case RequestType::LOGIN:

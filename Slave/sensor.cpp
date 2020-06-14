@@ -47,7 +47,7 @@ void Sensor::setTargetDegree(double target_degree)
     UpdateTemperature();
     _target_degree = target_degree;
     StartTimer();
-    qDebug() << "setTargetDegree(): " << target_degree;
+    // qDebug() << "setTargetDegree(): " << target_degree;
 }
 
 void Sensor::setWindSpeed(SpeedLevel windspeed)
@@ -57,7 +57,7 @@ void Sensor::setWindSpeed(SpeedLevel windspeed)
     UpdateTemperature();
     _speed = windspeed;
     StartTimer();
-    qDebug() << "setWindSpeed(): " << EnumToInt(windspeed);
+    // qDebug() << "setWindSpeed(): " << EnumToInt(windspeed);
 }
 
 void Sensor::setIsWind(bool is_wind)
@@ -67,7 +67,7 @@ void Sensor::setIsWind(bool is_wind)
     UpdateTemperature();
     _is_wind = is_wind;
     StartTimer();
-    qDebug() << "setIsWind(): " << is_wind;
+    // qDebug() << "setIsWind(): " << is_wind;
 }
 
 void Sensor::setWorkingMode(WorkingMode mode)
@@ -77,7 +77,7 @@ void Sensor::setWorkingMode(WorkingMode mode)
     UpdateTemperature();
     _mode = mode;
     StartTimer();
-    qDebug() << "setWorkingMode(): " << EnumToInt(mode);
+    // qDebug() << "setWorkingMode(): " << EnumToInt(mode);
 }
 
 void Sensor::StartTimer()
@@ -114,7 +114,7 @@ void Sensor::UpdateTemperature()
     if (_is_wind)
     {
         degree_diff = kTempChangePerSecWind.at(_speed) * diff_sec;
-        qDebug() << "diff for " << degree_diff;
+        // qDebug() << "diff for " << degree_diff;
         if (_mode == WorkingMode::COLD)
         {
             _current_degree -= degree_diff;
@@ -149,7 +149,7 @@ void Sensor::UpdateTemperature()
                 emit higherThanTargetDegreePlusOne();
         }
     }
-    qDebug() << "current_degree: " << _current_degree << ", _last: " << _last_update_time << ", now: " << now;
+    // qDebug() << "current_degree: " << _current_degree << ", _last: " << _last_update_time << ", now: " << now;
     _last_update_time = now;
 }
 
@@ -159,5 +159,5 @@ void Sensor::TimerUp()
     _timer.stop();
     UpdateTemperature();
     StartTimer();
-    qDebug() << "TimerUp";
+    // qDebug() << "TimerUp";
 }

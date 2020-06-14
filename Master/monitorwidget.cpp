@@ -1,6 +1,5 @@
 ﻿#include "monitorwidget.h"
 #include "report.h"
-#include "global.h"
 
 MonitorWidget::MonitorWidget(QWidget *parent) :
     QWidget(parent)
@@ -24,43 +23,23 @@ void MonitorWidget::createView()
 //        standItemModel->setHeaderData(3,Qt::Horizontal,QStringLiteral("送风状态"));
 //        standItemModel->setHeaderData(4,Qt::Horizontal,QStringLiteral("当前风速"));
 
-//        QDateTime begin, end;
-//        begin.setDate(QDate::currentDate());
-//        end.setDate(QDate::currentDate().addDays(1));
-//        //从DBAccess中拿到所有房间的数据
-//        const QDate today = QDateTime::currentDateTime().date();
-//        Report obj;
-//        if(obj.getDateReport(today))
-//        {
-//            for(auto it = obj.getDetails(begin, end).second.begin(); it != obj.getDetails(begin, end).second.end(); it ++)
-//            qDebug() << "???power = " << it->room_id<<endl;
-//        }
+        QDateTime begin, end;
+        begin.setDate(QDate::currentDate());
+        end.setDate(QDate::currentDate().addDays(1));
+        //从DBAccess中拿到所有房间的数据
+        const QDate today = QDateTime::currentDateTime().date();
+        Report obj;
+        if(obj.getDateReport(today))
+        {
+            auto [is_suc, details] = obj.getDetails(begin, end);
+            for(const auto detail : details)
+            {
+                qDebug() << "???room_id = " << detail.room_id;
+            }
+        }
 
 //        std::pair<bool, std::vector<StatPayload>> response = db.getRoomRequestStats(begin,end);//获取当日报表
 //        qDebug() << "!!!room_id = " << response.second.begin()->room_id <<endl;
-        auto room_ids = getRooms().getRoomIDs();
-        int i = 0;
-        for(auto &room_id : room_ids)
-        {
-            QString realid = getRooms().getRoom(room_id).room_id;
-            bool real_open = getRooms().getRoom(room_id).is_open;
-            bool real_wind = getRooms().getRoom(room_id).has_wind;
-            WorkingMode mode = getRooms().getRoom(room_id).config.getMode();
-            SpeedLevel level = getRooms().getRoom(room_id).config.getLevel();
-            double working_degree = getRooms().getRoom(room_id).config.getTemperature();
-            double current_degree = getRooms().getRoom(room_id).config.getCurTemperature();
-            QStandardItem *standItem1 = new QStandardItem(tr(room_id.toLocal8Bit().data()).arg(i+1));//房间号
-
-        }
-
-//        for(const auto &room_id : room_ids)
-//        {
-//                    qDebug() << "here--------- " <<endl;
-//            qDebug() << "!!!room_id = " << room_id.toLocal8Bit() <<endl;
-//            QStandardItem *standItem1 = new QStandardItem(tr(room_id.toLocal8Bit().data()).arg(i+1));//房间号
-//            standItemModel->setItem(i,0,standItem1);
-//            i++;
-//        }
 //        int i = 0;
 //        for(auto it = response.second.begin(); it != response.second.end();it ++)
 //        {
