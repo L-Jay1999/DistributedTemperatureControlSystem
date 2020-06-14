@@ -1,4 +1,4 @@
-#include "userlogincontroller.h"
+﻿#include "userlogincontroller.h"
 
 UserLoginController::UserLoginController(QObject *parent, Schedule *schedule)
      : QObject(parent), _schedule(schedule)
