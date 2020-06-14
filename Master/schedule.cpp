@@ -22,6 +22,7 @@ void Schedule::delRoom(const QString &RoomID)
     it = std::find(working_slave.begin(),working_slave.end(),RoomID);
     if(it != working_slave.end())
     {
+        sic->Send(false,*it);
         working_slave.erase(it);
         checkIdle();//此时服务区有空闲，需要进行调度
         return;
@@ -34,7 +35,7 @@ void Schedule::checkIdle()
     while(working_slave.size() < MAX_SERVICE && !waiting_slave.empty())
     {
         //将一台从机从等待队列移入服务区
-        //TODO 发送request通知从控机开始送风
+        sic->Send(true,waiting_slave.front());
         working_slave.push_back(waiting_slave.front());
         waiting_slave.erase(waiting_slave.begin());
     }
