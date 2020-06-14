@@ -48,10 +48,10 @@ private slots:
     void switch_to_report();        //切换到报表查看
     void switch_to_monitor();       //切换到监控
     void switch_to_user();          //切换到用户管理
-    void set_power(bool has_power);
+    void set_power_label_text(bool has_power);
     void change_mode();
-    void SetErrorInfoTextSlot(const QString &err_info);
-    void ClearErrorInfoTextSlot();
+    void set_error_info_text(const QString &err_info);
+    void clear_error_info_text();
 
     void rate_up();
     void rate_down();

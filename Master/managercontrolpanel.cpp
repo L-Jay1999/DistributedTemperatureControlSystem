@@ -26,8 +26,8 @@ ManagerControlPanel::ManagerControlPanel(const QString &manager_account, QWidget
     connect(ui->pushButton_report,&QPushButton::clicked,    this,&ManagerControlPanel::switch_to_report);   //查看报表
     connect(ui->pushButton_monitor,&QPushButton::clicked,   this,&ManagerControlPanel::switch_to_monitor);  //监控信息
     connect(ui->pushButton_user,&QPushButton::clicked,      this,&ManagerControlPanel::switch_to_user);     //用户管理
-    connect(this, &ManagerControlPanel::SetErrorInfoTextSignal,   this,&ManagerControlPanel::SetErrorInfoTextSlot);
-    connect(&clear_error_info_timer, &QTimer::timeout, this, &ManagerControlPanel::ClearErrorInfoTextSlot);
+    connect(this, &ManagerControlPanel::SetErrorInfoTextSignal,   this,&ManagerControlPanel::set_error_info_text);
+    connect(&clear_error_info_timer, &QTimer::timeout, this, &ManagerControlPanel::clear_error_info_text);
     psw = new PowerSupplyWidget;
     umw = new UserManagementWidget;
     mw = new MonitorWidget;
@@ -115,7 +115,7 @@ void ManagerControlPanel::switch_to_user()
     connect(umw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
 }
 
-void ManagerControlPanel::set_power(bool has_power)
+void ManagerControlPanel::set_power_label_text(bool has_power)
 {
     ui->label_power->setText(has_power ? "开启" : "关闭");
 }
@@ -146,24 +146,24 @@ void ManagerControlPanel::change_mode()
             auto [err_tmp, is_suc_tmp] = mode_request.Send();
             if (err_tmp.hasError())
             {
-                emit SetErrorInfoTextSignal("连接失败，与从控机的连接已断开");
+                emit SetErrorInfoTextSignal(QString("与房间%1连接失败，与从控机的连接已断开").arg(room_id));
                 getRooms().delRoomIfExists(room_id);
                 // TODO 停止送风，修改 UseAndCost 以及 Schedule
             }
         }
     }
-
+    emit SetErrorInfoTextSignal("成功修改工作模式");
     setModeLabelText();
 }
 
-void ManagerControlPanel::SetErrorInfoTextSlot(const QString &err_info)
+void ManagerControlPanel::set_error_info_text(const QString &err_info)
 {
     clear_error_info_timer.stop();
     ui->label_error_info->setText(err_info);
     clear_error_info_timer.start(5000);
 }
 
-void ManagerControlPanel::ClearErrorInfoTextSlot()
+void ManagerControlPanel::clear_error_info_text()
 {
     ui->label_error_info->clear();
 }
@@ -179,6 +179,10 @@ void ManagerControlPanel::ChangeRate(bool is_rate_up)
     {
         _rate--;
         // TODO 通知监控改变刷新间隔
+    }
+    else
+    {
+        emit SetErrorInfoTextSignal("频率已达上限或下限");
     }
     setRateLabelText();
 }
