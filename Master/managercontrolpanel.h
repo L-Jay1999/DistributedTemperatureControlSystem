@@ -7,6 +7,7 @@
 #include "parameterwidget.h"
 #include "monitorwidget.h"
 #include "reportwidget.h"
+#include "monitordialog.h"
 #include "../CommonLib/common.h"
 #include "./listener.h"
 
@@ -35,7 +36,7 @@ private:
     PowerSupplyWidget *psw;//电源控制面板
     UserManagementWidget *umw;//用户管理面板
     ParameterWidget *pw;//参数设置面板
-    MonitorWidget *mw;//监控信息界面
+    MonitorDialog *monitor_dialog{nullptr};//监控信息界面
     ReportWidget *rw;//报表界面
 
 
@@ -50,7 +51,7 @@ private slots:
     void switch_to_power();         //切换到电源控制
     void switch_to_detail();        //切换到详单查看
     void switch_to_report();        //切换到报表查看
-    void switch_to_monitor();       //切换到监控
+    void show_monitor();       //切换到监控
     void switch_to_user();          //切换到用户管理
     void set_power_label_text(bool has_power);
     void change_mode();
@@ -63,6 +64,7 @@ signals:
     void logout_signal();
     void SetErrorInfoTextSignal(const QString &err_info);
     void ClearErrorInfoTextSignal();
+    void setMonitorInterval(int interval_sec);
 };
 
 #endif // MANAGERCONTROLPANEL_H

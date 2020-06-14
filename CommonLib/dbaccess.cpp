@@ -109,13 +109,14 @@ std::pair<bool, std::vector<std::tuple<QString, QString, double, double> > > DBA
 {
     const QString kSelSql = "select room, id, use, cost from %1;";
     QSqlQuery q(QSqlDatabase::database(connection_name));
-    q.prepare(kSelSql.arg(MasterPowerStatContract::TITLE));
+    q.prepare(kSelSql.arg(MasterUserContract::TITLE));
     q.exec();
 
     QSqlError error = q.lastError();
     if (error.type() != QSqlError::NoError)
     {
         qDebug() << error.text();
+        qDebug() << q.lastQuery();
         return {false, {}};
     }
 

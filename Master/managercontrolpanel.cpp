@@ -24,13 +24,15 @@ ManagerControlPanel::ManagerControlPanel(const QString &manager_account, QWidget
     connect(ui->pushButton_rate_down, &QPushButton::clicked,this,&ManagerControlPanel::rate_down);//增大频率
     connect(ui->pushButton_detail,&QPushButton::clicked,    this,&ManagerControlPanel::switch_to_detail);   //查看详单
     connect(ui->pushButton_report,&QPushButton::clicked,    this,&ManagerControlPanel::switch_to_report);   //查看报表
-    connect(ui->pushButton_monitor,&QPushButton::clicked,   this,&ManagerControlPanel::switch_to_monitor);  //监控信息
+    connect(ui->pushButton_monitor,&QPushButton::clicked,   this,&ManagerControlPanel::show_monitor);  //监控信息
     connect(ui->pushButton_user,&QPushButton::clicked,      this,&ManagerControlPanel::switch_to_user);     //用户管理
     connect(this, &ManagerControlPanel::SetErrorInfoTextSignal,   this,&ManagerControlPanel::set_error_info_text);
     connect(&clear_error_info_timer, &QTimer::timeout, this, &ManagerControlPanel::clear_error_info_text);
     psw = new PowerSupplyWidget;
     umw = new UserManagementWidget;
     rw = new ReportWidget;
+    monitor_dialog = new MonitorDialog(_rate, this);
+    monitor_dialog->hide();
 
     setModeLabelText();
     setPowerLabelText();
@@ -106,12 +108,12 @@ void ManagerControlPanel::switch_to_report()
     connect(rw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
 }
 
-void ManagerControlPanel::switch_to_monitor()
+void ManagerControlPanel::show_monitor()
 {
-    mw = new MonitorWidget;
-    mw->show();
-//    this->hide();
-//    connect(mw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
+    if (!monitor_dialog->isVisible())
+        monitor_dialog->show();
+    else
+        monitor_dialog->setFocus();
 }
 
 void ManagerControlPanel::switch_to_user()
@@ -179,12 +181,12 @@ void ManagerControlPanel::ChangeRate(bool is_rate_up)
     if (is_rate_up && _rate < 10)
     {
         _rate++;
-        // TODO 通知监控改变刷新间隔
+        monitor_dialog->setUpdateInterval(_rate);
     }
     else if (!is_rate_up && _rate > 3)
     {
         _rate--;
-        // TODO 通知监控改变刷新间隔
+        monitor_dialog->setUpdateInterval(_rate);
     }
     else
     {

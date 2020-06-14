@@ -12,3 +12,8 @@ ReportWidget::~ReportWidget()
 {
     delete ui;
 }
+
+void ReportWidget::GetReport()
+{
+
+}
