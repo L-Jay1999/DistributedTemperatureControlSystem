@@ -9,6 +9,7 @@
 #include "common.h"
 #include "dbaccess.h"
 #include "requests.h"
+#include "schedule.h"
 
 class UserLoginController : public QObject
 {
