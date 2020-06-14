@@ -30,7 +30,6 @@ ManagerControlPanel::ManagerControlPanel(const QString &manager_account, QWidget
     connect(&clear_error_info_timer, &QTimer::timeout, this, &ManagerControlPanel::clear_error_info_text);
     psw = new PowerSupplyWidget;
     umw = new UserManagementWidget;
-    mw = new MonitorWidget;
     rw = new ReportWidget;
 
     setModeLabelText();
@@ -109,16 +108,17 @@ void ManagerControlPanel::switch_to_report()
 
 void ManagerControlPanel::switch_to_monitor()
 {
+    mw = new MonitorWidget;
     mw->show();
-    this->hide();
-    connect(mw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
+//    this->hide();
+//    connect(mw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
 }
 
 void ManagerControlPanel::switch_to_user()
 {
     umw->show();
-    this->hide();
-    connect(umw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
+//    this->hide();
+//    connect(umw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
 }
 
 void ManagerControlPanel::set_power_label_text(bool has_power)

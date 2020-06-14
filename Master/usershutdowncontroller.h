@@ -2,6 +2,7 @@
 #define USERSHUTDOWNCONTROLLER_H
 
 #include <QObject>
+#include <QDebug>
 
 #include "common.h"
 #include "global.h"

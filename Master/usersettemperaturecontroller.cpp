@@ -9,6 +9,7 @@ UserSetTemperatureController::UserSetTemperatureController(QObject *parent)
 
 bool UserSetTemperatureController::Set(const QString &RoomID, const double degree)
 {
+    qDebug() << RoomID << degree << "set temp request";
     _rooms.SetTemperature(RoomID, degree);
     return true;
 }

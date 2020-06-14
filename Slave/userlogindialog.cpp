@@ -17,6 +17,7 @@ UserLoginDialog::UserLoginDialog(QWidget *parent) :
     // connect(this, &UserLoginDialog::LoginSuccess, dynamic_cast<SlaveControlWindow*>(parent), &SlaveControlWindow::SetLoginUser);
     connect(this, SIGNAL(LoginSuccess(const QString &, const QString &, WorkingMode, double)),
             parent, SLOT(SetLoginUser(const QString &, const QString &, WorkingMode, double)));
+    qDebug() << "UserLoginDialog Create.";
 }
 
 UserLoginDialog::~UserLoginDialog()

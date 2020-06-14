@@ -2,6 +2,7 @@
 #define USERSETSPEEDCONTROLLER_H
 
 #include <QObject>
+#include <QDebug>
 
 #include "common.h"
 #include "schedule.h"
