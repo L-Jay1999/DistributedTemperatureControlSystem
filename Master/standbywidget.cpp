@@ -1,4 +1,4 @@
-#include "standbywidget.h"
+﻿#include "standbywidget.h"
 #include "ui_standbywidget.h"
 
 StandbyWidget::StandbyWidget(QWidget *parent) :
@@ -8,7 +8,7 @@ StandbyWidget::StandbyWidget(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowTitle("中央空调控制系统-待机");
     this->setFixedSize(this->width(),this->height());
-    ui->label_mode->setText("无");
+    ui->label_mode->setText(QStringLiteral("无"));
     connect(ui->btn_login, &QPushButton::clicked, this, &StandbyWidget::switch_to_login);//点击认证按钮
 }
 

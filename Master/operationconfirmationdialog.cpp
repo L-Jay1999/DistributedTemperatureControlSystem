@@ -1,4 +1,4 @@
-#include "operationconfirmationdialog.h"
+﻿#include "operationconfirmationdialog.h"
 #include "ui_operationconfirmationdialog.h"
 
 OperationConfirmationDialog::OperationConfirmationDialog(QWidget *parent) :
@@ -18,7 +18,7 @@ OperationConfirmationDialog::~OperationConfirmationDialog()
 
 void OperationConfirmationDialog::setText(QString text)
 {
-    text = "将执行操作:\n\n" + text + "\n\n是否确认？";
+    text = QStringLiteral("将执行操作:\n\n") + text + QStringLiteral("\n\n是否确认？");
     ui->textEdit->setText(text);
     ui->textEdit->setReadOnly(true);//设置为只读
 }

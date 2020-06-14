@@ -1,5 +1,6 @@
-#include "userinfocontroller.h"
+﻿#include "userinfocontroller.h"
 #include "standbywidget.h"
+
 UserInfoController::UserInfoController()
 {
 }
@@ -13,21 +14,21 @@ std::tuple<bool, QString> UserInfoController::AddUser(const QString &RoomID, con
             bool res = dba.addUser(RoomID, UserID); //进行插入操作
             if (res == true)
             {
-                return {true, "添加成功"};
+                return {true, QStringLiteral("添加成功")};
             }
             else
             {
-                return {false, "添加失败：数据库插入失败"};
+                return {false, QStringLiteral("添加失败：数据库插入失败")};
             }
         }
         else
         {
-            return {false, "添加失败：已存在的用户"};
+            return {false, QStringLiteral("添加失败：已存在的用户")};
         }
     }
     else
     {
-        return {false, "添加失败：数据库无连接"};
+        return {false, QStringLiteral("添加失败：数据库无连接")};
     }
 }
 std::tuple<bool, QString> UserInfoController::DeleteUser(const QString &RoomID, const QString &UserID)
@@ -39,21 +40,21 @@ std::tuple<bool, QString> UserInfoController::DeleteUser(const QString &RoomID, 
             bool res = dba.delUser(RoomID, UserID); //进行删除操作
             if (res == true)
             {
-                return {true, "删除成功"};
+                return {true, QStringLiteral("删除成功")};
             }
             else
             {
-                return {false, "删除失败：数据库删除失败"};
+                return {false, QStringLiteral("删除失败：数据库删除失败")};
             }
         }
         else
         {
-            return {false, "删除失败：不存在该用户"};
+            return {false, QStringLiteral("删除失败：不存在该用户")};
         }
     }
     else
     {
-        return {false, "删除失败：数据库无连接"};
+        return {false, QStringLiteral("删除失败：数据库无连接")};
     }
 }
 
@@ -72,6 +73,6 @@ QString UserInfoController::GetUser()
     }
     else
     {
-        return "用户信息获取失败";
+        return QStringLiteral("用户信息获取失败");
     }
 }
