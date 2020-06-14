@@ -1,4 +1,4 @@
-#ifndef AIRSUPPLYCONTROLLER_H
+﻿#ifndef AIRSUPPLYCONTROLLER_H
 #define AIRSUPPLYCONTROLLER_H
 
 #include <QObject>
