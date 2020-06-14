@@ -85,15 +85,15 @@ QString getRandomString(int length);
 
 namespace Config {
     // 保存一个房间的设置信息
-    static class RoomConfig
+    class RoomConfig
     {
     private:
-        WorkingMode _mode;//工作模式
-        SpeedLevel _level;//风速
-        double _working_degree;//工作温度
-        double _current_degree;//当前温度
+        WorkingMode _mode{};//工作模式
+        SpeedLevel _level{};//风速
+        double _working_degree{};//工作温度
+        double _current_degree{};//当前温度
     public:
-        RoomConfig() = delete;
+        RoomConfig() {};
         RoomConfig(WorkingMode mode,SpeedLevel level,double wd,double cd)
             :   _mode(mode),_level(level),_working_degree(wd),_current_degree(cd)   {}
         RoomConfig(const RoomConfig& conf)
@@ -103,15 +103,14 @@ namespace Config {
             _working_degree = conf.getTemperature();
             _current_degree = conf.getCurTemperature();
         }
-        void setMode(WorkingMode mode){_mode = mode;}
-        void setLevel(SpeedLevel level){_level = level;}
-        void setTemperature(double working_degree){_working_degree = working_degree;}
-        void setCurTemperature(double current_degree){_current_degree = current_degree;}
-        WorkingMode getMode(){return _mode;}
-        SpeedLevel getLevel(){return _level;}
-        double getTemperature(){return _working_degree;}
-        double getCurTemperature(){return _current_degree;}
-
+        void setMode(WorkingMode mode) {_mode = mode;}
+        void setLevel(SpeedLevel level) {_level = level;}
+        void setTemperature(double working_degree) {_working_degree = working_degree;}
+        void setCurTemperature(double current_degree) {_current_degree = current_degree;}
+        WorkingMode getMode() const {return _mode;}
+        SpeedLevel getLevel() const {return _level;}
+        double getTemperature() const {return _working_degree;}
+        double getCurTemperature() const {return _current_degree;}
     };
     // 标记主机的地址和端口，用于从控机发送请求给中央空调
     static constexpr auto kMasterHostAddr = "localhost";
@@ -226,6 +225,5 @@ namespace Config {
     void setTimeOutMsec(int timeout_ms);
 
     int getTimeOutMSec();
-
 };
 #endif // COMMON_H
