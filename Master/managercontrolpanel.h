@@ -8,7 +8,7 @@
 #include "monitorwidget.h"
 
 #include "../CommonLib/common.h"
-#include "../CommonLib/listener.h"
+#include "./listener.h"
 
 namespace Ui {
 class ManagerControlPanel;
