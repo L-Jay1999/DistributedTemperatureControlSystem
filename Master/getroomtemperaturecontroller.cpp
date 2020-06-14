@@ -5,9 +5,9 @@ GetRoomTemperatureController::GetRoomTemperatureController(QObject *parent) : QO
 
 }
 
-double GetRoomTemperatureController::Get()
+double GetRoomTemperatureController::Get(const QString &RoomID)
 {
-    GetRoomTemperatureRequest getroomtemperaturerequest;
+    GetRoomTemperatureRequest getroomtemperaturerequest(RoomID);
     auto [error, degree] = getroomtemperaturerequest.Send();
     if(error.hasError()){
         qDebug() << "GetRoomTemperatureController error";

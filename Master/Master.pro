@@ -45,6 +45,7 @@ SOURCES += \
     manager.cpp \
     powersupplywidget.cpp \
     operationconfirmationdialog.cpp \
+    useandcostcontrollermaster.cpp \
     userlogincontroller.cpp \
     usermanagementwidget.cpp \
     promptdialog.cpp \
@@ -71,6 +72,7 @@ HEADERS += \
     manager.h \
     powersupplywidget.h \
     operationconfirmationdialog.h \
+    useandcostcontrollermaster.h \
     userlogincontroller.h \
     usermanagementwidget.h \
     promptdialog.h \

@@ -4,6 +4,7 @@
 #include <QObject>
 #include <tuple>
 #include <QDebug>
+#include <QString>
 
 #include "common.h"
 #include "requests.h"
@@ -13,7 +14,7 @@ class ScheduleInfoController : public QObject
     Q_OBJECT
 public:
     explicit ScheduleInfoController(QObject *parent = nullptr);
-    bool Send(bool is_in_queue);
+    bool Send(const bool is_in_queue, const QString &RoomID);
 
 signals:
 
