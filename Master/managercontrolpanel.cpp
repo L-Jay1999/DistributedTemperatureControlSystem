@@ -83,6 +83,11 @@ void ManagerControlPanel::switch_to_parameter()
 {
     pw->show();
     this->hide();
+    if(pw->getMode() == "cold"){
+        _mode = WorkingMode{0};
+    }else{
+        _mode = WorkingMode{1};
+    }
     connect(pw,SIGNAL(cancel_signal()),this,SLOT(reshow()));
 }
 
