@@ -1,4 +1,4 @@
-#include "scheduleinfocontroller.h"
+﻿#include "scheduleinfocontroller.h"
 
 ScheduleInfoController::ScheduleInfoController(QObject *parent) : QObject(parent)
 {

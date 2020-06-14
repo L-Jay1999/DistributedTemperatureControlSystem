@@ -56,7 +56,8 @@ SOURCES += \
     report.cpp \
     usersetspeedcontroller.cpp \
     usersettemperaturecontroller.cpp \
-    usershutdowncontroller.cpp
+    usershutdowncontroller.cpp \
+    reportwidget.cpp
 
 HEADERS += \
     getroomtemperaturecontroller.h \
@@ -81,7 +82,8 @@ HEADERS += \
     report.h \
     usersetspeedcontroller.h \
     usersettemperaturecontroller.h \
-    usershutdowncontroller.h
+    usershutdowncontroller.h \
+    reportwidget.h
 
 FORMS += \
     managerloginwidget.ui \
