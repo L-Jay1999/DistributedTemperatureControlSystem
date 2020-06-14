@@ -24,7 +24,7 @@ public:
         if (!_connected_rooms.count(room_id))
         {
             _connected_rooms.insert(room_id);
-            _rooms[room_id] = Room{{}, {}, {}, room_id};
+            _rooms[room_id] = {{}, {}, {}, room_id};
         }
     }
 
@@ -38,6 +38,11 @@ public:
         return _rooms.at(room_id);
     }
 
+    bool hasRoom(const QString &room_id) const
+    {
+        return _connected_rooms.count(room_id);
+    }
+
     std::vector<QString> getRoomIDs()
     {
         std::vector<QString> res;
@@ -48,29 +53,24 @@ public:
 
     void delRoomIfExists(const QString &room_id)
     {
-        if (auto iter = _connected_rooms.find(room_id); iter != _connected_rooms.end())
+        if (hasRoom(room_id))
         {
-            _connected_rooms.erase(iter);
+            _connected_rooms.erase(_connected_rooms.find(room_id));
             _rooms.erase(_rooms.find(room_id));
         }
+
     }
 
     void SetSpeed(const QString& RoomID, const SpeedLevel& Level)//设置从控机风速
     {
-        auto iter = _rooms.find(RoomID);
-        if(iter != _rooms.end())
-        {
-            iter->secend.config.SetLevel(Level);
-        }
+        if (hasRoom(RoomID))
+            _rooms[RoomID].config.setLevel(Level);
     }
 
     void SetTemperature(const QString& RoomID, const double& Degree)//设置从控机工作温度
     {
-        auto iter = _rooms.find(RoomID);
-        if(iter != _rooms.end())
-        {
-            iter->secend.config.SetTemperature(Degree);
-        }
+        if (hasRoom(RoomID))
+            _rooms[RoomID].config.setTemperature(Degree);
     }
 
 private:
