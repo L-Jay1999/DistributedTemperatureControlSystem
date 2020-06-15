@@ -17,9 +17,9 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
     std::map<QString, UseAndCost*> useandcost;
-    Schedule schedule(this,useandcost);
+    Schedule schedule(useandcost, nullptr);
     UserLoginController login_controller;
-    UserSetSpeedController speed_controller(this,useandcost);
+    UserSetSpeedController speed_controller(useandcost, nullptr);
     UserShutDownController shutdowncontroller;
     UserSetTemperatureController tempcontroller;
     GetRoomTemperatureController roomcontroller;

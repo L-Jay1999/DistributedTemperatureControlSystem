@@ -1,6 +1,6 @@
 ﻿#include "schedule.h"
 
-Schedule::Schedule(QObject *parent, std::map<QString, UseAndCost*> &u) : QObject(parent), useandcost(u)
+Schedule::Schedule(std::map<QString, UseAndCost*> &u, QObject *parent) : QObject(parent), useandcost(u)
 {
     asc = new AirSupplyController(this, this);
     sic = new ScheduleInfoController(this);
@@ -31,7 +31,7 @@ void Schedule::delRoom(const QString &RoomID)
             DBAccess db;
             if(db.addRoomRequestStat(sp) == false)
             {
-                QDebug << "Schedule::delRoom::db.addRoomRequestStat Error";
+                qDebug() << "Schedule::delRoom::db.addRoomRequestStat Error";
             }
             delete useandcost[*it];
         }

@@ -1,6 +1,6 @@
 #include "usersetspeedcontroller.h"
 
-UserSetSpeedController::UserSetSpeedController(QObject *parent, std::map<QString, UseAndCost*> &u)
+UserSetSpeedController::UserSetSpeedController(std::map<QString, UseAndCost*> &u, QObject *parent)
      : QObject(parent), _rooms(getRooms()), useandcost(u)
 {
     Config::setMasterControllerPointer(Config::MasterControllerType::SET_SPEED, this);

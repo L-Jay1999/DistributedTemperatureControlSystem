@@ -25,7 +25,7 @@ private:
     ScheduleInfoController *sic;//送风请求回复控制器
     std::map<QString, UseAndCost*> &useandcost;
 public:
-    explicit Schedule(QObject *parent = nullptr, std::map<QString, UseAndCost*> &u);
+    explicit Schedule(std::map<QString, UseAndCost*> &u, QObject *parent = nullptr);
     // 各操作的回复由上级controller完成
     void addRoom(const QString& RoomID);//将请求服务的从机加入等待队列
     void delRoom(const QString& RoomID);//将完成服务或已关闭的从机移出

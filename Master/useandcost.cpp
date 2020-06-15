@@ -30,8 +30,8 @@ double UseAndCost::UseandCostfromStart(struct StatPayload &sp)
     sp.start_time = _start_time;
     sp.end_time = QDateTime::currentDateTime();
     sp.init_temperature = _init_temperature;
-    sp.end_temperature = getRooms().getRoom(RoomID).config.getCurTemperature();
-    sp.speed_level = getRooms().getRoom(RoomID).config.getLevel();
+    sp.end_temperature = getRooms().getRoom(_RoomID).config.getCurTemperature();
+    sp.speed_level = getRooms().getRoom(_RoomID).config.getLevel();
     sp.cost = _this_cost;
     _useandcostcontroller->Send(use + _this_use, cost + _this_cost, _RoomID);
     return _this_cost;
