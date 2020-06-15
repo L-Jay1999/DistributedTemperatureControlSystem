@@ -105,6 +105,21 @@ std::tuple<bool, double, double> DBAccess::getUseAndCost(const QString &room_id,
     return {false, {}, {}};
 }
 
+bool DBAccess::updateUseAndCost(const QString &room_id, const QString &user_id, double use, double cost)
+{
+    const QString kUpdateSql = "update %1 set use = ?, cost = ? where room = ? and user = ?;";
+    QSqlQuery q(QSqlDatabase::database(connection_name));
+    q.prepare(kUpdateSql.arg(MasterUserContract::TITLE));
+    auto error = DBHelper::BindAndExec(q, {use, cost, user_id, room_id});
+    if (error.type() != QSqlError::NoError)
+    {
+        qDebug() << error.text();
+        qDebug() << q.lastQuery();
+        return false;
+    }
+    return true;
+}
+
 std::pair<bool, std::vector<std::tuple<QString, QString, double, double> > > DBAccess::getUsers()
 {
     const QString kSelSql = "select room, id, use, cost from %1;";
