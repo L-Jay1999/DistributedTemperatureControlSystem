@@ -15,7 +15,7 @@ public:
     bool ShutDown(const QString &RoomID);
 
 private:
-    Rooms _rooms;
+    Rooms &_rooms;
 
 signals:
 

@@ -16,7 +16,7 @@ public:
     bool Set(const QString &RoomID, const SpeedLevel level);
 
 private:
-    Rooms _rooms;
+    Rooms &_rooms;
 
 signals:
 

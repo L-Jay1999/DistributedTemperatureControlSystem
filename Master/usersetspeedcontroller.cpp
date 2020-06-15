@@ -1,10 +1,9 @@
 #include "usersetspeedcontroller.h"
 
 UserSetSpeedController::UserSetSpeedController(QObject *parent)
-     : QObject(parent)
+     : QObject(parent), _rooms(getRooms())
 {
     Config::setMasterControllerPointer(Config::MasterControllerType::SET_SPEED, this);
-    _rooms = getRooms();
 }
 
 bool UserSetSpeedController::Set(const QString &RoomID, const SpeedLevel level)
