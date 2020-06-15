@@ -20,7 +20,7 @@ public:
     ~UserManagementWidget();
     void Add();     //添加房客
     void Delete();  //删除房客
-    void Refresh(); //刷新房客信息
+//    void Refresh(); //刷新房客信息
     void Clear();   //清空输入信息
     void Close();   //关闭界面
 

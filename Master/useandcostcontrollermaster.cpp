@@ -2,10 +2,7 @@
 
 UseAndCostControllerMaster::UseAndCostControllerMaster(QObject *parent) : QObject(parent)
 {
-//    _timer = new QTimer(this);
-//    connect(_timer, SIGNAL(timeout()), this, SLOT(SendALL()));
-//    _timer->start(15000);
-//    _rooms = getRooms();
+
 }
 
 bool UseAndCostControllerMaster::Send(const double use, const double cost, const QString &RoomID)
@@ -18,8 +15,3 @@ bool UseAndCostControllerMaster::Send(const double use, const double cost, const
     }
     return res;
 }
-
-//void UseAndCostControllerMaster::SendALL()
-//{
-
-//}

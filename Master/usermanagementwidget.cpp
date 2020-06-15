@@ -8,13 +8,13 @@ UserManagementWidget::UserManagementWidget(QWidget *parent) :
     ui->setupUi(this);
     setWindowTitle("用户管理");
     setFixedSize(this->width(),this->height());
-    ui->textEdit->setReadOnly(true);
+//    ui->textEdit->setReadOnly(true);
     connect(ui->pushButton_add,&QPushButton::clicked,this,&UserManagementWidget::Add);
     connect(ui->pushButton_delete,&QPushButton::clicked,this,&UserManagementWidget::Delete);
-    connect(ui->pushButton_refresh,&QPushButton::clicked,this,&UserManagementWidget::Refresh);
+//    connect(ui->pushButton_refresh,&QPushButton::clicked,this,&UserManagementWidget::Refresh);
     connect(ui->pushButton_close,&QPushButton::clicked,this,&UserManagementWidget::Close);
     connect(ui->pushButton_clear,&QPushButton::clicked,this,&UserManagementWidget::Clear);
-    ui->textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+//    ui->textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
 
 }
 
@@ -33,7 +33,7 @@ void UserManagementWidget::Add()
     pd = new PromptDialog;
     pd->setText(std::get<1>(_response));
     pd->exec();
-    Refresh();
+//    Refresh();
 }
 
 void UserManagementWidget::Delete()
@@ -46,16 +46,16 @@ void UserManagementWidget::Delete()
     pd = new PromptDialog;
     pd->setText(std::get<1>(_response));
     pd->exec();
-    Refresh();
+//    Refresh();
 }
 
-void UserManagementWidget::Refresh()
-{
-    //调用UserInfoControl::GetUserList()获得当前房客信息
-    //_UserList = UserInfoControl::GetUserList();
-    //_UserList
-    ui->textEdit->setText(_UserList);
-}
+//void UserManagementWidget::Refresh()
+//{
+//    //调用UserInfoControl::GetUserList()获得当前房客信息
+//    //_UserList = UserInfoControl::GetUserList();
+//    //_UserList
+//    ui->textEdit->setText(_UserList);
+//}
 
 void UserManagementWidget::Clear()
 {

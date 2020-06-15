@@ -12,7 +12,6 @@ void AirSupplyController::UpdateAirSupply(bool OpenorClose, const QString &RoomI
 {
     if(OpenorClose){
         _schedule->addRoom(RoomID);
-
     }
     else{
         _schedule->delRoom(RoomID);
