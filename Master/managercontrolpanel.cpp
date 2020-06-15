@@ -28,7 +28,6 @@ ManagerControlPanel::ManagerControlPanel(const QString &manager_account, QWidget
     connect(ui->pushButton_user,&QPushButton::clicked,      this,&ManagerControlPanel::switch_to_user);     //用户管理
     connect(this, &ManagerControlPanel::SetErrorInfoTextSignal,   this,&ManagerControlPanel::set_error_info_text);
     connect(&clear_error_info_timer, &QTimer::timeout, this, &ManagerControlPanel::clear_error_info_text);
-    psw = new PowerSupplyWidget;
     umw = new UserManagementWidget;
     rw = new ReportWidget;
     monitor_dialog = new MonitorDialog(_rate, this);
@@ -69,7 +68,6 @@ void ManagerControlPanel::logout()
 {
     emit logout_signal();
     this->close();
-    psw->close();
     umw->close();
 }
 
@@ -85,7 +83,7 @@ void ManagerControlPanel::switch_to_power()
         msg = msg.arg("关闭");
     else
         msg = msg.arg("开启");
-    if(QMessageBox::Yes == QMessageBox::warning(this, "改变电源状态", msg, QMessageBox::Yes | QMessageBox::No))
+    if(QMessageBox::Yes == QMessageBox::warning(this, "改变电源状态", msg, QMessageBox::Yes, QMessageBox::No))
     {
         _has_power = !_has_power;
         setPowerLabelText();

@@ -1,10 +1,9 @@
 #include "usersettemperaturecontroller.h"
 
 UserSetTemperatureController::UserSetTemperatureController(QObject *parent)
-     : QObject(parent)
+     : QObject(parent), _rooms(getRooms())
 {
     Config::setMasterControllerPointer(Config::MasterControllerType::SET_TEMP, this);
-    _rooms = getRooms();
 }
 
 bool UserSetTemperatureController::Set(const QString &RoomID, const double degree)

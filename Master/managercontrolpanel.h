@@ -2,9 +2,7 @@
 #define MANAGERCONTROLPANEL_H
 
 #include <QWidget>
-#include "powersupplywidget.h"
 #include "usermanagementwidget.h"
-#include "parameterwidget.h"
 #include "reportwidget.h"
 #include "monitordialog.h"
 #include "../CommonLib/common.h"
@@ -32,9 +30,7 @@ private:
     WorkingMode _mode{WorkingMode::COLD};
     QTimer clear_error_info_timer;
 
-    PowerSupplyWidget *psw;//电源控制面板
     UserManagementWidget *umw;//用户管理面板
-    ParameterWidget *pw;//参数设置面板
     MonitorDialog *monitor_dialog{nullptr};//监控信息界面
     ReportWidget *rw;//报表界面
 

@@ -5,7 +5,7 @@ UserInfoController::UserInfoController()
 {
 }
 
-std::tuple<bool, QString> UserInfoController::AddUser(const QString &RoomID, const QString &UserID)
+std::pair<bool, QString> UserInfoController::AddUser(const QString &RoomID, const QString &UserID)
 {
     if (dba.isConnected() == true) //判断是否连接至数据库
     {
@@ -31,7 +31,7 @@ std::tuple<bool, QString> UserInfoController::AddUser(const QString &RoomID, con
         return {false, QStringLiteral("添加失败：数据库无连接")};
     }
 }
-std::tuple<bool, QString> UserInfoController::DeleteUser(const QString &RoomID, const QString &UserID)
+std::pair<bool, QString> UserInfoController::DeleteUser(const QString &RoomID, const QString &UserID)
 {
     if (dba.isConnected() == true) //判断是否连接至数据库
     {
@@ -58,21 +58,12 @@ std::tuple<bool, QString> UserInfoController::DeleteUser(const QString &RoomID, 
     }
 }
 
-QString UserInfoController::GetUser()
+std::pair<bool, std::vector<std::pair<QString, QString>>> UserInfoController::GetUser()
 {
-    auto UserInfo = dba.getUsers();
-    if (UserInfo.first == true)
-    {
-        QString result;
-        result.clear();
-        for (auto it = UserInfo.second.begin(); it != UserInfo.second.end(); it++)
-        {
-            result = result + std::get<0>(*it) + "\t" + std::get<1>(*it) + "\t" + QString::number(std::get<2>(*it)) + "\t" + QString::number(std::get<3>(*it)) + "\n";
-        }
-        return result;
-    }
-    else
-    {
-        return QStringLiteral("用户信息获取失败");
-    }
+    auto [is_suc, users] = dba.getUsers();
+    std::vector<std::pair<QString, QString>> res;
+    if (is_suc)
+        for (const auto user : users)
+            res.push_back({std::get<0>(user), std::get<1>(user)});
+    return {is_suc, res};
 }

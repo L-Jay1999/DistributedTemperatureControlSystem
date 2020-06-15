@@ -45,16 +45,12 @@ SOURCES += \
     standbywidget.cpp \
     managercontrolpanel.cpp \
     manager.cpp \
-    powersupplywidget.cpp \
-    operationconfirmationdialog.cpp \
     useandcostcontrollermaster.cpp \
     userlogincontroller.cpp \
     usermanagementwidget.cpp \
-    promptdialog.cpp \
     userinfocontroller.cpp \
     airsupplycontroller.cpp \
     schedule.cpp \
-    parameterwidget.cpp \
     report.cpp \
     usersetspeedcontroller.cpp \
     usersettemperaturecontroller.cpp \
@@ -74,16 +70,12 @@ HEADERS += \
     standbywidget.h \
     managercontrolpanel.h \
     manager.h \
-    powersupplywidget.h \
-    operationconfirmationdialog.h \
     useandcostcontrollermaster.h \
     userlogincontroller.h \
     usermanagementwidget.h \
-    promptdialog.h \
     userinfocontroller.h \
     airsupplycontroller.h \
     schedule.h \
-    parameterwidget.h \
     report.h \
     usersetspeedcontroller.h \
     usersettemperaturecontroller.h \
@@ -95,11 +87,7 @@ FORMS += \
     monitordialog.ui \
     standbywidget.ui \
     managercontrolpanel.ui \
-    powersupplywidget.ui \
-    operationconfirmationdialog.ui \
     usermanagementwidget.ui \
-    promptdialog.ui \
-    parameterwidget.ui \
     reportwidget.ui
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../CommonLib/release/ -lCommonLib

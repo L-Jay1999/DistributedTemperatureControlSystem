@@ -18,7 +18,7 @@ public:
 
 private:
     Schedule *_schedule;
-    Rooms _rooms;
+    Rooms &_rooms;
 
 signals:
 

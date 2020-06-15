@@ -31,7 +31,7 @@ public:
 
 
 private:
-    Rooms _rooms;
+    Rooms &_rooms;
     DBAccess _db;
 signals:
 

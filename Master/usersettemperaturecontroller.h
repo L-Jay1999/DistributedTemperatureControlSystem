@@ -14,7 +14,7 @@ public:
     bool Set(const QString &RoomID, const double degree);
 
 private:
-    Rooms _rooms;
+    Rooms &_rooms;
 
 signals:
 

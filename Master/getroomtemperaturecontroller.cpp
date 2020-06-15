@@ -1,8 +1,9 @@
 #include "getroomtemperaturecontroller.h"
 
-GetRoomTemperatureController::GetRoomTemperatureController(QObject *parent) : QObject(parent)
+GetRoomTemperatureController::GetRoomTemperatureController(QObject *parent)
+    : QObject(parent), _rooms(getRooms())
 {
-    _rooms = getRooms();
+
     _timer = new QTimer(this);
     connect(_timer, SIGNAL(timeout()), this, SLOT(GetALL()));
     _timer->start(1500);

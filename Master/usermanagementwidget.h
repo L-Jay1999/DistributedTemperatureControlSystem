@@ -4,13 +4,13 @@
 #include <QWidget>
 #include <QDateTime>
 #include <tuple>
-#include "promptdialog.h"
 #include "userinfocontroller.h"
 
 namespace Ui {
 class UserManagementWidget;
 }
 
+// TODO 对输入进行检验
 class UserManagementWidget : public QWidget
 {
     Q_OBJECT
@@ -27,12 +27,10 @@ public:
 private:
     Ui::UserManagementWidget *ui;
     UserInfoController user_info;
-    PromptDialog *pd;
     QString _UserList;          //房客信息
     QString _RoomID;            //房间ID
     QString _UserID;            //用户ID
     QDateTime _EffDateTime;     //有效时间
-    std::tuple<bool, QString> _response;
 
 signals:
     void cancel_signal();

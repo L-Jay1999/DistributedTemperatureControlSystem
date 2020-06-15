@@ -21,7 +21,7 @@ public:
 
 private:
     QTimer *_timer;
-    Rooms _rooms;
+    Rooms &_rooms;
 
 private slots:
     void GetALL();
