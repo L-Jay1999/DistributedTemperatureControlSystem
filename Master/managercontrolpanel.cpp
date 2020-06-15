@@ -114,7 +114,7 @@ void ManagerControlPanel::switch_to_report()
 {
     rw->show();
 //    this->hide();
-    connect(rw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
+//    connect(rw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
 }
 
 void ManagerControlPanel::show_monitor()

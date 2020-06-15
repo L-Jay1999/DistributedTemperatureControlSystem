@@ -6,7 +6,7 @@ ReportWidget::ReportWidget(QWidget *parent) :
     ui(new Ui::ReportWidget)
 {
     ui->setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose);
+//    setAttribute(Qt::WA_DeleteOnClose);
     ui->lineEdit_cost->setReadOnly(true);
     ui->lineEdit_power->setReadOnly(true);
     ui->dateEdit->setDate(QDate::currentDate());
