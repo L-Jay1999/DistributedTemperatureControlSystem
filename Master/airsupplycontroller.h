@@ -17,7 +17,7 @@ class AirSupplyController : public QObject
 
 public:
     explicit AirSupplyController(QObject *parent = nullptr, Schedule *schedule = nullptr);
-    void UpdateAirSupply(bool OpenorClose, const QString &RoomID);
+    void UpdateAirSupply(const bool OpenorClose, const QString &RoomID);
 
 private:
     static constexpr int kDelayMs = 250;
@@ -25,12 +25,12 @@ private:
     Rooms &_rooms;
     QTimer _timer;
     std::deque<std::pair<bool, QString>> _delayed_data;
+
 private slots:
     void updateSupplyDelayed();
 
 signals:
 
-public slots:
 };
 
 #endif // AIRSUPPLYCONTROLLER_H

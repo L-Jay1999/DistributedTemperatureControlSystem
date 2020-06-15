@@ -344,14 +344,14 @@ QPushButton:pressed {
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_8">
        <item>
-        <widget class="QLabel" name="label_4">
+        <widget class="QLabel" name="label_7">
          <property name="text">
-          <string>刷新频率：</string>
+          <string>默认温度：</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_rate">
+        <widget class="QLabel" name="label_default_degree">
          <property name="text">
           <string>TextLabel</string>
          </property>
@@ -362,14 +362,14 @@ QPushButton:pressed {
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_9">
        <item>
-        <widget class="QLabel" name="label_7">
+        <widget class="QLabel" name="label_4">
          <property name="text">
-          <string>默认温度：</string>
+          <string>刷新频率：</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_default_degree">
+        <widget class="QLabel" name="label_rate">
          <property name="text">
           <string>TextLabel</string>
          </property>

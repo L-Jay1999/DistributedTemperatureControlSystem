@@ -56,6 +56,7 @@ void UseAndCost::UpdateUseandCost()
         break;
     }
     _this_use += P * _interval / 60000;
-    _this_cost += _this_use * 5.0;
+    _this_cost = _this_use * 5.0;
+    qDebug() << "update" << P << _this_use << _this_cost;
 //    _useandcostcontroller->Send(_this_use, _this_cost, _RoomID);
 }

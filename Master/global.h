@@ -82,7 +82,7 @@ public:
     {
         if(hasRoom(RoomID)){
             _rooms[RoomID].id = ID;
-            qDebug() << "rooms " << RoomID << " sets " << ID;
+//            qDebug() << "rooms " << RoomID << " sets " << ID;
         }
     }
 

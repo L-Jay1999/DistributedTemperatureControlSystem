@@ -321,6 +321,7 @@ bool SlaveControlWindow::SendWind()
 //        WindDisplay();
 //        return result;
     }
+    return true;
 //    else{
 //        _is_wind = false;
 //        _sensor->setIsWind(_is_wind);
@@ -373,15 +374,13 @@ void SlaveControlWindow::SetLoginUser(const QString &room_id, const QString &use
 
 void SlaveControlWindow::WindControlFromM(bool is_in_queue)
 {
-    if(is_in_queue){
-        _is_wind = true;
-    }
-    else{
-        _is_wind = true;
-    }
+    _is_wind = is_in_queue;
     _sensor->setIsWindWithoutUpdate(_is_wind);
     WindDisplay();
-    TextAppend("主控机传来送风信号");
+    if(is_in_queue)
+        TextAppend("主控机传来送风信号True");
+    else
+        TextAppend("主控机传来送风信号False");
 }
 
 void SlaveControlWindow::TextAppend(QString s)

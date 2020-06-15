@@ -8,7 +8,7 @@ AirSupplyController::AirSupplyController(QObject *parent, Schedule *schedule)
     connect(&_timer, &QTimer::timeout, this, &AirSupplyController::updateSupplyDelayed);
 }
 
-void AirSupplyController::UpdateAirSupply(bool OpenorClose, const QString &RoomID)
+void AirSupplyController::UpdateAirSupply(const bool OpenorClose, const QString &RoomID)
 {
     qDebug() << "UpdateAirSupply" << RoomID;
     _delayed_data.push_back({OpenorClose, RoomID});
@@ -22,15 +22,15 @@ void AirSupplyController::updateSupplyDelayed()
     _delayed_data.pop_front();
     if(OpenorClose)
     {
-        _schedule->addRoom(RoomID);
+        _schedule->addRoom(_RoomID);
     }
     else
     {
-        _schedule->delRoom(RoomID);
+        _schedule->delRoom(_RoomID);
     }
-    if(_rooms.hasRoom(RoomID))
+    if(_rooms.hasRoom(_RoomID))
     {
-        _rooms.getRoom(RoomID).has_wind = OpenorClose;
+        _rooms.getRoom(_RoomID).has_wind = _openorclose;
     }
     if (_delayed_data.size())
         _timer.start(kDelayMs);
