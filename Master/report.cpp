@@ -40,11 +40,6 @@ bool Report::getDateReport(const QDate &date)
     }
 }
 
-bool Report::writeDetail(const StatPayload &detail)
-{
-    return db.addRoomRequestStat(detail);
-}
-
 std::vector<StatPayload> Report::getRoomReport(const QString &roomID)
 {
     auto it = _details.find(roomID);

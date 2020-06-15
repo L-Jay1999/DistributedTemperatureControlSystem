@@ -18,12 +18,14 @@ class UseAndCost : public QObject
 public:
     explicit UseAndCost(QObject *parent = nullptr);
     void Start(const QString &RoomID);
-    double UseandCostfromStart();
+    double UseandCostfromStart(struct StatPayload &sp);
 
 private:
     double _this_use = 0;
     double _this_cost = 0;
     const double _interval = 1000;
+    QDateTime _start_time;
+    double _init_temperature;
     QTimer *_timer;
     Rooms &_rooms;
     QString _RoomID{};

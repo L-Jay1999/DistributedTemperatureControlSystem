@@ -12,12 +12,12 @@ class UserSetSpeedController : public QObject
 {
     Q_OBJECT
 public:
-    explicit UserSetSpeedController(QObject *parent = nullptr);
+    explicit UserSetSpeedController(QObject *parent = nullptr, std::map<QString, UseAndCost*> &u);
     bool Set(const QString &RoomID, const SpeedLevel level);
 
 private:
     Rooms &_rooms;
-
+    std::map<QString, UseAndCost*> &useandcost;
 signals:
 
 };

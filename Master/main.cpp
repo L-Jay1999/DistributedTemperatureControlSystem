@@ -8,6 +8,7 @@
 #include "usershutdowncontroller.h"
 #include "getroomtemperaturecontroller.h"
 #include "schedule.h"
+#include "useandcost.h"
 
 
 int main(int argc, char *argv[])
@@ -15,9 +16,10 @@ int main(int argc, char *argv[])
     Config::setUserType(Config::UserType::MASTER);
 
     QApplication a(argc, argv);
-    Schedule schedule;
+    std::map<QString, UseAndCost*> useandcost;
+    Schedule schedule(this,useandcost);
     UserLoginController login_controller;
-    UserSetSpeedController speed_controller;
+    UserSetSpeedController speed_controller(this,useandcost);
     UserShutDownController shutdowncontroller;
     UserSetTemperatureController tempcontroller;
     GetRoomTemperatureController roomcontroller;

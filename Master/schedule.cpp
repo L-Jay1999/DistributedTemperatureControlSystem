@@ -1,6 +1,6 @@
 ﻿#include "schedule.h"
 
-Schedule::Schedule(QObject *parent) : QObject(parent)
+Schedule::Schedule(QObject *parent, std::map<QString, UseAndCost*> &u) : QObject(parent), useandcost(u)
 {
     asc = new AirSupplyController(this, this);
     sic = new ScheduleInfoController(this);
@@ -24,9 +24,18 @@ void Schedule::delRoom(const QString &RoomID)
     if(it != working_slave.end())
     {
         sic->Send(false,*it);
-        working_slave.erase(it);
-        useandcost[*it]->UseandCostfromStart();
+
+        //构造详单，发送给数据库
+        struct StatPayload sp;
+        useandcost[*it]->UseandCostfromStart(sp);
+        DBAccess db;
+        if(db.addRoomRequestStat(sp) == false)
+        {
+            QDebug << "Schedule::delRoom::db.addRoomRequestStat Error";
+        }
+
         delete useandcost[*it];
+        working_slave.erase(it);
         checkIdle();//此时服务区有空闲，需要进行调度
         return;
     }

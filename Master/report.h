@@ -12,7 +12,6 @@ class Report
 {
 public:
     Report();
-    bool writeDetail(const StatPayload &detail);//记录一个请求的详单，保存到数据库
     bool getDateReport(const QDate &date);//从数据库获取从控机日报表，并保存在本地
     std::pair<bool,std::vector<StatPayload>> getDetails(const QDateTime &begin,const QDateTime &end);//向数据库查询begin-end时间段内所有从控机的详单
     std::vector<StatPayload> getRoomReport(const QString &roomID);//从本地获取指定房间的日报表
