@@ -26,12 +26,12 @@ private:
     const double _interval = 1000;
     QDateTime _start_time;
     double _init_temperature;
-    QTimer *_timer;
+    QTimer _timer;
     Rooms &_rooms;
     QString _RoomID{};
     QString _UserID{};
-    UseAndCostControllerMaster *_useandcostcontroller;
-    DBAccess _db;
+    UseAndCostControllerMaster _useandcostcontroller;
+    // DBAccess _db;
 
 private slots:
     void UpdateUseandCost();

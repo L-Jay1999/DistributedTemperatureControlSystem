@@ -1,18 +1,22 @@
 #include "airsupplycontroller.h"
 
-AirSupplyController::AirSupplyController(QObject *parent, Schedule *schedule)
-    : QObject(parent), _rooms(getRooms())
+AirSupplyController::AirSupplyController(Schedule &schedule, QObject *parent)
+    : QObject(parent), _rooms(getRooms()), _schedule(schedule)
 {
     Config::setMasterControllerPointer(Config::MasterControllerType::WIND_REQUEST, this);
-    _schedule = schedule;
     connect(&_timer, &QTimer::timeout, this, &AirSupplyController::updateSupplyDelayed);
+    connect(this, &AirSupplyController::StartTimerFromAnotherThread,
+            this, &AirSupplyController::StartTimer);
+    connect(this, &AirSupplyController::StopTimerFromAnotherThread,
+            this, &AirSupplyController::StopTimer);
 }
 
 void AirSupplyController::UpdateAirSupply(const bool OpenorClose, const QString &RoomID)
 {
     qDebug() << "UpdateAirSupply" << RoomID;
+    emit StopTimerFromAnotherThread();
     _delayed_data.push_back({OpenorClose, RoomID});
-    _timer.start(kDelayMs);
+    emit StartTimerFromAnotherThread();
 }
 
 void AirSupplyController::updateSupplyDelayed()
@@ -22,11 +26,11 @@ void AirSupplyController::updateSupplyDelayed()
     _delayed_data.pop_front();
     if(OpenorClose)
     {
-	    _schedule->addRoom(RoomID);
+        _schedule.addRoom(RoomID);
     }
     else
     {
-	    _schedule->delRoom(RoomID);
+        _schedule.delRoom(RoomID);
     }
     if(_rooms.hasRoom(RoomID))
     {
@@ -34,4 +38,14 @@ void AirSupplyController::updateSupplyDelayed()
     }
     if (_delayed_data.size())
         _timer.start(kDelayMs);
+}
+
+void AirSupplyController::StartTimer()
+{
+    _timer.start();
+}
+
+void AirSupplyController::StopTimer()
+{
+    _timer.stop();
 }

@@ -6,7 +6,7 @@
 std::tuple<bool, QString> ManagerLoginController::ManagerLogin()
 {
 //    return {true, {}};
-
+    DBAccess db;
     if (CheckArgs())
     {
         bool result = db.hasManager(_account,_password);

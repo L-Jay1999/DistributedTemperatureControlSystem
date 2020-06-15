@@ -18,7 +18,7 @@ private:
     QString _account;//输入账号
     QString _password;//输入密码
     bool CheckArgs();//格式检查
-    DBAccess db{};
+    // DBAccess db{};
 };
 
 #endif // MANAGERLOGINCONTROLLER_H

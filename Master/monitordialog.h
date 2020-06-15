@@ -20,7 +20,7 @@ public:
 private:
     Ui::MonitorDialog *ui;
     Rooms &_rooms;
-    DBAccess _db;
+    // DBAccess _db;
     QTimer _timer;
     int _interval;
 private slots:

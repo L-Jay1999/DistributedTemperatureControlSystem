@@ -17,6 +17,7 @@
 class Listener : public QObject
 {
     Q_OBJECT
+
 public:
     Listener(QObject *parent = nullptr) : QObject(parent), server(new QTcpServer(this))
     {
@@ -36,6 +37,8 @@ public:
         // TODO 如果区间过小可能导致死循环，考虑之后缓减
         while (!Listen(random_port))
             random_port = getRandomInt(a, b);
+        _port = random_port;
+        server->close();
         Config::setSlaveListenerPort(random_port);
         return random_port;
     }
@@ -49,6 +52,9 @@ public:
      */
     bool Listen(const quint16 port = Config::kMasterListenPort)
     {
+        _port = port;
+        return true;
+
         bool is_listen_suc = server->listen(QHostAddress::LocalHost, port);
         if (is_listen_suc)
             Config::setSlaveListenerPort(port);
@@ -59,7 +65,19 @@ public:
 
 private:
     QTcpServer *server;
+    quint16 _port;
 public slots:
+    void StartListen()
+    {
+        qDebug() << "Start Listen " << this->thread();
+        server->listen(QHostAddress::LocalHost, _port);
+    }
+
+    void StopListen()
+    {
+        server->close();
+    }
+
     void HandleConnection()
     {
         QTcpSocket *connection = server->nextPendingConnection();

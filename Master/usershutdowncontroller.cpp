@@ -5,14 +5,18 @@ UserShutDownController::UserShutDownController(Schedule &schedule, QObject *pare
 {
     Config::setMasterControllerPointer(Config::MasterControllerType::SHUTDOWN, this);
     connect(&_timer, &QTimer::timeout, this, &UserShutDownController::ShutDownDelayed);
+    connect(this, &UserShutDownController::StartTimerFromAnotherThread,
+            this, &UserShutDownController::StartTimer);
+    connect(this, &UserShutDownController::StopTimerFromAnotherThread,
+            this, &UserShutDownController::StopTimer);
 }
 
 bool UserShutDownController::ShutDown(const QString &RoomID)
 {
     qDebug() << RoomID << "shutdown request";
-    _timer.stop();
+    emit StopTimerFromAnotherThread();
     _delayed_data.push_back(RoomID);
-    _timer.start(kDelayMs);
+    emit StartTimerFromAnotherThread();
     return true;
 }
 
@@ -26,4 +30,14 @@ void UserShutDownController::ShutDownDelayed()
     _rooms.delRoomIfExists(RoomID);
     if (_delayed_data.size())
         _timer.start(kDelayMs);
+}
+
+void UserShutDownController::StartTimer()
+{
+    _timer.start();
+}
+
+void UserShutDownController::StopTimer()
+{
+    _timer.stop();
 }

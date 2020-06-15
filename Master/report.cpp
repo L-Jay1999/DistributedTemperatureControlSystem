@@ -8,11 +8,13 @@ Report::Report()
 
 std::pair<bool,std::vector<StatPayload>> Report::getDetails(const QDateTime &begin,const QDateTime &end)
 {
+    DBAccess db;
     return db.getRoomRequestStats(begin,end);//获取当日报表
 }
 
 bool Report::getDateReport(const QDate &date)
 {
+    DBAccess db;
     QDateTime begin, end;
     begin.setDate(date);
     end.setDate(date.addDays(1));

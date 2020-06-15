@@ -1,8 +1,8 @@
 ﻿#include "schedule.h"
 
-Schedule::Schedule(std::map<QString, UseAndCost*> &u, QObject *parent) : QObject(parent), useandcost(u)
+Schedule::Schedule(std::map<QString, std::shared_ptr<UseAndCost>> &u, QObject *parent) : QObject(parent), useandcost(u)
 {
-    asc = new AirSupplyController(this, this);
+    asc = new AirSupplyController(*this, this);
     sic = new ScheduleInfoController(this);
 }
 
@@ -33,7 +33,7 @@ void Schedule::delRoom(const QString &RoomID)
             {
                 qDebug() << "Schedule::delRoom::db.addRoomRequestStat Error";
             }
-            delete useandcost[*it];
+            useandcost.erase(*it);
         }
         working_slave.erase(it);
         checkIdle();//此时服务区有空闲，需要进行调度
@@ -50,11 +50,8 @@ void Schedule::checkIdle()
         qDebug() << RoomID << "is taken out of waiting slave";
         sic->Send(true, RoomID);
         working_slave.push_back(RoomID);
-        waiting_slave.erase(waiting_slave.begin());
-        UseAndCost *temp = new UseAndCost(this);
-        if(useandcost.count(RoomID))
-            delete useandcost[RoomID];
-        useandcost[RoomID] = temp;
-        temp->Start(RoomID);
+        waiting_slave.pop_front();
+        useandcost[RoomID] = std::make_shared<UseAndCost>(this);
+        useandcost[RoomID]->Start(RoomID);
     }
 }

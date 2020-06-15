@@ -16,6 +16,7 @@
 DBAccess::DBAccess()
 {
     connection_name = "QSQLITE_connection_" + QString().setNum(getHashedThreadId());
+    qDebug() << connection_name;
     if (!Config::hasUserType())
     {
         assert(false);

@@ -32,8 +32,9 @@ void MonitorDialog::setUpdateInterval(int interval_sec)
 
 void MonitorDialog::updateTable()
 {
+    DBAccess db;
     qDebug() << "MonitorDialog::updateTable() called!";
-    auto [is_suc, users] = _db.getUsers();
+    auto [is_suc, users] = db.getUsers();
     std::set<QString> all_rooms;
     if (!is_suc)
     {

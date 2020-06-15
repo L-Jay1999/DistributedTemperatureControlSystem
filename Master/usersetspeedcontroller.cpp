@@ -1,18 +1,22 @@
 #include "usersetspeedcontroller.h"
 
-UserSetSpeedController::UserSetSpeedController(std::map<QString, UseAndCost*> &u, QObject *parent)
+UserSetSpeedController::UserSetSpeedController(std::map<QString, std::shared_ptr<UseAndCost>> &u, QObject *parent)
      : QObject(parent), _rooms(getRooms()), useandcost(u)
 {
     Config::setMasterControllerPointer(Config::MasterControllerType::SET_SPEED, this);
     connect(&_timer, &QTimer::timeout, this, &UserSetSpeedController::SetDelayed);
+    connect(this, &UserSetSpeedController::StartTimerFromAnotherThread,
+            this, &UserSetSpeedController::StartTimer);
+    connect(this, &UserSetSpeedController::StopTimerFromAnotherThread,
+            this, &UserSetSpeedController::StopTimer);
 }
 
 bool UserSetSpeedController::Set(const QString &RoomID, const SpeedLevel level)
 {
     qDebug() << RoomID << (int)level << "set speed request";
-    _timer.stop();
+    emit StopTimerFromAnotherThread();
     _delayed_data.push_back({RoomID, level});
-    _timer.start(kDelayMs);
+    emit StartTimerFromAnotherThread();
     return true;
 }
 
@@ -31,15 +35,15 @@ void UserSetSpeedController::SetDelayed()
         DBAccess db;
         if(db.addRoomRequestStat(sp) == false)
         {
-            delete useandcost[RoomID];
+            useandcost.erase(RoomID);
             if (size)
                 _timer.start(kDelayMs);
             return;
         }
-        delete useandcost[RoomID];
+        useandcost.erase(RoomID);
         //改变风速，并记录一个新详单的开始
         _rooms.SetSpeed(RoomID, level);
-        useandcost[RoomID] = new UseAndCost(this);
+        useandcost[RoomID] = std::make_shared<UseAndCost>(this);
         useandcost[RoomID]->Start(RoomID);
         if (size)
             _timer.start(kDelayMs);
@@ -50,4 +54,14 @@ void UserSetSpeedController::SetDelayed()
     if (size)
         _timer.start(kDelayMs);
     return;
+}
+
+void UserSetSpeedController::StartTimer()
+{
+    _timer.start();
+}
+
+void UserSetSpeedController::StopTimer()
+{
+    _timer.stop();
 }
