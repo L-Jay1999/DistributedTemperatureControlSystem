@@ -95,8 +95,6 @@ public:
      * 第一个分量表示是否成功，* 第二个包含用户所有信息，分别为 <房间号，身份证号，用量，消费金额>
      */
     std::pair<bool, std::vector<std::tuple<QString, QString, double, double>>> getUsers();
-    // bool addLog();
-    // std::tuple<QString, LogLevel, QString> getLogs(const QDateTime &from, const QDateTime &to);
 
     /**
      * @brief 查询 master.auth 表，判断是否存在给定管理人员

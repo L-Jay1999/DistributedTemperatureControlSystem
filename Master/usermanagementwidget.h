@@ -10,6 +10,7 @@ namespace Ui {
 class UserManagementWidget;
 }
 
+// TODO 对输入进行检验
 class UserManagementWidget : public QWidget
 {
     Q_OBJECT
@@ -30,7 +31,6 @@ private:
     QString _RoomID;            //房间ID
     QString _UserID;            //用户ID
     QDateTime _EffDateTime;     //有效时间
-    std::tuple<bool, QString> _response;
 
 signals:
     void cancel_signal();

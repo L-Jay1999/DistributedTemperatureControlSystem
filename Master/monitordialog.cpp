@@ -61,6 +61,13 @@ void MonitorDialog::updateTable()
         wind_speed_item = new QTableWidgetItem;
         has_wind_item = new QTableWidgetItem;
 
+        room_id_item->setTextAlignment(Qt::AlignCenter);
+        is_open_item->setTextAlignment(Qt::AlignCenter);
+        room_temp_item->setTextAlignment(Qt::AlignCenter);
+        target_temp_item->setTextAlignment(Qt::AlignCenter);
+        wind_speed_item->setTextAlignment(Qt::AlignCenter);
+        has_wind_item->setTextAlignment(Qt::AlignCenter);
+
         room_id_item->setText(room_id);
         if (_rooms.hasRoom(room_id))
         {

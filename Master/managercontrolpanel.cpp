@@ -83,7 +83,7 @@ void ManagerControlPanel::switch_to_power()
         msg = msg.arg("关闭");
     else
         msg = msg.arg("开启");
-    if(QMessageBox::Yes == QMessageBox::warning(this, "改变电源状态", msg, QMessageBox::Yes | QMessageBox::No))
+    if(QMessageBox::Yes == QMessageBox::warning(this, "改变电源状态", msg, QMessageBox::Yes, QMessageBox::No))
     {
         _has_power = !_has_power;
         setPowerLabelText();
