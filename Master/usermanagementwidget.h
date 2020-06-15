@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QDateTime>
 #include <tuple>
-#include "promptdialog.h"
 #include "userinfocontroller.h"
 
 namespace Ui {
@@ -27,7 +26,6 @@ public:
 private:
     Ui::UserManagementWidget *ui;
     UserInfoController user_info;
-    PromptDialog *pd;
     QString _UserList;          //房客信息
     QString _RoomID;            //房间ID
     QString _UserID;            //用户ID
