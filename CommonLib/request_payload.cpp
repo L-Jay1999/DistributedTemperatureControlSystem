@@ -130,8 +130,7 @@ QByteArray RequestPayload::toBase64ByteArray() const
 
 bool RequestPayload::CheckParams() const
 {
-
-    return true;
+    // return true;
     switch (type)
     {
     case RequestType::LOGIN:
@@ -159,7 +158,7 @@ bool RequestPayload::CheckParams() const
             return true;
         break;
     case RequestType::SET_MODE:
-        if (mode.has_value())
+        if (mode.has_value() && temperature.has_value())
             return true;
         break;
     case RequestType::SET_SPEED:
@@ -188,5 +187,6 @@ bool RequestPayload::CheckParams() const
         break;
     default:break;
     }
+
     return false;
 }

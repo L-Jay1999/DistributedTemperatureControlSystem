@@ -14,7 +14,7 @@ class SetModeController : public QObject
     Q_OBJECT
 public:
     explicit SetModeController(QObject *parent = nullptr);
-    bool Set(const WorkingMode mode, const QString &RoomID);
+    bool Set(const WorkingMode mode, const QString &RoomID, const double default_degree);
 
 signals:
 

@@ -1,13 +1,15 @@
 ﻿
 #include "managerlogincontroller.h"
 
+#include <QRegExp>
+
 std::tuple<bool, QString> ManagerLoginController::ManagerLogin()
 {
 //    return {true, {}};
 
     if (CheckArgs())
     {
-        bool result = db.hasManager(_Account,_Password);
+        bool result = db.hasManager(_account,_password);
         if (result)
         {
             return {true, QStringLiteral("登录成功")};
@@ -19,11 +21,14 @@ std::tuple<bool, QString> ManagerLoginController::ManagerLogin()
     }
     else
     {
-        return {false, "输入格式有误"};
+        return {false, "账号和密码必须为3到12位的数字字母字符串"};
     }
 }
 
 bool ManagerLoginController::CheckArgs()
 {
-    return true;
+    QRegExp re("[a-zA-Z0-9]{3,12}");
+    if (re.exactMatch(_account) && re.exactMatch(_password))
+        return true;
+    return false;
 }

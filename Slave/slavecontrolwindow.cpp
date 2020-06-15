@@ -257,9 +257,12 @@ void SlaveControlWindow::GetRoomTemperature()
     _roomtemperature_lcd->display(_roomtemperature);
 }
 
-void SlaveControlWindow::GetMode(WorkingMode mode)
+void SlaveControlWindow::GetMode(WorkingMode mode, double default_degree)
 {
     if(mode == _mode){
+        _sensor->setWorkingMode(_mode);
+        _sensor->setTargetDegree(default_degree);
+        UpdateBound();
         ModeDisplay();
     }
     else{
@@ -269,6 +272,7 @@ void SlaveControlWindow::GetMode(WorkingMode mode)
             else{
                 _mode = mode;
                 _sensor->setWorkingMode(_mode);
+                _sensor->setTargetDegree(default_degree);
                 UpdateBound();
                 ModeDisplay();
             }
@@ -279,6 +283,7 @@ void SlaveControlWindow::GetMode(WorkingMode mode)
             else{
                 _mode = mode;
                 _sensor->setWorkingMode(_mode);
+                _sensor->setTargetDegree(default_degree);
                 UpdateBound();
                 ModeDisplay();
             }

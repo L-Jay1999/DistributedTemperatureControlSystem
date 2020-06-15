@@ -5,9 +5,9 @@ SetModeController::SetModeController(QObject *parent) : QObject(parent)
 
 }
 
-bool SetModeController::Set(const WorkingMode mode, const QString &RoomID)
+bool SetModeController::Set(const WorkingMode mode, const QString &RoomID, const double default_degree)
 {
-    SetModeRequest setmoderequest(mode, RoomID);
+    SetModeRequest setmoderequest(mode, RoomID, default_degree);
     auto [error, res] = setmoderequest.Send();
     if(error.hasError()){
         qDebug() << "SetModeController error";

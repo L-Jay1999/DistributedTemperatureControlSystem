@@ -46,7 +46,7 @@ private slots:
 public slots:
     void GetUseandCost();
     void GetRoomTemperature();
-    void GetMode(WorkingMode mode);
+    void GetMode(WorkingMode mode, double default_degree);
     void reachTargetDegree();
     void higherThanTargetDegreePlusOne();
     void SetLoginUser(const QString &room_id, const QString &_id, WorkingMode mode, double init_temp);

@@ -26,6 +26,8 @@ ManagerControlPanel::ManagerControlPanel(const QString &manager_account, QWidget
     connect(ui->pushButton_report,&QPushButton::clicked,    this,&ManagerControlPanel::switch_to_report);   //查看报表
     connect(ui->pushButton_monitor,&QPushButton::clicked,   this,&ManagerControlPanel::show_monitor);  //监控信息
     connect(ui->pushButton_user,&QPushButton::clicked,      this,&ManagerControlPanel::switch_to_user);     //用户管理
+    connect(ui->pushButton_degree_up, &QPushButton::clicked,this,&ManagerControlPanel::degree_up);
+    connect(ui->pushButton_degree_down, &QPushButton::clicked,this,&ManagerControlPanel::degree_down);
     connect(this, &ManagerControlPanel::SetErrorInfoTextSignal,   this,&ManagerControlPanel::set_error_info_text);
     connect(&clear_error_info_timer, &QTimer::timeout, this, &ManagerControlPanel::clear_error_info_text);
     umw = new UserManagementWidget;
@@ -37,6 +39,7 @@ ManagerControlPanel::ManagerControlPanel(const QString &manager_account, QWidget
     setPowerLabelText();
     ui->label_manager->setText(manager_account);
     setRateLabelText();
+    setDefaultDegreeLabelText();
     if (_listener.Listen())
         emit SetErrorInfoTextSignal("监听端口成功，端口号 " + QString::number(Config::kMasterListenPort));
 }
@@ -53,7 +56,7 @@ void ManagerControlPanel::setPowerLabelText()
 
 void ManagerControlPanel::setModeLabelText()
 {
-    if (_mode == WorkingMode::COLD)
+    if (getCurrentWorkingMode() == WorkingMode::COLD)
         ui->label_mode->setText("制冷");
     else
         ui->label_mode->setText("制热");
@@ -64,11 +67,15 @@ void ManagerControlPanel::setRateLabelText()
     ui->label_rate->setText(QString::number(_rate) + "秒");
 }
 
+void ManagerControlPanel::setDefaultDegreeLabelText()
+{
+    ui->label_default_degree->setText(QString::number(getDefaultWorkingTemperature()));
+}
+
 void ManagerControlPanel::logout()
 {
     emit logout_signal();
-    this->close();
-    umw->close();
+    this->hide();
 }
 
 void ManagerControlPanel::reshow()
@@ -85,11 +92,15 @@ void ManagerControlPanel::switch_to_power()
         msg = msg.arg("开启");
     if(QMessageBox::Yes == QMessageBox::warning(this, "改变电源状态", msg, QMessageBox::Yes, QMessageBox::No))
     {
+        // TODO 销毁Listener
         _has_power = !_has_power;
         setPowerLabelText();
     }
     if (!_has_power)
+    {
         ui->label_mode->setText("无");
+        ui->label_default_degree->setText("无");
+    }
     else
         setModeLabelText();
 }
@@ -117,8 +128,6 @@ void ManagerControlPanel::show_monitor()
 void ManagerControlPanel::switch_to_user()
 {
     umw->show();
-//    this->hide();
-//    connect(umw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
 }
 
 void ManagerControlPanel::set_power_label_text(bool has_power)
@@ -136,14 +145,14 @@ void ManagerControlPanel::change_mode()
     }
 
     auto room_ids = getRooms().getRoomIDs();
-    if (_mode == WorkingMode::HOT)
-        _mode = WorkingMode::COLD;
+    if (getCurrentWorkingMode() == WorkingMode::HOT)
+        setCurrentWorkingMode(WorkingMode::COLD);
     else
-        _mode = WorkingMode::HOT;
+        setCurrentWorkingMode(WorkingMode::HOT);
 
     for (const auto &room_id : room_ids)
     {
-        SetModeRequest mode_request(_mode, room_id);
+        SetModeRequest mode_request(getCurrentWorkingMode(), room_id, getDefaultWorkingTemperature());
         auto [err, is_suc] = mode_request.Send();
         if (err.hasError())
         {
@@ -160,7 +169,9 @@ void ManagerControlPanel::change_mode()
     }
     emit SetErrorInfoTextSignal("成功修改工作模式");
     setModeLabelText();
+    setDefaultDegreeLabelText();
 }
+
 
 void ManagerControlPanel::set_error_info_text(const QString &err_info)
 {
@@ -201,4 +212,38 @@ void ManagerControlPanel::rate_up()
 void ManagerControlPanel::rate_down()
 {
     ChangeRate(false);
+}
+
+void ManagerControlPanel::ChangeDegree(bool is_degree_up)
+{
+    double current_degree = getDefaultWorkingTemperature();
+    if (is_degree_up)
+    {
+        if (getCurrentWorkingMode() == WorkingMode::HOT && current_degree < 30.0)
+            setDefaultWorkingTemperature(current_degree + 1.0);
+        else if (getCurrentWorkingMode() == WorkingMode::COLD && current_degree < 25.0)
+            setDefaultWorkingTemperature(current_degree + 1.0);
+        else
+            emit SetErrorInfoTextSignal("默认温度已达到最大值");
+    }
+    else
+    {
+        if (getCurrentWorkingMode() == WorkingMode::HOT && current_degree > 25.0)
+            setDefaultWorkingTemperature(current_degree - 1.0);
+        else if (getCurrentWorkingMode() == WorkingMode::COLD && current_degree > 18.0)
+            setDefaultWorkingTemperature(current_degree - 1.0);
+        else
+            emit SetErrorInfoTextSignal("默认温度已达到最小值");
+    }
+    setDefaultDegreeLabelText();
+}
+
+void ManagerControlPanel::degree_up()
+{
+    ChangeDegree(true);
+}
+
+void ManagerControlPanel::degree_down()
+{
+    ChangeDegree(false);
 }

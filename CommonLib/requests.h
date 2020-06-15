@@ -289,8 +289,8 @@ private:
 class SetModeRequest : Request
 {
 public:
-    SetModeRequest(const WorkingMode mode, const QString &room_id)
-        : mode_(mode), room_id_(room_id)
+    SetModeRequest(const WorkingMode mode, const QString &room_id, const double default_temperature)
+        : mode_(mode), room_id_(room_id), default_temperature_(default_temperature)
     {}
 
     std::pair<ErrorPack, bool> Send()
@@ -320,6 +320,7 @@ protected:
         RequestPayload payload{};
         payload.type = RequestType::SET_MODE;
         payload.mode = mode_;
+        payload.temperature = default_temperature_;
         payload.target_host = Config::kMasterHostAddr; // localhost
         payload.target_port = Config::getSlavePort(room_id_);
         return payload;
@@ -327,6 +328,7 @@ protected:
 private:
     WorkingMode mode_{};
     QString room_id_{};
+    double default_temperature_{};
 };
 
 class ForceShutDownRequest : Request

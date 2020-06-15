@@ -7,6 +7,8 @@
 
 #include <QString>
 #include <QObject>
+#include <QDebug>
+
 
 namespace Config
 {
@@ -135,33 +137,11 @@ namespace Config
         return timeout_msec;
     }
 
-    static WorkingMode mode;
-
-    WorkingMode getCurrentWorkingMode()
-    {
-        return mode;
-    }
-
-    void setCurrentWorkingMode(const WorkingMode working_mode)
-    {
-       mode = working_mode;
-    }
-
-    static double working_degree = 25.0;
-    double getDefaultWorkingTemperature()
-    {
-        return working_degree;
-    }
-
-    void setDefaultWorkingTemperature(double degree)
-    {
-        working_degree = degree;
-    }
-
     static std::map<QString, quint16> room_to_port{};
     void addSlavePort(const QString &room_id, quint16 port)
     {
         room_to_port[room_id] = port;
+        qDebug() << "Config::addSlavePort(): room: " << room_id << ", port: " << port;
     }
 
     quint16 getSlavePort(const QString &room_id)

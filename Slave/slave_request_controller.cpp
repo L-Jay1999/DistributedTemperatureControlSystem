@@ -50,7 +50,7 @@ namespace SlaveRequestController
                 response.type = RequestType::ACK;
                 ModeAlterController *controller =
                         dynamic_cast<ModeAlterController *>(Config::getSlaveControllerPointer(Config::SlaveControllerType::MODE_ALTER));
-                controller->SetMode(request_parsed.mode.value());
+                controller->SetMode(request_parsed.mode.value(), request_parsed.temperature.value());
                 response.result = true;
                 break;
             }

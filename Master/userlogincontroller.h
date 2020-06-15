@@ -23,7 +23,7 @@ public:
         if(_db.hasUser(RoomID, UserID)){
             qDebug() << "login success";
             _rooms.addRoom(RoomID);
-            return {true, Config::getCurrentWorkingMode(), Config::getDefaultWorkingTemperature()};
+            return {true, getCurrentWorkingMode(), getDefaultWorkingTemperature()};
             // return {false, {}, {}};
         }
         return {false, {}, {}};

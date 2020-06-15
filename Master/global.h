@@ -79,7 +79,13 @@ private:
     std::set<QString> _connected_rooms;
 };
 
+WorkingMode getCurrentWorkingMode();
 
+void setCurrentWorkingMode(WorkingMode mode);
+
+double getDefaultWorkingTemperature();
+
+void setDefaultWorkingTemperature(double degree);
 
 
 Rooms &getRooms();

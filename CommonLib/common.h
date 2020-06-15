@@ -226,14 +226,6 @@ namespace Config {
 
     int getTimeOutMSec();
 
-    WorkingMode getCurrentWorkingMode();
-
-    void setCurrentWorkingMode();
-
-    double getDefaultWorkingTemperature();
-
-    void setDefaultWorkingTemperature(double degree);
-
     void addSlavePort(const QString &room_id, quint16 port);
 
     quint16 getSlavePort(const QString &room_id);

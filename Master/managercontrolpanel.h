@@ -27,7 +27,6 @@ private:
 
     bool _has_power{false};
     int _rate{10};
-    WorkingMode _mode{WorkingMode::COLD};
     QTimer clear_error_info_timer;
 
     UserManagementWidget *umw;//用户管理面板
@@ -38,7 +37,9 @@ private:
     void setPowerLabelText();
     void setModeLabelText();
     void setRateLabelText();
+    void setDefaultDegreeLabelText();
     void ChangeRate(bool is_rate_up);
+    void ChangeDegree(bool is_degree_up);
 
 private slots:
     void logout();                  //登出
@@ -55,6 +56,8 @@ private slots:
 
     void rate_up();
     void rate_down();
+    void degree_up();
+    void degree_down();
 signals:
     void logout_signal();
     void SetErrorInfoTextSignal(const QString &err_info);
