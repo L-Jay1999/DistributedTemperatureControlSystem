@@ -41,7 +41,3 @@ void Schedule::checkIdle()
     }
 }
 
-void Schedule::change_power(bool is_working)
-{
-
-}

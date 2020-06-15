@@ -38,8 +38,7 @@ void ReportWidget::GetReport()
             ui->tableWidget->setItem(i,1,new QTableWidgetItem(rep[i].end_time.toString("yyyy-MM-dd hh:mm:ss")));
             ui->tableWidget->setItem(i,2,new QTableWidgetItem(QString::number(rep[i].init_temperature)));
             ui->tableWidget->setItem(i,3,new QTableWidgetItem(QString::number(rep[i].end_temperature)));
-            //TODO 计算风量消耗
-            //ui->tableWidget->setItem(i,4,new QTableWidgetItem(QString::number()));
+            ui->tableWidget->setItem(i,4,new QTableWidgetItem(QString::number(rep[i].cost/5)));
             ui->tableWidget->setItem(i,5,new QTableWidgetItem(QString::number(rep[i].cost)));
         }
     }
@@ -50,26 +49,41 @@ void ReportWidget::GetReport()
 void ReportWidget::DownLoad()
 {
     GetReport();
-    using namespace std;
-    string path = "./report/" + _date.toString("yyyy-MM-dd").toStdString() + '_' + _roomid.toStdString() + ".csv";
-    ofstream outf;
-    outf.open(path,ios::out);
-    outf << "Date" << ',' << "RoomID" << ',' << "Power Supply" << ',' << "Total Cost" << endl;
-    outf << _date.toString("yyyy-MM-dd").toStdString() << ','
-         << _roomid.toStdString() << ','
-         << ui->lineEdit_power->text().toStdString() << ','
-         << ui->lineEdit_cost->text().toStdString() << endl;
-    outf << "Start Time" << ',' << "End Time" << ',' << "Init Temperature" << ',' << "End Temperature" << ',' << "Air Volume" << ',' << "Cost" << endl;
-    for(int i = 0; i < ui->tableWidget->rowCount(); i++)
+    QString message = "房间号：<font color='red'>" + _roomid + "</font>\n日期：<font color='red'>" + _date.toString() + "</font>\n是否确认？";
+    QMessageBox::StandardButton mb1 = QMessageBox::question(NULL,"导出确认",message,QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
+    if(mb1 == QMessageBox::Yes)
     {
-        outf << ui->tableWidget->item(i,0)->text().toStdString() << ','
-             << ui->tableWidget->item(i,1)->text().toStdString() << ','
-             << ui->tableWidget->item(i,2)->text().toStdString() << ','
-             << ui->tableWidget->item(i,3)->text().toStdString() << ','
-             << ui->tableWidget->item(i,4)->text().toStdString() << ','
-             << ui->tableWidget->item(i,5)->text().toStdString() << endl;
+        using namespace std;
+        string path = "./report/" + _date.toString("yyyy-MM-dd").toStdString() + '_' + _roomid.toStdString() + ".csv";
+        ofstream outf;
+        outf.open(path,ios::out);
+        if(outf.is_open())
+        {
+            outf << "Date" << ',' << "RoomID" << ',' << "Power Supply" << ',' << "Total Cost" << endl;
+            outf << _date.toString("yyyy-MM-dd").toStdString() << ','
+                 << _roomid.toStdString() << ','
+                 << ui->lineEdit_power->text().toStdString() << ','
+                 << ui->lineEdit_cost->text().toStdString() << endl;
+            outf << "Start Time" << ',' << "End Time" << ',' << "Init Temperature" << ',' << "End Temperature" << ',' << "Power consumption" << ',' << "Cost" << endl;
+            for(int i = 0; i < ui->tableWidget->rowCount(); i++)
+            {
+                outf << ui->tableWidget->item(i,0)->text().toStdString() << ','
+                     << ui->tableWidget->item(i,1)->text().toStdString() << ','
+                     << ui->tableWidget->item(i,2)->text().toStdString() << ','
+                     << ui->tableWidget->item(i,3)->text().toStdString() << ','
+                     << ui->tableWidget->item(i,4)->text().toStdString() << ','
+                     << ui->tableWidget->item(i,5)->text().toStdString() << endl;
+            }
+            outf.close();
+            message = "导出成功";
+        }else
+        {
+            message = "导出失败：文件无法生成"
+        }
+        QMessageBox::about(NULL,"提示",message);
+
     }
-    outf.close();
+
 }
 
 void ReportWidget::Cancel()
