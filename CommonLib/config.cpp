@@ -96,7 +96,7 @@ namespace Config
     void setSlaveControllerPointer(SlaveControllerType type, QObject *controller)
     {
         std::unique_lock lock(slave_ctrller_ptr_rw_mutex);
-        // slave_ctrller_ptr.at(type) = controller;
+        qDebug() << "Config::setSlaveControllerPointer() set type: " << EnumToInt(type);
         slave_ctrller_ptr[type] = controller;
     }
 
@@ -106,6 +106,7 @@ namespace Config
         if (auto i = slave_ctrller_ptr.find(ctrller_type);
                 i != slave_ctrller_ptr.end())
             return (*i).second;
+        qDebug() << "Config::getSlaveControllerPointer() of type: " << EnumToInt(ctrller_type) << " not set.";
         return nullptr;
     }
 
@@ -113,6 +114,7 @@ namespace Config
     {
         std::unique_lock lock(master_ctrller_ptr_rw_mutex);
         // slave_ctrller_ptr.at(type) = controller;
+        qDebug() << "Config::setMasterControllerPointer() set type: " << EnumToInt(type);
         master_ctrller_ptr[type] = controller;
     }
 
@@ -122,6 +124,7 @@ namespace Config
         if (auto i = master_ctrller_ptr.find(ctrller_type);
                 i != master_ctrller_ptr.end())
             return (*i).second;
+        qDebug() << "Config::getMasterControllerPointer() of type: " << EnumToInt(ctrller_type) << " not set.";
         return nullptr;
     }
 

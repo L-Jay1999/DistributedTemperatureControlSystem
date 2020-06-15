@@ -149,7 +149,6 @@ public:
 
         if (json_err.error == QJsonParseError::NoError && !document.isNull())
         {
-            Log::addLog(Log::LogLevel::ERROR, QString("IN_PARSE: ") + document.toJson());
             assert(document.isObject());
             payload.fromQJsonObject(document.object());
         }

@@ -403,6 +403,7 @@ protected:
         payload.type = RequestType::GET_ROOM_TEMP;
         payload.target_host = Config::kMasterHostAddr; // localhost
         payload.target_port = Config::getSlavePort(room_id_);
+        qDebug() << "GetRoomTemperatureRequest::BuildPayload(): port: " << payload.target_port;
         return payload;
     }
 private:

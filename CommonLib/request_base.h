@@ -64,8 +64,6 @@ protected:
         QByteArray send_data = payload.toBase64ByteArray();
         RequestSendReturnPack res;
         Log::addLog(Log::LogLevel::ERROR, QString("SEND: ") + payload.toString());
-        Log::addLog(Log::LogLevel::ERROR, QString("PARSE: ") + RequestParser::Parse(payload.toBase64ByteArray()).second.toString());
-        Log::addLog(Log::LogLevel::ERROR, QString("BYTEARRAY: ") + payload.toBase64ByteArray());
         socket.connectToHost(payload.target_host, payload.target_port);
         if (!socket.waitForConnected(Config::getTimeOutMSec()))
         {
@@ -89,7 +87,6 @@ protected:
         }
         response_base64 = socket.readAll();
         socket.disconnectFromHost();
-        Log::addLog(Log::LogLevel::ERROR, QString("JUST RECEIVE: ") + response_base64);
         auto [is_parsed, response_payload] = RequestParser::ParseBase64(response_base64);
         if (!is_parsed)
         {

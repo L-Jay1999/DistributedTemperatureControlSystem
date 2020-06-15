@@ -27,6 +27,8 @@ SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
 
     _modealtercontroller = new ModeAlterController(this);
 
+    _windcontrollerfromm = new WindControllerFromM(this);
+
     qDebug() << "slavecontrolwindow create";
 }
 

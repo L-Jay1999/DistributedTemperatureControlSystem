@@ -14,6 +14,7 @@ namespace SlaveRequestController
         RequestPayload response;
 
         auto [is_parsing_suc, request_parsed] = RequestParser::Parse(request);
+        Log::addLog(Log::LogLevel::ERROR, QString("REQUEST: ") + request_parsed.toString());
         if (!is_parsing_suc)
         {
             auto fail_response = getAckResponse(false);
@@ -78,7 +79,7 @@ namespace SlaveRequestController
                 throw getTypeStr(request_parsed.type);
             }
         }
-
+        Log::addLog(Log::LogLevel::ERROR, QString("RESPONSE: ") + response.toBase64ByteArray());
         return response.toBase64ByteArray();
     }
 } // namespace RequestController

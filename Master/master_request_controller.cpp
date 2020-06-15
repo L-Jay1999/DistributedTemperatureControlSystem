@@ -46,7 +46,7 @@ namespace MasterRequestController
                 response.result = login_result;
                 response.config = {init_mode, init_temp};
                 if (login_result)
-                    Config::addSlavePort(request_parsed.room_id.value(), host_port);
+                    Config::addSlavePort(request_parsed.room_id.value(), request_parsed.listen_port.value());
                 break;
             }
             case RequestType::SET_SPEED:

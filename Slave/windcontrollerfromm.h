@@ -12,7 +12,7 @@ public:
 
     explicit WindControllerFromM(QObject *parent) : QObject(parent)
     {
-    //    Config::setSlaveControllerPointer(Config::SlaveControllerType::WIND_SCHEDULE, this);
+        Config::setSlaveControllerPointer(Config::SlaveControllerType::WIND_SCHEDULE, this);
         connect(this, SIGNAL(WindControl(bool)), parent, SLOT(WindControlFromM(bool)));
     }
 

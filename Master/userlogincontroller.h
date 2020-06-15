@@ -24,7 +24,7 @@ public:
             qDebug() << "login success";
             _rooms.addRoom(RoomID);
             _rooms.SetID(RoomID, UserID);
-            return {true, Config::getCurrentWorkingMode(), Config::getDefaultWorkingTemperature()};
+            return {true, getCurrentWorkingMode(), getDefaultWorkingTemperature()};
             // return {false, {}, {}};
         }
         return {false, {}, {}};
