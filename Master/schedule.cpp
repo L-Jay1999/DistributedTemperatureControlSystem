@@ -24,20 +24,19 @@ void Schedule::delRoom(const QString &RoomID)
     if(it != working_slave.end())
     {
         sic->Send(false,*it);
-
-        //构造详单，发送给数据库
-        struct StatPayload sp;
-        useandcost[*it]->UseandCostfromStart(sp);
-        DBAccess db;
-        if(db.addRoomRequestStat(sp) == false)
-        {
-            QDebug << "Schedule::delRoom::db.addRoomRequestStat Error";
+        if(useandcost.count(*it)){
+            //构造详单，发送给数据库
+            struct StatPayload sp;
+            useandcost[*it]->UseandCostfromStart(sp);
+            DBAccess db;
+            if(db.addRoomRequestStat(sp) == false)
+            {
+                QDebug << "Schedule::delRoom::db.addRoomRequestStat Error";
+            }
+            delete useandcost[*it];
         }
-
-        delete useandcost[*it];
         working_slave.erase(it);
         checkIdle();//此时服务区有空闲，需要进行调度
-        return;
     }
 }
 
@@ -48,11 +47,12 @@ void Schedule::checkIdle()
     {
         //将一台从机从等待队列移入服务区
         QString RoomID = waiting_slave.front();
-        sic->Send(true,RoomID);
+        qDebug() << RoomID << "is taken out of waiting slave";
+        sic->Send(true, RoomID);
         working_slave.push_back(RoomID);
         waiting_slave.erase(waiting_slave.begin());
         UseAndCost *temp = new UseAndCost(this);
-        if(useandcost[RoomID])
+        if(useandcost.count(RoomID))
             delete useandcost[RoomID];
         useandcost[RoomID] = temp;
         temp->Start(RoomID);

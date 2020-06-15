@@ -8,6 +8,7 @@
 
 #include "common.h"
 #include "requests.h"
+#include "global.h"
 
 class ScheduleInfoController : public QObject
 {
@@ -15,6 +16,9 @@ class ScheduleInfoController : public QObject
 public:
     explicit ScheduleInfoController(QObject *parent = nullptr);
     bool Send(const bool is_in_queue, const QString &RoomID);
+
+private:
+    Rooms &_rooms;
 
 signals:
 

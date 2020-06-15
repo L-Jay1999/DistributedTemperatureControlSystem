@@ -14,12 +14,8 @@ class SetTemperatureController : public QObject
 
 public:
     SetTemperatureController() = delete;
-    explicit SetTemperatureController(QObject *parent = nullptr, const QString &RoomID = "", const double degree = 25.0);
-    bool Set();
-
-private:
-    QString _RoomID;
-    double _degree;
+    explicit SetTemperatureController(QObject *parent = nullptr);
+    bool Set(const QString &RoomID, const double degree);
 
 signals:
     void AddTextTemp(QString s);

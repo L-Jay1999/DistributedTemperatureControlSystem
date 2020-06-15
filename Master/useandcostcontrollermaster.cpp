@@ -1,7 +1,7 @@
 #include "useandcostcontrollermaster.h"
 
 UseAndCostControllerMaster::UseAndCostControllerMaster(QObject *parent)
-    : QObject(parent) //, _rooms(getRooms())
+    : QObject(parent) , _rooms(getRooms())
 {
     
 }
@@ -13,6 +13,7 @@ bool UseAndCostControllerMaster::Send(const double use, const double cost, const
     if(error.hasError()){
         qDebug() << "UseandCostControllerMaster error";
         qDebug() << error.err_str;
+        _rooms.delRoomIfExists(RoomID);
     }
     return res;
 }

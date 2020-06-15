@@ -14,11 +14,8 @@ class ShutDownController : public QObject
 
 public:
     ShutDownController() = delete;
-    explicit ShutDownController(QObject *parent = nullptr, const QString &RoomID = "");
-    bool ShutDown();
-
-private:
-    QString _RoomID;
+    explicit ShutDownController(QObject *parent = nullptr);
+    bool ShutDown(const QString &RoomID);
 
 signals:
     void AddTextShutDown(QString s);

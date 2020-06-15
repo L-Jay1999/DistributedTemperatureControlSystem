@@ -8,6 +8,7 @@
 
 #include "requests.h"
 #include "common.h"
+#include "global.h"
 
 class SetModeController : public QObject
 {
@@ -15,6 +16,9 @@ class SetModeController : public QObject
 public:
     explicit SetModeController(QObject *parent = nullptr);
     bool Set(const WorkingMode mode, const QString &RoomID, const double default_degree);
+
+private:
+    Rooms &_rooms;
 
 signals:
 

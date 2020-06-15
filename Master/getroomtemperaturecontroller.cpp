@@ -16,6 +16,7 @@ double GetRoomTemperatureController::Get(const QString &RoomID)
     if(error.hasError()){
         qDebug() << "GetRoomTemperatureController error";
         qDebug() << error.err_str;
+        _rooms.delRoomIfExists(RoomID);
     }
     return degree;
 }

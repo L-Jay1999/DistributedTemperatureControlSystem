@@ -1,6 +1,6 @@
 #include "setmodecontroller.h"
 
-SetModeController::SetModeController(QObject *parent) : QObject(parent)
+SetModeController::SetModeController(QObject *parent) : QObject(parent), _rooms(getRooms())
 {
 
 }
