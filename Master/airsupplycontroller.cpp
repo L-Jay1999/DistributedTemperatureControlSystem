@@ -5,11 +5,21 @@ AirSupplyController::AirSupplyController(QObject *parent, Schedule *schedule)
 {
     Config::setMasterControllerPointer(Config::MasterControllerType::WIND_REQUEST, this);
     _schedule = schedule;
+    connect(&_timer, &QTimer::timeout, this, &AirSupplyController::updateSupplyDelayed);
 }
 
 void AirSupplyController::UpdateAirSupply(bool OpenorClose, const QString &RoomID)
 {
     qDebug() << "UpdateAirSupply" << RoomID;
+    _delayed_data.push_back({OpenorClose, RoomID});
+    _timer.start(kDelayMs);
+}
+
+void AirSupplyController::updateSupplyDelayed()
+{
+    _timer.stop();
+    auto [OpenorClose, RoomID] = _delayed_data.front();
+    _delayed_data.pop_front();
     if(OpenorClose)
     {
         _schedule->addRoom(RoomID);
@@ -22,4 +32,6 @@ void AirSupplyController::UpdateAirSupply(bool OpenorClose, const QString &RoomI
     {
         _rooms.getRoom(RoomID).has_wind = OpenorClose;
     }
+    if (_delayed_data.size())
+        _timer.start(kDelayMs);
 }

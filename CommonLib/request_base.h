@@ -94,7 +94,6 @@ protected:
             return res;
         }
         Log::addLog(Log::LogLevel::ERROR, QString("RECEIVE: ") + response_payload.toString());
-        qDebug() << response_payload.toString();
 
         // add source host addr and port
         response_payload.source_host = payload.target_host;

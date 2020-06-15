@@ -391,9 +391,17 @@ void SlaveControlWindow::TextAppend(QString s)
 
 void SlaveControlWindow::GetUseandCost()
 {
-    _usage = _user->getUsage();
-    _cost = _user->getCost();
-    _usage_lcd->display(_usage);
-    _cost_lcd->display(_cost);
-    TextAppend("主控机传来use和cost");
+    if (!_is_open)
+    {
+        _user->setUsage(0.0);
+        _user->setCost(0.0);
+    }
+    else
+    {
+        _usage = _user->getUsage();
+        _cost = _user->getCost();
+        _usage_lcd->display(_usage);
+        _cost_lcd->display(_cost);
+        TextAppend("主控机传来use和cost");
+    }
 }

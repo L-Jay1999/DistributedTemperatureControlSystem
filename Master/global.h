@@ -24,6 +24,7 @@ public:
     Rooms() {};
     void addRoom(const QString &room_id)
     {
+        qDebug() << "addRoom" << room_id;
         if (!_connected_rooms.count(room_id))
         {
             _connected_rooms.insert(room_id);
@@ -43,7 +44,6 @@ public:
 
     bool hasRoom(const QString &room_id) const
     {
-        qDebug() << "hasRoom" << room_id << _connected_rooms.count(room_id);
         return _connected_rooms.count(room_id);
     }
 
@@ -57,6 +57,7 @@ public:
 
     void delRoomIfExists(const QString &room_id)
     {
+        qDebug() << "DelRoom" << room_id;
         if (hasRoom(room_id))
         {
             _connected_rooms.erase(_connected_rooms.find(room_id));

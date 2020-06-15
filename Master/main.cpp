@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     Schedule schedule(useandcost, nullptr);
     UserLoginController login_controller;
     UserSetSpeedController speed_controller(useandcost, nullptr);
-    UserShutDownController shutdowncontroller;
+    UserShutDownController shutdowncontroller(schedule);
     UserSetTemperatureController tempcontroller;
     GetRoomTemperatureController roomcontroller;
     StandbyWidget sw;
