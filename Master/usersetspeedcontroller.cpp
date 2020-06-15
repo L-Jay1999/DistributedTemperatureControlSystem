@@ -31,7 +31,7 @@ void UserSetSpeedController::SetDelayed()
     {
         //构造详单，发送给数据库
         struct StatPayload sp;
-        useandcost[RoomID]->UseandCostfromStart(sp);
+        useandcost.at(RoomID)->UseandCostfromStart(sp);
         DBAccess db;
         if(db.addRoomRequestStat(sp) == false)
         {
