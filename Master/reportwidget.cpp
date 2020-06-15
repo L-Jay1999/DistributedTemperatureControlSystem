@@ -78,7 +78,7 @@ void ReportWidget::DownLoad()
             message = "导出成功";
         }else
         {
-            message = "导出失败：文件无法生成"
+            message = "导出失败：文件无法生成";
         }
         QMessageBox::about(NULL,"提示",message);
 

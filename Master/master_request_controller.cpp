@@ -81,6 +81,7 @@ namespace MasterRequestController
                 response.type = RequestType::ACK;
                 AirSupplyController *controller =
                         dynamic_cast<AirSupplyController *>(Config::getMasterControllerPointer(Config::MasterControllerType::WIND_REQUEST));
+                controller->UpdateAirSupply(request_parsed.is_open.value(), request_parsed.room_id.value());
                 response.result = true;
                 break;
             }
