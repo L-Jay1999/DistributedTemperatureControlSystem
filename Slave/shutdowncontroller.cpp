@@ -1,12 +1,12 @@
 #include "shutdowncontroller.h"
 
-ShutDownController::ShutDownController(QObject *parent, const QString &RoomID)
-    : QObject(parent), _RoomID(RoomID)
+ShutDownController::ShutDownController(QObject *parent)
+    : QObject(parent)
 {
     connect(this, SIGNAL(AddTextShutDown(QString)), parent, SLOT(TextAppend(QString)));
 }
 
-bool ShutDownController::ShutDown()
+bool ShutDownController::ShutDown(const QString &RoomID)
 {
     ShutDownRequest shutdownrequest(_RoomID);
     auto [error, result] = shutdownrequest.Send();

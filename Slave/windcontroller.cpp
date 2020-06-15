@@ -1,15 +1,15 @@
 #include "windcontroller.h"
 
-WindController::WindController(QObject *parent, const bool open, const QString &RoomID)
-    : QObject(parent), _open(open), _RoomID(RoomID)
+WindController::WindController(QObject *parent)
+    : QObject(parent)
 {
     connect(this, SIGNAL(AddTextWind(QString)), parent, SLOT(TextAppend(QString)));
 }
 
-bool WindController::Send()
+bool WindController::Send(const QString &RoomID, const bool open)
 {
 
-    WindRequest windrequest(_RoomID, _open);
+    WindRequest windrequest(RoomID, open);
     auto [error, result] = windrequest.Send();
     if(error.hasError()){
         qDebug() << "windcontroller error:";

@@ -1,14 +1,14 @@
 #include "settemperaturecontroller.h"
 
-SetTemperatureController::SetTemperatureController(QObject *parent, const QString &RoomID, const double degree)
-    :  QObject(parent), _RoomID(RoomID), _degree(degree)
+SetTemperatureController::SetTemperatureController(QObject *parent)
+    :  QObject(parent)
 {
     connect(this, SIGNAL(AddTextTemp(QString)), parent, SLOT(TextAppend(QString)));
 }
 
-bool SetTemperatureController::Set()
+bool SetTemperatureController::Set(const QString &RoomID, const double degree)
 {
-    SetTemperatureRequest settemperaturerequest(_RoomID, _degree);
+    SetTemperatureRequest settemperaturerequest(RoomID, degree);
     auto [error, result] = settemperaturerequest.Send();
     if(error.hasError()){
         qDebug() << "settemperaturecontroller error:";

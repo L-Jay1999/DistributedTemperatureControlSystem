@@ -7,6 +7,7 @@
 #include <map>
 #include <set>
 #include <vector>
+#include <QDebug>
 
 struct Room
 {
@@ -26,7 +27,7 @@ public:
         if (!_connected_rooms.count(room_id))
         {
             _connected_rooms.insert(room_id);
-            _rooms[room_id] = {{}, {}, room_id};
+            _rooms[room_id] = {{}, {}, room_id, {}};
         }
     }
 
@@ -42,6 +43,7 @@ public:
 
     bool hasRoom(const QString &room_id) const
     {
+        qDebug() << "hasRoom" << room_id << _connected_rooms.count(room_id);
         return _connected_rooms.count(room_id);
     }
 
@@ -79,6 +81,7 @@ public:
     {
         if(hasRoom(RoomID)){
             _rooms[RoomID].id = ID;
+            qDebug() << "rooms " << RoomID << " sets " << ID;
         }
     }
 

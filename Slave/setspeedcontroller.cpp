@@ -1,14 +1,14 @@
 #include "setspeedcontroller.h"
 
-SetSpeedController::SetSpeedController(QObject *parent, const QString &RoomID, const SpeedLevel level)
-    : QObject(parent), _RoomID(RoomID), _level(level)
+SetSpeedController::SetSpeedController(QObject *parent)
+    : QObject(parent)
 {
     connect(this, SIGNAL(AddTextSpeed(QString)), parent, SLOT(TextAppend(QString)));
 }
 
-bool SetSpeedController::Set()
+bool SetSpeedController::Set(const QString &RoomID, const SpeedLevel level)
 {
-    SetSpeedRequest setspeedrequest(_RoomID, _level);
+    SetSpeedRequest setspeedrequest(RoomID, level);
     auto [error, result] = setspeedrequest.Send();
     if(error.hasError()){
         qDebug() << "setspeedcontroller error:";

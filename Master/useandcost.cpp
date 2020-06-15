@@ -14,6 +14,7 @@ void UseAndCost::Start(const QString &RoomID)
     _RoomID = RoomID;
     if(_rooms.hasRoom(_RoomID))
         _UserID = _rooms.getRoom(_RoomID).id;
+    qDebug() << _RoomID << _UserID;
 }
 
 double UseAndCost::UseandCostfromStart()
@@ -23,8 +24,8 @@ double UseAndCost::UseandCostfromStart()
     _timer->stop();
     auto [res, use, cost] = _db.getUseAndCost(_RoomID, _UserID);
     _db.updateUseAndCost(_RoomID, _UserID, use + _this_use, cost + _this_cost);
-    _useandcostcontroller->Send(_this_use, _this_cost, _RoomID);
-    return _this_use;
+    _useandcostcontroller->Send(use + _this_use, cost + _this_cost, _RoomID);
+    return _this_cost;
 }
 
 void UseAndCost::UpdateUseandCost()

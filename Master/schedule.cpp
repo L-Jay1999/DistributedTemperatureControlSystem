@@ -24,9 +24,11 @@ void Schedule::delRoom(const QString &RoomID)
     if(it != working_slave.end())
     {
         sic->Send(false,*it);
+        if(useandcost.count(*it)){
+            useandcost[*it]->UseandCostfromStart();
+            delete useandcost[*it];
+        }
         working_slave.erase(it);
-        useandcost[*it]->UseandCostfromStart();
-        delete useandcost[*it];
         checkIdle();//此时服务区有空闲，需要进行调度
         return;
     }
@@ -39,11 +41,12 @@ void Schedule::checkIdle()
     {
         //将一台从机从等待队列移入服务区
         QString RoomID = waiting_slave.front();
-        sic->Send(true,RoomID);
+        qDebug() << RoomID << "is taken out of waiting slave";
+        sic->Send(true, RoomID);
         working_slave.push_back(RoomID);
         waiting_slave.erase(waiting_slave.begin());
         UseAndCost *temp = new UseAndCost(this);
-        if(useandcost[RoomID])
+        if(useandcost.count(RoomID))
             delete useandcost[RoomID];
         useandcost[RoomID] = temp;
         temp->Start(RoomID);
