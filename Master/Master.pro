@@ -56,7 +56,8 @@ SOURCES += \
     usersetspeedcontroller.cpp \
     usersettemperaturecontroller.cpp \
     usershutdowncontroller.cpp \
-    reportwidget.cpp
+    reportwidget.cpp\
+    detailwidget.cpp
 
 HEADERS += \
     getroomtemperaturecontroller.h \
@@ -82,7 +83,8 @@ HEADERS += \
     usersetspeedcontroller.h \
     usersettemperaturecontroller.h \
     usershutdowncontroller.h \
-    reportwidget.h
+    reportwidget.h\
+    detailwidget.h
 
 FORMS += \
     managerloginwidget.ui \
@@ -90,7 +92,8 @@ FORMS += \
     standbywidget.ui \
     managercontrolpanel.ui \
     usermanagementwidget.ui \
-    reportwidget.ui
+    reportwidget.ui\
+    detailwidget.ui
 
 win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../CommonLib/release/ -lCommonLib
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../CommonLib/debug/ -lCommonLib

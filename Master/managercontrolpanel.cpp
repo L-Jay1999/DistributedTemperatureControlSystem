@@ -19,12 +19,12 @@ ManagerControlPanel::ManagerControlPanel(const QString &manager_account, QWidget
     this->setFixedSize(this->width(),this->height());
     connect(ui->pushButton_logout,&QPushButton::clicked,    this,&ManagerControlPanel::logout);             //管理员登出
     connect(ui->pushButton_power,&QPushButton::clicked,     this,&ManagerControlPanel::switch_to_power);    //电源控制
-    connect(ui->pushButton_mode,&QPushButton::clicked,      this,&ManagerControlPanel::change_mode);//参数设置
-    connect(ui->pushButton_rate_up, &QPushButton::clicked,  this,&ManagerControlPanel::rate_up);//减小频率
-    connect(ui->pushButton_rate_down, &QPushButton::clicked,this,&ManagerControlPanel::rate_down);//增大频率
+    connect(ui->pushButton_mode,&QPushButton::clicked,      this,&ManagerControlPanel::change_mode);        //参数设置
+    connect(ui->pushButton_rate_up, &QPushButton::clicked,  this,&ManagerControlPanel::rate_up);            //减小频率
+    connect(ui->pushButton_rate_down, &QPushButton::clicked,this,&ManagerControlPanel::rate_down);          //增大频率
     connect(ui->pushButton_detail,&QPushButton::clicked,    this,&ManagerControlPanel::switch_to_detail);   //查看详单
     connect(ui->pushButton_report,&QPushButton::clicked,    this,&ManagerControlPanel::switch_to_report);   //查看报表
-    connect(ui->pushButton_monitor,&QPushButton::clicked,   this,&ManagerControlPanel::show_monitor);  //监控信息
+    connect(ui->pushButton_monitor,&QPushButton::clicked,   this,&ManagerControlPanel::show_monitor);       //监控信息
     connect(ui->pushButton_user,&QPushButton::clicked,      this,&ManagerControlPanel::switch_to_user);     //用户管理
     connect(ui->pushButton_degree_up, &QPushButton::clicked,this,&ManagerControlPanel::degree_up);
     connect(ui->pushButton_degree_down, &QPushButton::clicked,this,&ManagerControlPanel::degree_down);
@@ -32,6 +32,7 @@ ManagerControlPanel::ManagerControlPanel(const QString &manager_account, QWidget
     connect(&clear_error_info_timer, &QTimer::timeout, this, &ManagerControlPanel::clear_error_info_text);
     umw = new UserManagementWidget;
     rw = new ReportWidget;
+    dw = new DetailWidget;
     monitor_dialog = new MonitorDialog(_rate, this);
     monitor_dialog->hide();
 
@@ -107,14 +108,12 @@ void ManagerControlPanel::switch_to_power()
 
 void ManagerControlPanel::switch_to_detail()
 {
-
+    dw->show();
 }
 
 void ManagerControlPanel::switch_to_report()
 {
     rw->show();
-//    this->hide();
-//    connect(rw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
 }
 
 void ManagerControlPanel::show_monitor()

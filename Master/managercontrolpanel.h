@@ -7,6 +7,7 @@
 #include "monitordialog.h"
 #include "../CommonLib/common.h"
 #include "./listener.h"
+#include "detailwidget.h"
 
 namespace Ui {
 class ManagerControlPanel;
@@ -32,6 +33,7 @@ private:
     UserManagementWidget *umw;//用户管理面板
     MonitorDialog *monitor_dialog{nullptr};//监控信息界面
     ReportWidget *rw;//报表界面
+    DetailWidget *dw;//详单界面
 
 
     void setPowerLabelText();

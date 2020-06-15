@@ -54,7 +54,9 @@ void ReportWidget::DownLoad()
     if(mb1 == QMessageBox::Yes)
     {
         using namespace std;
-        string path = "./report/" + _date.toString("yyyy-MM-dd").toStdString() + '_' + _roomid.toStdString() + ".csv";
+        string command = "mkdir report";
+        system(command.c_str());
+        string path = ".\\report\\" + _date.toString("yyyy-MM-dd").toStdString() + '_' + _roomid.toStdString() + ".csv";
         ofstream outf;
         outf.open(path,ios::out);
         if(outf.is_open())
