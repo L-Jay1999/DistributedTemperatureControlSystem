@@ -10,7 +10,7 @@ static WorkingMode working_mode;
 static std::map<WorkingMode, double> default_degree =
 {
     {WorkingMode::HOT, 28.0},
-    {WorkingMode::COLD, 22.0},
+    {WorkingMode::COLD, 25.0},
 };
 
 WorkingMode getCurrentWorkingMode()

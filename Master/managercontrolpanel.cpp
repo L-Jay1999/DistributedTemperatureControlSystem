@@ -113,7 +113,7 @@ void ManagerControlPanel::switch_to_detail()
 void ManagerControlPanel::switch_to_report()
 {
     rw->show();
-    this->hide();
+//    this->hide();
     connect(rw,SIGNAL(cancel_signal()),this,SLOT(reshow()));//连接返回信号与回显
 }
 

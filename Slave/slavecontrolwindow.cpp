@@ -214,8 +214,11 @@ void SlaveControlWindow::on_uptemperaturebtn_clicked()
     if (!_is_open)
         return;
 
-    if(_temperature >= _upperbound)
+    if(_temperature >= _upperbound){
+        TextAppend("温度已达上界");
         return;
+    }
+
     _temperature += 1.0;
     SetTemperatureController settemperaturecontroller(this);
     if(settemperaturecontroller.Set(_user->getRoomID(), _temperature)){
@@ -236,8 +239,11 @@ void SlaveControlWindow::on_downtemperaturebtn_clicked()
     if (!_is_open)
         return;
 
-    if(_temperature <= _lowerbound)
+    if(_temperature <= _lowerbound){
+        TextAppend("温度已达下界");
         return;
+    }
+
     _temperature -= 1.0;
     SetTemperatureController settemperaturecontroller(this);
     if(settemperaturecontroller.Set(_user->getRoomID(), _temperature)){

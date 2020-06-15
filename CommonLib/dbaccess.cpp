@@ -107,7 +107,7 @@ std::tuple<bool, double, double> DBAccess::getUseAndCost(const QString &room_id,
 
 bool DBAccess::updateUseAndCost(const QString &room_id, const QString &user_id, double use, double cost)
 {
-    const QString kUpdateSql = "update %1 set use = ?, cost = ? where room = ? and user = ?;";
+    const QString kUpdateSql = "update %1 set use = ?, cost = ? where id = ? and room = ?;";
     QSqlQuery q(QSqlDatabase::database(connection_name));
     q.prepare(kUpdateSql.arg(MasterUserContract::TITLE));
     auto error = DBHelper::BindAndExec(q, {use, cost, user_id, room_id});

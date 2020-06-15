@@ -22,15 +22,15 @@ void AirSupplyController::updateSupplyDelayed()
     _delayed_data.pop_front();
     if(OpenorClose)
     {
-        _schedule->addRoom(_RoomID);
+	    _schedule->addRoom(RoomID);
     }
     else
     {
-        _schedule->delRoom(_RoomID);
+	    _schedule->delRoom(RoomID);
     }
-    if(_rooms.hasRoom(_RoomID))
+    if(_rooms.hasRoom(RoomID))
     {
-        _rooms.getRoom(_RoomID).has_wind = _openorclose;
+	    _rooms.getRoom(RoomID).has_wind = OpenorClose;
     }
     if (_delayed_data.size())
         _timer.start(kDelayMs);

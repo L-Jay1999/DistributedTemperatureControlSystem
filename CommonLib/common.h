@@ -91,7 +91,7 @@ namespace Config {
         WorkingMode _mode{};//工作模式
         SpeedLevel _level{};//风速
         double _working_degree{};//工作温度
-        double _current_degree{};//当前温度
+        double _current_degree{27.0};//当前温度
     public:
         RoomConfig() {};
         RoomConfig(WorkingMode mode,SpeedLevel level,double wd,double cd)

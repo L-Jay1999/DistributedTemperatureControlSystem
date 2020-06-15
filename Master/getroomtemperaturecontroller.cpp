@@ -6,7 +6,6 @@ GetRoomTemperatureController::GetRoomTemperatureController(QObject *parent)
     _timer = new QTimer(this);
     connect(_timer, SIGNAL(timeout()), this, SLOT(GetALL()));
     _timer->start(3000);
-    GetALL();
 }
 
 double GetRoomTemperatureController::Get(const QString &RoomID)
