@@ -17,10 +17,11 @@ public:
     explicit UserLoginController(QObject *parent = nullptr);
     std::tuple<bool, WorkingMode, double> UserLogin(const QString &UserID, const QString &RoomID)
     {
+        DBAccess db;
         qDebug() << UserID << RoomID;
-        if(!_db.isConnected())
+        if(!db.isConnected())
             return {false, {}, {}};
-        if(_db.hasUser(RoomID, UserID)){
+        if(db.hasUser(RoomID, UserID)){
             qDebug() << "login success";
             _rooms.addRoom(RoomID);
             _rooms.SetID(RoomID, UserID);
@@ -33,7 +34,7 @@ public:
 
 private:
     Rooms &_rooms;
-    DBAccess _db;
+    // DBAccess _db;
 signals:
 
 };

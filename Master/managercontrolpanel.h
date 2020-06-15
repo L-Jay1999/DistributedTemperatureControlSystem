@@ -24,7 +24,8 @@ public:
 private:
     Ui::ManagerControlPanel *ui;
     QString _account;
-    Listener _listener;
+    QThread *_thread;
+    Listener *_listener;
 
     bool _has_power{false};
     int _rate{10};
@@ -65,6 +66,8 @@ signals:
     void SetErrorInfoTextSignal(const QString &err_info);
     void ClearErrorInfoTextSignal();
     void setMonitorInterval(int interval_sec);
+    void StopListen();
+    void StartListen();
 };
 
 #endif // MANAGERCONTROLPANEL_H

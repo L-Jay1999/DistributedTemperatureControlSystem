@@ -7,11 +7,12 @@ UserInfoController::UserInfoController()
 
 std::pair<bool, QString> UserInfoController::AddUser(const QString &RoomID, const QString &UserID)
 {
-    if (dba.isConnected() == true) //判断是否连接至数据库
+    DBAccess db;
+    if (db.isConnected() == true) //判断是否连接至数据库
     {
-        if (dba.hasUser(RoomID, UserID) == false) //判断是否已存在该用户
+        if (db.hasUser(RoomID, UserID) == false) //判断是否已存在该用户
         {
-            bool res = dba.addUser(RoomID, UserID); //进行插入操作
+            bool res = db.addUser(RoomID, UserID); //进行插入操作
             if (res == true)
             {
                 return {true, QStringLiteral("添加成功")};
@@ -33,11 +34,12 @@ std::pair<bool, QString> UserInfoController::AddUser(const QString &RoomID, cons
 }
 std::pair<bool, QString> UserInfoController::DeleteUser(const QString &RoomID, const QString &UserID)
 {
-    if (dba.isConnected() == true) //判断是否连接至数据库
+    DBAccess db;
+    if (db.isConnected() == true) //判断是否连接至数据库
     {
-        if (dba.hasUser(RoomID, UserID) == true) //判断是否已存在该用户
+        if (db.hasUser(RoomID, UserID) == true) //判断是否已存在该用户
         {
-            bool res = dba.delUser(RoomID, UserID); //进行删除操作
+            bool res = db.delUser(RoomID, UserID); //进行删除操作
             if (res == true)
             {
                 return {true, QStringLiteral("删除成功")};
@@ -60,7 +62,8 @@ std::pair<bool, QString> UserInfoController::DeleteUser(const QString &RoomID, c
 
 std::pair<bool, std::vector<std::pair<QString, QString>>> UserInfoController::GetUser()
 {
-    auto [is_suc, users] = dba.getUsers();
+    DBAccess db;
+    auto [is_suc, users] = db.getUsers();
     std::vector<std::pair<QString, QString>> res;
     if (is_suc)
         for (const auto user : users)

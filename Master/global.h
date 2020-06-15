@@ -8,6 +8,8 @@
 #include <set>
 #include <vector>
 #include <QDebug>
+#include <mutex>
+
 
 struct Room
 {
@@ -24,31 +26,30 @@ public:
     Rooms() {};
     void addRoom(const QString &room_id)
     {
+        std::lock_guard lock(l1_mtx);
         qDebug() << "addRoom" << room_id;
-        if (!_connected_rooms.count(room_id))
+        if (!hasRoom(room_id))
         {
             _connected_rooms.insert(room_id);
             _rooms[room_id] = {{}, {}, room_id, {}};
         }
     }
 
-    const Room &getRoom(const QString &room_id) const
-    {
-        return _rooms.at(room_id);
-    }
-
     Room &getRoom(const QString &room_id)
     {
+        std::lock_guard lock(l1_mtx);
         return _rooms.at(room_id);
     }
 
-    bool hasRoom(const QString &room_id) const
+    bool hasRoom(const QString &room_id)
     {
+        std::lock_guard lock(l2_mtx);
         return _connected_rooms.count(room_id);
     }
 
     std::vector<QString> getRoomIDs()
     {
+        std::lock_guard lock(l1_mtx);
         std::vector<QString> res;
         for (const auto room : _connected_rooms)
             res.push_back(room);
@@ -57,36 +58,43 @@ public:
 
     void delRoomIfExists(const QString &room_id)
     {
+        std::lock_guard lock(l1_mtx);
         qDebug() << "DelRoom" << room_id;
         if (hasRoom(room_id))
         {
-            _connected_rooms.erase(_connected_rooms.find(room_id));
-            _rooms.erase(_rooms.find(room_id));
+            _connected_rooms.erase(room_id);
+            _rooms.erase(room_id);
         }
 
     }
 
     void SetSpeed(const QString& RoomID, const SpeedLevel& Level)//设置从控机风速
     {
+        std::lock_guard lock(l1_mtx);
         if (hasRoom(RoomID))
             _rooms[RoomID].config.setLevel(Level);
     }
 
     void SetTemperature(const QString& RoomID, const double& Degree)//设置从控机工作温度
     {
+        std::lock_guard lock(l1_mtx);
         if (hasRoom(RoomID))
             _rooms[RoomID].config.setTemperature(Degree);
     }
 
     void SetID(const QString & RoomID, const QString &ID)
     {
-        if(hasRoom(RoomID)){
+        std::lock_guard lock(l1_mtx);
+        if(hasRoom(RoomID))
+        {
             _rooms[RoomID].id = ID;
 //            qDebug() << "rooms " << RoomID << " sets " << ID;
         }
     }
 
 private:
+    std::mutex l1_mtx;
+    std::mutex l2_mtx;
     std::map<QString, Room> _rooms;
     std::set<QString> _connected_rooms;
 };

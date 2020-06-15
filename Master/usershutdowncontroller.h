@@ -17,13 +17,18 @@ public:
     bool ShutDown(const QString &RoomID);
 
 private:
-    static constexpr int kDelayMs = 100;
+    static constexpr int kDelayMs = 1;
     Rooms &_rooms;
     Schedule &_schedule;
     QTimer _timer;
     std::deque<QString> _delayed_data;
 private slots:
     void ShutDownDelayed();
+    void StartTimer();
+    void StopTimer();
+signals:
+    void StartTimerFromAnotherThread();
+    void StopTimerFromAnotherThread();
 };
 
 #endif // USERSHUTDOWNCONTROLLER_H

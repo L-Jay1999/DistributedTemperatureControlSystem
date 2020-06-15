@@ -14,19 +14,22 @@ class UserSetSpeedController : public QObject
 {
     Q_OBJECT
 public:
-    explicit UserSetSpeedController(std::map<QString, UseAndCost*> &u, QObject *parent = nullptr);
+    explicit UserSetSpeedController(std::map<QString, std::shared_ptr<UseAndCost>> &u, QObject *parent = nullptr);
     bool Set(const QString &RoomID, const SpeedLevel level);
 
 private:
-    static constexpr int kDelayMs = 250;
+    static constexpr int kDelayMs = 1;
     Rooms &_rooms;
-    std::map<QString, UseAndCost*> &useandcost;
+    std::map<QString, std::shared_ptr<UseAndCost>> &useandcost;
     QTimer _timer;
     std::deque<std::pair<QString, SpeedLevel>> _delayed_data;
 private slots:
     void SetDelayed();
+    void StartTimer();
+    void StopTimer();
 signals:
-
+    void StopTimerFromAnotherThread();
+    void StartTimerFromAnotherThread();
 };
 
 #endif // USERSETSPEEDCONTROLLER_H

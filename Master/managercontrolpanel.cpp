@@ -41,13 +41,28 @@ ManagerControlPanel::ManagerControlPanel(const QString &manager_account, QWidget
     ui->label_manager->setText(manager_account);
     setRateLabelText();
     setDefaultDegreeLabelText();
-    if (_listener.Listen())
+
+    _thread = new QThread(this);
+    _listener = new Listener;
+    if (_listener->Listen())
         emit SetErrorInfoTextSignal("监听端口成功，端口号 " + QString::number(Config::kMasterListenPort));
+    _listener->moveToThread(_thread);
+    connect(this, &ManagerControlPanel::StopListen, _listener, &Listener::StopListen);
+    connect(this, &ManagerControlPanel::StartListen, _listener, &Listener::StartListen);
+    _thread->start();
+    emit StartListen();
 }
 
 ManagerControlPanel::~ManagerControlPanel()
 {
     delete ui;
+    emit StopListen();
+    _thread->quit();
+    if (_thread->wait(1000))
+    {
+        _thread->terminate();
+        _thread->wait();
+    }
 }
 
 void ManagerControlPanel::setPowerLabelText()

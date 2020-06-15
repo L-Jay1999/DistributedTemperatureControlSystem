@@ -20,7 +20,7 @@ public:
 private:
     std::map<QString,int> _power_supply;//开关机次数
     std::map<QString,std::vector<StatPayload>> _details{};//日报表
-    DBAccess db;
+    // DBAccess db;
 };
 
 #endif // REPORT_H
