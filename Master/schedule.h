@@ -5,10 +5,12 @@
 #include <QString>
 #include <vector>
 #include <deque>
+#include <map>
 #include <algorithm>
 #include "common.h"
 #include "scheduleinfocontroller.h"
 #include "airsupplycontroller.h"
+#include "useandcost.h"
 
 class AirSupplyController;
 class Schedule : public QObject
@@ -20,6 +22,7 @@ private:
     std::deque<QString> working_slave;//服务区
     AirSupplyController *asc;   //送风请求接收控制器
     ScheduleInfoController *sic;//送风请求回复控制器
+    std::map<QString, UseAndCost*> useandcost;
 public:
     explicit Schedule(QObject *parent = nullptr);
     // 各操作的回复由上级controller完成

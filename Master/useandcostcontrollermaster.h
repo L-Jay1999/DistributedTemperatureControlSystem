@@ -17,13 +17,6 @@ public:
     explicit UseAndCostControllerMaster(QObject *parent = nullptr);
     bool Send(const double use, const double cost, const QString &RoomID);
 
-//private:
-//    QTimer *_timer;
-//    Rooms &_rooms;
-
-//private slots:
-//    void SendALL();
-
 signals:
 
 };

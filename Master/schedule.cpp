@@ -2,7 +2,8 @@
 
 Schedule::Schedule(QObject *parent) : QObject(parent)
 {
-    asc = new AirSupplyController(this);
+    asc = new AirSupplyController(this, this);
+    sic = new ScheduleInfoController(this);
 }
 
 void Schedule::addRoom(const QString& RoomID)
@@ -24,6 +25,8 @@ void Schedule::delRoom(const QString &RoomID)
     {
         sic->Send(false,*it);
         working_slave.erase(it);
+        useandcost[*it]->UseandCostfromStart();
+        delete useandcost[*it];
         checkIdle();//此时服务区有空闲，需要进行调度
         return;
     }
@@ -35,9 +38,14 @@ void Schedule::checkIdle()
     while(working_slave.size() < MAX_SERVICE && !waiting_slave.empty())
     {
         //将一台从机从等待队列移入服务区
-        sic->Send(true,waiting_slave.front());
-        working_slave.push_back(waiting_slave.front());
+        QString RoomID = waiting_slave.front();
+        sic->Send(true,RoomID);
+        working_slave.push_back(RoomID);
         waiting_slave.erase(waiting_slave.begin());
+        UseAndCost *temp = new UseAndCost(this);
+        if(useandcost[RoomID])
+            delete useandcost[RoomID];
+        useandcost[RoomID] = temp;
+        temp->Start(RoomID);
     }
 }
-

@@ -14,6 +14,7 @@ struct Room
     //bool is_open{false};
     bool has_wind{false};
     QString room_id{};
+    QString id{};
 };
 
 class Rooms
@@ -72,6 +73,13 @@ public:
     {
         if (hasRoom(RoomID))
             _rooms[RoomID].config.setTemperature(Degree);
+    }
+
+    void SetID(const QString & RoomID, const QString &ID)
+    {
+        if(hasRoom(RoomID)){
+            _rooms[RoomID].id = ID;
+        }
     }
 
 private:

@@ -45,6 +45,7 @@ SOURCES += \
     standbywidget.cpp \
     managercontrolpanel.cpp \
     manager.cpp \
+    useandcost.cpp \
     useandcostcontrollermaster.cpp \
     userlogincontroller.cpp \
     usermanagementwidget.cpp \
@@ -70,6 +71,7 @@ HEADERS += \
     standbywidget.h \
     managercontrolpanel.h \
     manager.h \
+    useandcost.h \
     useandcostcontrollermaster.h \
     userlogincontroller.h \
     usermanagementwidget.h \
