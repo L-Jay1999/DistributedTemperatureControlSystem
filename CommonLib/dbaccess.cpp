@@ -247,8 +247,11 @@ std::pair<bool, std::vector<StatPayload> > DBAccess::getRoomRequestStats(const Q
         QString room_id = q.value(0).toString();
         double init_temperature = q.value(1).toDouble();
         double end_temperature = q.value(2).toDouble();
-        QDateTime start_time = q.value(3).toDateTime();
-        QDateTime end_time = q.value(4).toDateTime();
+//        QDateTime start_time = q.value(3).toDateTime();
+//        QDateTime end_time = q.value(4).toDateTime();
+        QDateTime start_time = QDateTime::fromTime_t(q.value(3).toInt());
+        QDateTime end_time = QDateTime::fromTime_t(q.value(4).toInt());
+//        qDebug() << start_time << end_time;
         SpeedLevel speed_level = static_cast<SpeedLevel>(q.value(5).toInt());
         double cost = q.value(6).toDouble();
         res.push_back({room_id, init_temperature, end_temperature, start_time, end_time, speed_level, cost});
