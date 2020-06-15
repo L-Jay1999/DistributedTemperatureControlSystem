@@ -8,7 +8,7 @@ ShutDownController::ShutDownController(QObject *parent)
 
 bool ShutDownController::ShutDown(const QString &RoomID)
 {
-    ShutDownRequest shutdownrequest(_RoomID);
+    ShutDownRequest shutdownrequest(RoomID);
     auto [error, result] = shutdownrequest.Send();
     if(error.hasError()){
         qDebug() << "shutdowncontroller error:";

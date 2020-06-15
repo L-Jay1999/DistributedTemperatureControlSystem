@@ -311,33 +311,35 @@ bool SlaveControlWindow::SendWind()
 
     if(std::abs(_temperature - _roomtemperature) >= 1.0){
         WindController windcontroller(this);
-        bool result = windcontroller.Send(_user->getRoomID(), true);
+        windcontroller.Send(_user->getRoomID(), true);
+//        bool result = windcontroller.Send(_user->getRoomID(), true);
 //        bool result = true;
-        if(result){
-            _is_wind = true;
-        }
-        _sensor->setIsWind(_is_wind);
-        WindDisplay();
-        return result;
+//        if(result){
+//            _is_wind = true;
+//        }
+//        _sensor->setIsWind(_is_wind);
+//        WindDisplay();
+//        return result;
     }
-    else{
-        _is_wind = false;
-        _sensor->setIsWind(_is_wind);
-        return false;
-    }
+//    else{
+//        _is_wind = false;
+//        _sensor->setIsWind(_is_wind);
+//        return false;
+//    }
 }
 
 void SlaveControlWindow::reachTargetDegree()
 {
     // TODO 停止送风请求
     WindController windcontroller(this);
-    bool result = windcontroller.Send(_user->getRoomID(), false);
+    windcontroller.Send(_user->getRoomID(), false);
+//    bool result = windcontroller.Send(_user->getRoomID(), false);
 //    bool result = true;
-    if(result){
-        _is_wind = false;
-    }
-    _sensor->setIsWindWithoutUpdate(_is_wind);
-    WindDisplay();
+//    if(result){
+//        _is_wind = false;
+//    }
+//    _sensor->setIsWindWithoutUpdate(_is_wind);
+//    WindDisplay();
 }
 
 void SlaveControlWindow::higherThanTargetDegreePlusOne()
@@ -345,19 +347,20 @@ void SlaveControlWindow::higherThanTargetDegreePlusOne()
     if (_is_open)
     {
 	WindController windcontroller(this);
-	bool result = windcontroller.Send(_user->getRoomID(), true);
+    windcontroller.Send(_user->getRoomID(), true);
+//	bool result = windcontroller.Send(_user->getRoomID(), true);
 //        bool result = true;
-        if (result)
-        {
-            _sensor->setIsWindWithoutUpdate(true);
-            _is_wind = true;
-            WindDisplay();
-        }
-        else
-        {
-            // TODO handle false condition
-            qDebug() << "higherThanTargetDegreePlusOne error!";
-        }
+//        if (result)
+//        {
+//            _sensor->setIsWindWithoutUpdate(true);
+//            _is_wind = true;
+//            WindDisplay();
+//        }
+//        else
+//        {
+//            // TODO handle false condition
+//            qDebug() << "higherThanTargetDegreePlusOne error!";
+//        }
     }
 }
 
