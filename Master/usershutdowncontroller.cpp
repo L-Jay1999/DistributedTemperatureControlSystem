@@ -28,6 +28,8 @@ void UserShutDownController::ShutDownDelayed()
 
     _schedule.delRoom(RoomID);
     _rooms.delRoomIfExists(RoomID);
+    DBAccess db;
+    db.addRoomPowerStat(RoomID,false);
     if (_delayed_data.size())
         _timer.start(kDelayMs);
 }

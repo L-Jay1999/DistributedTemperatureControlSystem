@@ -24,6 +24,7 @@ void Schedule::delRoom(const QString &RoomID)
     if(it != working_slave.end())
     {
         sic->Send(false,*it);
+        getRooms().getRoom(RoomID).has_wind = false;
         if(useandcost.count(*it)){
             //构造详单，发送给数据库
             struct StatPayload sp;
@@ -49,6 +50,7 @@ void Schedule::checkIdle()
         QString RoomID = waiting_slave.front();
         qDebug() << RoomID << "is taken out of waiting slave";
         sic->Send(true, RoomID);
+        getRooms().getRoom(RoomID).has_wind = true;
         working_slave.push_back(RoomID);
         waiting_slave.pop_front();
         useandcost[RoomID] = std::make_shared<UseAndCost>(this);
