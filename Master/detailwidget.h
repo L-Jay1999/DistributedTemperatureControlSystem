@@ -29,6 +29,8 @@ private slots:
     void GetDetails();//点击查询
     void DownLoad();//点击打印报表
     void Cancel();//返回
+public slots:
+    void UpdateTime();//每次点进来更新时间
 signals:
 };
 

@@ -8,9 +8,9 @@ DetailWidget::DetailWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowTitle("详单查询");
-    ui->dateTimeEdit_end->setDateTime(QDateTime::currentDateTime());
+//    ui->dateTimeEdit_end->setDateTime(QDateTime::currentDateTime().addSecs(30));
     ui->dateTimeEdit_end->setCalendarPopup(true);
-    ui->dateTimeEdit_begin->setDateTime(QDateTime::currentDateTime().addDays(-1));
+//    ui->dateTimeEdit_begin->setDateTime(QDateTime::currentDateTime().addDays(-1));
     ui->dateTimeEdit_begin->setCalendarPopup(true);
     ui->tableWidget->setColumnCount(5);
     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -27,11 +27,17 @@ DetailWidget::~DetailWidget()
 
 QString getLevel(struct StatPayload &sp)//获得风速
 {
-    double rat = sp.end_time.toMSecsSinceEpoch() - sp.start_time.toMSecsSinceEpoch();
-    double P = sp.cost * 12000 / rat;
-    if(P < 0.9)return "低";
-    if(P < 1.1)return "中";
-    return "高";
+//    double rat = sp.end_time.toMSecsSinceEpoch() - sp.start_time.toMSecsSinceEpoch();
+//    double P = sp.cost * 12000 / rat;
+//    if(P < 0.9)return "低";
+//    if(P < 1.1)return "中";
+//    return "高";
+    if(sp.speed_level == SpeedLevel::LOW)
+        return "低";
+    else if(sp.speed_level == SpeedLevel::MID)
+        return "中";
+    else
+        return "高";
 }
 
 void DetailWidget::GetDetails()
@@ -57,7 +63,7 @@ void DetailWidget::GetDetails()
 void DetailWidget::DownLoad()
 {
     GetDetails();
-    QString message = "开始时间：<font color='red'>" + _begin.toString("yyyy-MM-dd hh:mm:ss") + "</font>\r\n结束时间：<font color='red'>" + _end.toString("yyyy-MM-dd hh:mm:ss") + "</font>\r\n是否确认？";
+    QString message = "开始时间：<font color='red'>" + _begin.toString("yyyy-MM-dd hh:mm:ss") + "</font><br>结束时间：<font color='red'>" + _end.toString("yyyy-MM-dd hh:mm:ss") + "</font><br>是否确认？";
     QMessageBox::StandardButton mb1 = QMessageBox::question(NULL,"导出确认",message,QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
     if(mb1 == QMessageBox::Yes)
     {
@@ -93,4 +99,10 @@ void DetailWidget::DownLoad()
 void DetailWidget::Cancel()
 {
     this->hide();
+}
+
+void DetailWidget::UpdateTime()
+{
+    ui->dateTimeEdit_end->setDateTime(QDateTime::currentDateTime().addSecs(30));
+    ui->dateTimeEdit_begin->setDateTime(QDateTime::currentDateTime().addDays(-1));
 }

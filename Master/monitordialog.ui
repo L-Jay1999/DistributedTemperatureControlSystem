@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>监控窗口</string>
   </property>
   <property name="modal">
    <bool>false</bool>

@@ -49,7 +49,7 @@ void ReportWidget::GetReport()
 void ReportWidget::DownLoad()
 {
     GetReport();
-    QString message = "房间号：<font color='red'>" + _roomid + "</font>\n日期：<font color='red'>" + _date.toString() + "</font>\n是否确认？";
+    QString message = "房间号：<font color='red'>" + _roomid + "</font><br>日期：<font color='red'>" + _date.toString() + "</font><br>是否确认？";
     QMessageBox::StandardButton mb1 = QMessageBox::question(NULL,"导出确认",message,QMessageBox::Yes|QMessageBox::No,QMessageBox::Yes);
     if(mb1 == QMessageBox::Yes)
     {

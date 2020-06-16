@@ -30,9 +30,11 @@ ManagerControlPanel::ManagerControlPanel(const QString &manager_account, QWidget
     connect(ui->pushButton_degree_down, &QPushButton::clicked,this,&ManagerControlPanel::degree_down);
     connect(this, &ManagerControlPanel::SetErrorInfoTextSignal,   this,&ManagerControlPanel::set_error_info_text);
     connect(&clear_error_info_timer, &QTimer::timeout, this, &ManagerControlPanel::clear_error_info_text);
+
     umw = new UserManagementWidget;
     rw = new ReportWidget;
     dw = new DetailWidget;
+    connect(ui->pushButton_detail,&QPushButton::clicked, dw, &DetailWidget::UpdateTime);
     monitor_dialog = new MonitorDialog(_rate, this);
     monitor_dialog->hide();
 
