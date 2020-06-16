@@ -14,7 +14,7 @@ ManagerLoginWidget::ManagerLoginWidget(QWidget *parent) :
     ui->lineEdit_password->setEchoMode(QLineEdit::Password);//设置密码输入框
     connect(ui->pushButton_confirm, &QPushButton::clicked, this, &ManagerLoginWidget::confirm);//连接确认按钮与确认函数
     connect(ui->pushButton_cancel, &QPushButton::clicked, this, &ManagerLoginWidget::cancel);//连接取消按钮与取消函数
-    ui->pushButton_confirm->setShortcut(Qt::Key_Enter);//绑定字母区回车键
+    ui->pushButton_confirm->setShortcut(Qt::Key_Return);//绑定字母区回车键
 }
 
 ManagerLoginWidget::~ManagerLoginWidget()

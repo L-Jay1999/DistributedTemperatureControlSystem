@@ -15,7 +15,7 @@ UserManagementWidget::UserManagementWidget(QWidget *parent) :
     connect(ui->pushButton_close,&QPushButton::clicked,this,&UserManagementWidget::Close);
     connect(ui->pushButton_clear,&QPushButton::clicked,this,&UserManagementWidget::Clear);
     ui->user_table->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    ui->pushButton_add->setShortcut(Qt::Key_Enter);//绑定字母区回车键与添加按钮
+    ui->pushButton_add->setShortcut(Qt::Key_Return);//绑定字母区回车键与添加按钮
     Refresh();
 }
 
