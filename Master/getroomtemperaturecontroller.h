@@ -11,17 +11,19 @@
 #include "common.h"
 #include "requests.h"
 #include "global.h"
+#include "schedule.h"
 
 class GetRoomTemperatureController : public QObject
 {
     Q_OBJECT
 public:
-    explicit GetRoomTemperatureController(QObject *parent = nullptr);
+    explicit GetRoomTemperatureController(Schedule &schedule, QObject *parent = nullptr);
     double Get(const QString &RoomID);
 
 private:
     QTimer _timer;
     Rooms &_rooms;
+    Schedule &_schedule;
 
 private slots:
     void GetALL();

@@ -35,7 +35,8 @@ void Schedule::delRoom(const QString &RoomID)
     if(it != working_slave.end())
     {
         sic->Send(false,*it);
-        getRooms().getRoom(RoomID).has_wind = false;
+        if (getRooms().hasRoom(RoomID))
+            getRooms().getRoom(RoomID).has_wind = false;
         if(useandcost.count(*it)){
             //构造详单，发送给数据库
             struct StatPayload sp;
@@ -48,7 +49,6 @@ void Schedule::delRoom(const QString &RoomID)
             useandcost.erase(*it);
         }
         working_slave.erase(it);
-        getRooms().getRoom(RoomID).has_wind = false;
         checkIdle();//此时服务区有空闲，需要进行调度
     }
 }

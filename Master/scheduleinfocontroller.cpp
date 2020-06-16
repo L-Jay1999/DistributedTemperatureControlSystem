@@ -16,7 +16,7 @@ bool ScheduleInfoController::Send(const bool is_in_queue, const QString &RoomID)
         qDebug() << error.err_str;
         QMessageBox *err_box = new QMessageBox(QMessageBox::Warning, "发送调度数据失败", QString("无法连接到房间 %1").arg(RoomID), QMessageBox::Ok);
         err_box->show();
-        _rooms.delRoomIfExists(RoomID);
+        // _rooms.delRoomIfExists(RoomID);
     }
     return res;
 }

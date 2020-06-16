@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     UserSetSpeedController speed_controller(useandcost, nullptr);
     UserShutDownController shutdowncontroller(schedule);
     UserSetTemperatureController tempcontroller;
-    GetRoomTemperatureController roomcontroller;
+    GetRoomTemperatureController roomcontroller(schedule);
     StandbyWidget sw;
     sw.show();
     return a.exec();
