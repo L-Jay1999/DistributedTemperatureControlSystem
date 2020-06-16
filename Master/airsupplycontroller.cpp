@@ -31,8 +31,6 @@ void AirSupplyController::updateSupplyDelayed()
             _schedule.addRoom(RoomID);
         else
             _schedule.delRoom(RoomID);
-//        if(_rooms.hasRoom(RoomID))
-//            _rooms.getRoom(RoomID).has_wind = OpenorClose;
     }
     else
     {

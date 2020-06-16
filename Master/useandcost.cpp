@@ -65,6 +65,6 @@ void UseAndCost::UpdateUseandCost()
     }
     else
         _count_down--;
-    qDebug() << "update" << P << _this_use << _this_cost;
+    // qDebug() << "update" << P << _this_use << _this_cost;
 //    _useandcostcontroller->Send(_this_use, _this_cost, _RoomID);
 }
