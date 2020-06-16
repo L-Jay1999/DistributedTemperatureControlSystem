@@ -35,7 +35,7 @@ public:
         {
             if (response.type == RequestType::LOGIN_RESPONSE)
             {
-                qDebug() << "RESULT_VALUE: " << response.result.value();
+                // qDebug() << "RESULT_VALUE: " << response.result.value();
                 if (response.result.value())
                     return {errs, true, std::get<0>(response.config.value()), std::get<1>(response.config.value())};
                 else
@@ -403,7 +403,7 @@ protected:
         payload.type = RequestType::GET_ROOM_TEMP;
         payload.target_host = Config::kMasterHostAddr; // localhost
         payload.target_port = Config::getSlavePort(room_id_);
-        qDebug() << "GetRoomTemperatureRequest::BuildPayload(): port: " << payload.target_port;
+        // qDebug() << "GetRoomTemperatureRequest::BuildPayload(): port: " << payload.target_port;
         return payload;
     }
 private:

@@ -14,14 +14,13 @@ void UseAndCost::Start(const QString &RoomID)
         _UserID = _rooms.getRoom(_RoomID).id;
     _start_time = QDateTime::currentDateTime();
     _init_temperature =getRooms().getRoom(RoomID).config.getCurTemperature();
-    qDebug() << _RoomID << _UserID;
+    // qDebug() << _RoomID << _UserID;
 }
 
 double UseAndCost::UseandCostfromStart(struct StatPayload &sp)
 {
     DBAccess db;
-    qDebug() << "use and cost end";
-    qDebug() << _this_use << _this_cost;
+    qDebug() << "use and cost end, " << _this_use << ", " << _this_cost;
     _timer.stop();
     auto [res, use, cost] = db.getUseAndCost(_RoomID, _UserID);
     db.updateUseAndCost(_RoomID, _UserID, use + _this_use, cost + _this_cost);
@@ -57,6 +56,15 @@ void UseAndCost::UpdateUseandCost()
     }
     _this_use += P * _interval / 60000;
     _this_cost = _this_use * 5.0;
+    if (_count_down <= 0)
+    {
+        DBAccess db;
+        auto [res, use, cost] = db.getUseAndCost(_RoomID, _UserID);
+        _useandcostcontroller.Send(use + _this_use, cost + _this_cost, _RoomID);
+        _count_down = 5;
+    }
+    else
+        _count_down--;
     qDebug() << "update" << P << _this_use << _this_cost;
 //    _useandcostcontroller->Send(_this_use, _this_cost, _RoomID);
 }

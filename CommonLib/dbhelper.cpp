@@ -60,7 +60,7 @@ namespace DBHelper
     QSqlError ExecSQLs(const std::vector<QString> &query_sqls, const QString &connection_name)
     {
         QSqlDatabase db = QSqlDatabase::database(connection_name);
-        qDebug() << db.isOpen();
+        // qDebug() << db.isOpen();
         db.transaction();
         QSqlQuery q(db);
         for (const auto &sql : query_sqls)

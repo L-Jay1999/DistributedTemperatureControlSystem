@@ -69,7 +69,7 @@ private:
 public slots:
     void StartListen()
     {
-        qDebug() << "Start Listen " << this->thread();
+        // qDebug() << "Start Listen " << this->thread();
         server->listen(QHostAddress::LocalHost, _port);
     }
 

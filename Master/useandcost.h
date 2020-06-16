@@ -31,6 +31,7 @@ private:
     QString _RoomID{};
     QString _UserID{};
     UseAndCostControllerMaster _useandcostcontroller;
+    int _count_down = 5;
     // DBAccess _db;
 
 private slots:

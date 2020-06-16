@@ -106,7 +106,7 @@ namespace Config
         if (auto i = slave_ctrller_ptr.find(ctrller_type);
                 i != slave_ctrller_ptr.end())
             return (*i).second;
-        qDebug() << "Config::getSlaveControllerPointer() of type: " << EnumToInt(ctrller_type) << " not set.";
+        // qDebug() << "Config::getSlaveControllerPointer() of type: " << EnumToInt(ctrller_type) << " not set.";
         return nullptr;
     }
 
@@ -124,7 +124,7 @@ namespace Config
         if (auto i = master_ctrller_ptr.find(ctrller_type);
                 i != master_ctrller_ptr.end())
             return (*i).second;
-        qDebug() << "Config::getMasterControllerPointer() of type: " << EnumToInt(ctrller_type) << " not set.";
+        // qDebug() << "Config::getMasterControllerPointer() of type: " << EnumToInt(ctrller_type) << " not set.";
         return nullptr;
     }
 
@@ -144,7 +144,7 @@ namespace Config
     void addSlavePort(const QString &room_id, quint16 port)
     {
         room_to_port[room_id] = port;
-        qDebug() << "Config::addSlavePort(): room: " << room_id << ", port: " << port;
+        // qDebug() << "Config::addSlavePort(): room: " << room_id << ", port: " << port;
     }
 
     quint16 getSlavePort(const QString &room_id)

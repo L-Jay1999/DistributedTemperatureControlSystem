@@ -9,6 +9,7 @@ Schedule::Schedule(std::map<QString, std::shared_ptr<UseAndCost>> &u, QObject *p
 void Schedule::addRoom(const QString& RoomID)
 {
     waiting_slave.push_back(RoomID);
+    qDebug() << RoomID << " is pushed to waiting slave";
     checkIdle();
     if (!getRooms().getRoom(RoomID).has_wind)
         sic->Send(false, RoomID);

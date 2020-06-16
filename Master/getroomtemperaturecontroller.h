@@ -20,7 +20,7 @@ public:
     double Get(const QString &RoomID);
 
 private:
-    QTimer *_timer;
+    QTimer _timer;
     Rooms &_rooms;
 
 private slots:
