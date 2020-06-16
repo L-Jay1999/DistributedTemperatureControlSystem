@@ -36,6 +36,7 @@ struct ErrorPack
     void setParsingError(ParsingErrType parsing_err_type)
     {
         this->parsing_err_type = parsing_err_type;
+        has_parsing_error = true;
     }
 };
 

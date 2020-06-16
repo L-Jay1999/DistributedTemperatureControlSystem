@@ -10,6 +10,8 @@ void Schedule::addRoom(const QString& RoomID)
 {
     waiting_slave.push_back(RoomID);
     checkIdle();
+    if (!getRooms().getRoom(RoomID).has_wind)
+        sic->Send(false, RoomID);
 }
 
 void Schedule::delRoom(const QString &RoomID)
@@ -18,12 +20,14 @@ void Schedule::delRoom(const QString &RoomID)
     if(it != waiting_slave.end())
     {
         waiting_slave.erase(it);
+        getRooms().getRoom(RoomID).has_wind = false;
         return;
     }
     it = std::find(working_slave.begin(),working_slave.end(),RoomID);
     if(it != working_slave.end())
     {
         sic->Send(false,*it);
+        getRooms().getRoom(RoomID).has_wind = false;
         if(useandcost.count(*it)){
             //构造详单，发送给数据库
             struct StatPayload sp;
@@ -36,6 +40,7 @@ void Schedule::delRoom(const QString &RoomID)
             useandcost.erase(*it);
         }
         working_slave.erase(it);
+        getRooms().getRoom(RoomID).has_wind = false;
         checkIdle();//此时服务区有空闲，需要进行调度
     }
 }
@@ -47,11 +52,14 @@ void Schedule::checkIdle()
     {
         //将一台从机从等待队列移入服务区
         QString RoomID = waiting_slave.front();
-        qDebug() << RoomID << "is taken out of waiting slave";
+        qDebug() << RoomID << " is taken out of waiting slave";
         sic->Send(true, RoomID);
+        getRooms().getRoom(RoomID).has_wind = true;
         working_slave.push_back(RoomID);
         waiting_slave.pop_front();
         useandcost[RoomID] = std::make_shared<UseAndCost>(this);
         useandcost[RoomID]->Start(RoomID);
     }
+    for (const auto &i : waiting_slave)
+        getRooms().getRoom(i).has_wind = false;
 }

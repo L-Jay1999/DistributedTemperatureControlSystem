@@ -27,18 +27,32 @@ void UserManagementWidget::Add()
 {
     _RoomID = ui->lineEdit_roomid->text();
     _UserID = ui->lineEdit_userid->text();
-    auto [is_suc, response] = user_info.AddUser(_RoomID,_UserID);
-    QMessageBox::information(this, "用户添加", response, QMessageBox::Ok);
-    Refresh();
+    if (!CheckArgs())
+    {
+        QMessageBox::warning(this, "用户添加", "身份证格式不正确", QMessageBox::Ok);
+    }
+    else
+    {
+        auto [is_suc, response] = user_info.AddUser(_RoomID,_UserID);
+        QMessageBox::information(this, "用户添加", response, QMessageBox::Ok);
+        Refresh();
+    }
 }
 
 void UserManagementWidget::Delete()
 {
     _RoomID = ui->lineEdit_roomid->text();
     _UserID = ui->lineEdit_userid->text();
-    auto [is_suc, response] = user_info.DeleteUser(_RoomID,_UserID);
-    QMessageBox::information(this, "用户删除", response, QMessageBox::Ok);
-    Refresh();
+    if (!CheckArgs())
+    {
+        QMessageBox::warning(this, "用户添加", "身份证格式不正确", QMessageBox::Ok);
+    }
+    else
+    {
+        auto [is_suc, response] = user_info.DeleteUser(_RoomID,_UserID);
+        QMessageBox::information(this, "用户删除", response, QMessageBox::Ok);
+        Refresh();
+    }
 }
 
 void UserManagementWidget::Refresh()
@@ -74,4 +88,10 @@ void UserManagementWidget::Close()
 {
     emit cancel_signal();
     this->hide();
+}
+
+bool UserManagementWidget::CheckArgs()
+{
+    QRegExp re("[0-9]{17}[0-9xX]");
+    return re.exactMatch(_UserID) && _RoomID.length();
 }

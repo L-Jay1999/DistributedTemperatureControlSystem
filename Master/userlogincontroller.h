@@ -25,6 +25,7 @@ public:
             qDebug() << "login success";
             _rooms.addRoom(RoomID);
             _rooms.SetID(RoomID, UserID);
+            db.addRoomPowerStat(RoomID,true);
             return {true, getCurrentWorkingMode(), getDefaultWorkingTemperature()};
             // return {false, {}, {}};
         }
