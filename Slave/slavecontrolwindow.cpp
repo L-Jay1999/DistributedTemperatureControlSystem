@@ -281,29 +281,15 @@ void SlaveControlWindow::GetMode(int mode_, double default_degree)
         ModeDisplay();
     }
     else{
-        if(mode == WorkingMode::HOT){
-            if(_temperature <= _roomtemperature)
-                return;
-            else{
-                _mode = mode;
-                _sensor->setWorkingMode(_mode);
-                _sensor->setTargetDegree(default_degree);
-                UpdateBound();
-                ModeDisplay();
-            }
-        }
-        else{
-            if(_temperature >= _roomtemperature)
-                return;
-            else{
-                _mode = mode;
-                _sensor->setWorkingMode(_mode);
-                _sensor->setTargetDegree(default_degree);
-                UpdateBound();
-                ModeDisplay();
-            }
-        }
+        _mode = mode;
+        _temperature = default_degree;
+        _sensor->setWorkingMode(_mode);
+        _sensor->setTargetDegree(default_degree);
+        UpdateBound();
+        ModeDisplay();
+        _temperature_lcd->display(_temperature);
     }
+
     TextAppend("主控机传来模式修改信号");
 }
 
