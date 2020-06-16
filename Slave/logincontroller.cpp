@@ -16,6 +16,10 @@ std::tuple<ErrorPack, bool, WorkingMode, double> LoginController::Login()
 
 bool LoginController::CheckArgs()
 {
+#ifdef ENABLE_ARG_CHECK
     QRegExp re("[0-9]{17}[0-9xX]");
     return re.exactMatch(_UserID) && _RoomID.length();
+#else
+    return true;
+#endif
 }

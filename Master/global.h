@@ -10,10 +10,49 @@
 #include <QDebug>
 #include <mutex>
 
+WorkingMode getCurrentWorkingMode();
+
+void setCurrentWorkingMode(WorkingMode mode);
+
+double getDefaultWorkingTemperature();
+
+void setDefaultWorkingTemperature(double degree);
+
+class Rooms;
+Rooms &getRooms();
+
+// 保存一个房间的设置信息
+class RoomConfig
+{
+private:
+    WorkingMode _mode{getCurrentWorkingMode()};//工作模式
+    SpeedLevel _level{};//风速
+    double _working_degree{getDefaultWorkingTemperature()};//工作温度
+    double _current_degree{27.0};//当前温度
+public:
+    RoomConfig() {};
+    RoomConfig(WorkingMode mode,SpeedLevel level,double wd,double cd)
+        :   _mode(mode),_level(level),_working_degree(wd),_current_degree(cd)   {}
+    RoomConfig(const RoomConfig& conf)
+    {
+        _mode = conf.getMode();
+        _level = conf.getLevel();
+        _working_degree = conf.getTemperature();
+        _current_degree = conf.getCurTemperature();
+    }
+    void setMode(WorkingMode mode) {_mode = mode;}
+    void setLevel(SpeedLevel level) {_level = level;}
+    void setTemperature(double working_degree) {_working_degree = working_degree;}
+    void setCurTemperature(double current_degree) {_current_degree = current_degree;}
+    WorkingMode getMode() const {return _mode;}
+    SpeedLevel getLevel() const {return _level;}
+    double getTemperature() const {return _working_degree;}
+    double getCurTemperature() const {return _current_degree;}
+};
 
 struct Room
 {
-    Config::RoomConfig config{};
+    RoomConfig config{};
     //bool is_open{false};
     bool has_wind{false};
     QString room_id{};
@@ -98,16 +137,5 @@ private:
     std::map<QString, Room> _rooms;
     std::set<QString> _connected_rooms;
 };
-
-WorkingMode getCurrentWorkingMode();
-
-void setCurrentWorkingMode(WorkingMode mode);
-
-double getDefaultWorkingTemperature();
-
-void setDefaultWorkingTemperature(double degree);
-
-
-Rooms &getRooms();
 
 #endif // GLOBAL_H
