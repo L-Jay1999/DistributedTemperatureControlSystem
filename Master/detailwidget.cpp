@@ -27,17 +27,19 @@ DetailWidget::~DetailWidget()
 
 QString getLevel(struct StatPayload &sp)//获得风速
 {
-//    double rat = sp.end_time.toMSecsSinceEpoch() - sp.start_time.toMSecsSinceEpoch();
-//    double P = sp.cost * 12000 / rat;
-//    if(P < 0.9)return "低";
-//    if(P < 1.1)return "中";
-//    return "高";
-    if(sp.speed_level == SpeedLevel::LOW)
+    switch (sp.speed_level) {
+    case SpeedLevel::LOW:
         return "低";
-    else if(sp.speed_level == SpeedLevel::MID)
+        break;
+    case SpeedLevel::MID:
         return "中";
-    else
+        break;
+    case SpeedLevel::HIGH:
         return "高";
+        break;
+    default:
+        break;
+    }
 }
 
 void DetailWidget::GetDetails()
