@@ -20,6 +20,7 @@ public:
 
 signals:
     void AddTextSpeed(QString s);
+    void ShutDown();
 };
 
 #endif // SETSPEEDCONTROLLER_H

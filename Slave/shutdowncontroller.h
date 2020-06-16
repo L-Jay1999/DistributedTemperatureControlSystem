@@ -19,6 +19,7 @@ public:
 
 signals:
     void AddTextShutDown(QString s);
+    void ShutDown();
 };
 
 #endif // SHUTDOWNCONTROLLER_H

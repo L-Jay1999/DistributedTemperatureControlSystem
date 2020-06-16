@@ -19,6 +19,7 @@ public:
 
 signals:
     void AddTextTemp(QString s);
+    void ShutDown();
 };
 
 #endif // SETTEMPERATURECONTROLLER_H

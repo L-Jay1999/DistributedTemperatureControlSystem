@@ -67,6 +67,11 @@ ManagerControlPanel::~ManagerControlPanel()
     }
 }
 
+bool ManagerControlPanel::has_power() const
+{
+    return _has_power;
+}
+
 void ManagerControlPanel::setPowerLabelText()
 {
     ui->label_power->setText(_has_power ? "开机" : "关机");

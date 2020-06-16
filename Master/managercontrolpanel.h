@@ -21,13 +21,15 @@ public:
     explicit ManagerControlPanel(const QString &manager_account, QWidget *parent = 0);
     ~ManagerControlPanel();
 
+    bool has_power() const;
+
 private:
     Ui::ManagerControlPanel *ui;
     QString _account;
     QThread *_thread;
     Listener *_listener;
 
-    bool _has_power{false};
+    bool _has_power{true};
     int _rate{10};
     QTimer clear_error_info_timer;
 
