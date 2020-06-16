@@ -13,7 +13,7 @@ public:
     void SetMode(const WorkingMode mode, const double default_degree);
 
 signals:
-    void ModeChanged(WorkingMode mode, double default_degree);
+    void ModeChanged(int mode, double default_degree);
 
 };
 

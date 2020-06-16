@@ -35,8 +35,9 @@ SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
 
 SlaveControlWindow::~SlaveControlWindow()
 {
+    if (_is_open)
+        on_shutdownbtn_clicked();
     delete ui;
-    exit(0);
 }
 
 int SlaveControlWindow::WindSpeed(SpeedLevel speedlevel)
@@ -270,8 +271,9 @@ void SlaveControlWindow::GetRoomTemperature()
     _roomtemperature_lcd->display(_roomtemperature);
 }
 
-void SlaveControlWindow::GetMode(WorkingMode mode, double default_degree)
+void SlaveControlWindow::GetMode(int mode_, double default_degree)
 {
+    WorkingMode mode = static_cast<WorkingMode>(mode_);
     if(mode == _mode){
         _sensor->setWorkingMode(_mode);
         _sensor->setTargetDegree(default_degree);

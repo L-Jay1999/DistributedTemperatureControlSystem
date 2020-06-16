@@ -184,7 +184,6 @@ void ManagerControlPanel::change_mode()
             {
                 emit SetErrorInfoTextSignal(QString("与房间%1连接失败，与从控机的连接已断开").arg(room_id));
                 getRooms().delRoomIfExists(room_id);
-                // TODO 停止送风，修改 UseAndCost 以及 Schedule
             }
         }
     }

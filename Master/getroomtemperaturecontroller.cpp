@@ -1,5 +1,7 @@
 #include "getroomtemperaturecontroller.h"
 
+#include <QMessageBox>
+
 GetRoomTemperatureController::GetRoomTemperatureController(QObject *parent)
     : QObject(parent), _timer(QTimer(this)), _rooms(getRooms())
 {
@@ -14,6 +16,8 @@ double GetRoomTemperatureController::Get(const QString &RoomID)
     if(error.hasError()){
         qDebug() << "GetRoomTemperatureController error";
         qDebug() << error.err_str;
+        QMessageBox *err_box = new QMessageBox(QMessageBox::Warning, "获取温度失败", QString("无法连接到房间 %1").arg(RoomID), QMessageBox::Ok);
+        err_box->show();
         _rooms.delRoomIfExists(RoomID);
         degree = -1.0; // indicate room has been deleted
     }

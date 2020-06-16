@@ -14,7 +14,7 @@ UserLoginDialog::UserLoginDialog(QWidget *parent) :
     _listener = new Listener;
     connect(this, &UserLoginDialog::StartListen, _listener, &Listener::StartListen);
     connect(this, &UserLoginDialog::StopListen, _listener, &Listener::StopListen);
-    auto port = _listener->ListenOnRandomPort(1080, 1100);
+    auto port = _listener->ListenOnRandomPort(10000, 65500);
     Config::setSlaveListenerPort(port);
 
     qDebug() << "main thread : " << thread();
