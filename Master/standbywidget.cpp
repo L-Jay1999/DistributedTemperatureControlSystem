@@ -6,13 +6,12 @@ StandbyWidget::StandbyWidget(QWidget *parent) :
     ui(new Ui::StandbyWidget)
 {
     ui->setupUi(this);
-    this->setWindowTitle("中央空调控制系统-待机");
+    this->setWindowTitle("中央空调控制系统-未认证");
     this->setFixedSize(this->width(),this->height());
 //    ui->label_mode->setText(QStringLiteral("无"));
     ui->label_mode->setText("无");
     ui->label_state->setText("开机");
     connect(ui->btn_login, &QPushButton::clicked, this, &StandbyWidget::switch_to_login);//点击认证按钮
-
 }
 
 StandbyWidget::~StandbyWidget()

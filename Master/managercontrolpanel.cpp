@@ -15,7 +15,7 @@ ManagerControlPanel::ManagerControlPanel(const QString &manager_account, QWidget
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_DeleteOnClose);
-    this->setWindowTitle("控制面板");
+    this->setWindowTitle("中央空调控制系统-已认证");
     this->setFixedSize(this->width(),this->height());
     connect(ui->pushButton_logout,&QPushButton::clicked,    this,&ManagerControlPanel::logout);             //管理员登出
     connect(ui->pushButton_power,&QPushButton::clicked,     this,&ManagerControlPanel::switch_to_power);    //电源控制
