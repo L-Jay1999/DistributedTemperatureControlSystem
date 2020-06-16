@@ -71,7 +71,7 @@ void UserLoginDialog::on_confirmbutton_clicked()
     {
         qDebug() << "333";
         emit LoginSuccess(_room_id_input->text(), _id_input->text(), init_mode, init_temp);
-        std::this_thread::sleep_for(200ms);
+//        std::this_thread::sleep_for(200ms);
         emit accept();
         this->close();
     }

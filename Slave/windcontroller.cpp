@@ -18,7 +18,7 @@ bool WindController::Send(const QString &RoomID, const bool open)
         emit AddTextWind(error.err_str);
         emit AddTextWind("重试请求送风...");
         using namespace std::chrono_literals;
-        std::this_thread::sleep_for(3000ms);
+//        std::this_thread::sleep_for(3000ms);
         auto [error, result] = windrequest.Send();
         if(error.hasError()){
             emit AddTextWind(error.err_str);

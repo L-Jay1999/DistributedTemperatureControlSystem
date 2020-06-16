@@ -17,7 +17,7 @@ void Schedule::addRoom(const QString& RoomID)
         waiting_slave.push_back(RoomID);
         qDebug() << RoomID << " is pushed to waiting slave";
         checkIdle();
-        if (!getRooms().getRoom(RoomID).has_wind)
+        if (std::find(waiting_slave.begin(), waiting_slave.end(), RoomID) != waiting_slave.end())
             sic->Send(false, RoomID);
     }
 }

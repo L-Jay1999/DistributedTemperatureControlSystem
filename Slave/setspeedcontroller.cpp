@@ -17,7 +17,7 @@ bool SetSpeedController::Set(const QString &RoomID, const SpeedLevel level)
         emit AddTextSpeed(error.err_str);
         emit AddTextSpeed("重试设定风速...");
         using namespace std::chrono_literals;
-        std::this_thread::sleep_for(3000ms);
+//        std::this_thread::sleep_for(3000ms);
         auto [error, result] = setspeedrequest.Send();
         if(error.hasError()){
             emit AddTextSpeed(error.err_str);
