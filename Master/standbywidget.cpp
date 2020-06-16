@@ -12,6 +12,7 @@ StandbyWidget::StandbyWidget(QWidget *parent) :
     ui->label_mode->setText("无");
     ui->label_state->setText("开机");
     connect(ui->btn_login, &QPushButton::clicked, this, &StandbyWidget::switch_to_login);//点击认证按钮
+    ui->btn_login->setShortcut(Qt::Key_Return);//绑定字母区回车键
 }
 
 StandbyWidget::~StandbyWidget()
