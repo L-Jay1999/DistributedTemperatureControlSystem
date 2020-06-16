@@ -40,16 +40,15 @@ void UseAndCost::UpdateUseandCost()
 {
     if (!_rooms.hasRoom(_RoomID))
         return;
-    int speed = (int)_rooms.getRoom(_RoomID).config.getLevel();
     double P = 1.0;
-    switch (speed) {
-    case 0:
+    switch (_rooms.getRoom(_RoomID).config.getLevel()) {
+    case SpeedLevel::LOW:
         P = 0.8;
         break;
-    case 1:
+    case SpeedLevel::MID:
         P = 1.0;
         break;
-    case 2:
+    case SpeedLevel::HIGH:
         P = 1.2;
         break;
     default:
