@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QSqlQuery>
+#include <QSqlError>
 
 #include <vector>
 #include <variant>
@@ -43,7 +44,7 @@ namespace DBHelper
      * @param query_sqls 需要执行的 SQL 语句
      * @return QSqlError 错误信息
      */
-    QSqlError ExecSQLs(const std::vector<QString> &query_sqls);
+    QSqlError ExecSQLs(const std::vector<QString> &query_sqls, const QString &connection_name);
 
     /**
      * @brief 通过给定信息构建插入语句
@@ -61,7 +62,7 @@ namespace DBHelper
      * @param binds 需要绑定的值
      * @return QSqlError 错误信息
      */
-    QSqlError BindAndExec(QSqlQuery &q, const std::vector<std::variant<QString, double, int, qint64, SpeedLevel>> binds);
+    QSqlError BindAndExec(QSqlQuery &q, const std::vector<std::variant<QString, double, int, SpeedLevel, qint64>> vals);
 }
 
 

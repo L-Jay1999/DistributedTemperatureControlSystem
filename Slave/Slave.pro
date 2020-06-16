@@ -27,6 +27,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
+    slave_request_controller.cpp \
     useandcostcontroller.cpp \
     userlogindialog.cpp \
     slavecontrolwindow.cpp \
@@ -42,6 +43,8 @@ SOURCES += \
     windcontrollerfromm.cpp
 
 HEADERS += \
+    listener.h \
+    slave_request_controller.h \
     useandcostcontroller.h \
     userlogindialog.h \
     slavecontrolwindow.h \

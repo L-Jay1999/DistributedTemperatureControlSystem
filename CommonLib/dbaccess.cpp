@@ -1,6 +1,7 @@
 #include "dbaccess.h"
 #include "common.h"
 #include "database_defs.h"
+#include "dbhelper.h"
 
 #include <QSqlDatabase>
 #include <QDebug>
@@ -15,6 +16,7 @@
 DBAccess::DBAccess()
 {
     connection_name = "QSQLITE_connection_" + QString().setNum(getHashedThreadId());
+    // qDebug() << connection_name;
     if (!Config::hasUserType())
     {
         assert(false);
@@ -40,8 +42,9 @@ bool DBAccess::isConnected() const
 bool DBAccess::addUser(const QString &room_id, const QString &user_id)
 {
     QString insert_sql = DBHelper::getInsertSQL(MasterUserContract::TITLE, MasterUserContract::COL_INFO);
-    QSqlQuery q(insert_sql);
-    QSqlError error = DBHelper::BindAndExec(q, {room_id, user_id});
+    QSqlQuery q(QSqlDatabase::database(connection_name));
+    q.prepare(insert_sql);
+    QSqlError error = DBHelper::BindAndExec(q, {room_id, user_id, 0.0, 0.0});
     if (error.type() != QSqlError::NoError)
     {
         qDebug() << error.text();
@@ -52,8 +55,9 @@ bool DBAccess::addUser(const QString &room_id, const QString &user_id)
 
 bool DBAccess::hasUser(const QString &room_id, const QString &user_id)
 {
-    QString kCountSql = "select count(*) from table %1 where room = ? and id = ?;";
-    QSqlQuery q(kCountSql.arg(MasterUserContract::TITLE));
+    QString kCountSql = "select count(*) from %1 where room = ? and id = ?;";
+    QSqlQuery q(QSqlDatabase::database(connection_name));
+    q.prepare(kCountSql.arg(MasterUserContract::TITLE));
     auto error = DBHelper::BindAndExec(q, {room_id, user_id});
     if (error.type() == QSqlError::NoError)
     {
@@ -70,8 +74,9 @@ bool DBAccess::hasUser(const QString &room_id, const QString &user_id)
 
 bool DBAccess::delUser(const QString &room_id, const QString &user_id)
 {
-    const QString kDelSql = "delete from table %1 where id = ? and room = ?;";;
-    QSqlQuery q(kDelSql.arg(MasterUserContract::TITLE));
+    const QString kDelSql = "delete from %1 where id = ? and room = ?;";;
+    QSqlQuery q(QSqlDatabase::database(connection_name));
+    q.prepare(kDelSql.arg(MasterUserContract::TITLE));
     auto error = DBHelper::BindAndExec(q, {user_id, room_id});
     if (error.type() == QSqlError::NoError)
         return true;
@@ -81,8 +86,9 @@ bool DBAccess::delUser(const QString &room_id, const QString &user_id)
 
 std::tuple<bool, double, double> DBAccess::getUseAndCost(const QString &room_id, const QString &user_id)
 {
-    const QString kSelSql = "select use, cost from table %1 where id = ? and room = ?;";
-    QSqlQuery q(kSelSql.arg(MasterUserContract::TITLE));
+    const QString kSelSql = "select use, cost from %1 where id = ? and room = ?;";
+    QSqlQuery q(QSqlDatabase::database(connection_name));
+    q.prepare(kSelSql.arg(MasterUserContract::TITLE));
     auto error = DBHelper::BindAndExec(q, {user_id, room_id});
     double use, cost;
     if (error.type() == QSqlError::NoError)
@@ -100,16 +106,33 @@ std::tuple<bool, double, double> DBAccess::getUseAndCost(const QString &room_id,
     return {false, {}, {}};
 }
 
+bool DBAccess::updateUseAndCost(const QString &room_id, const QString &user_id, double use, double cost)
+{
+    const QString kUpdateSql = "update %1 set use = ?, cost = ? where id = ? and room = ?;";
+    QSqlQuery q(QSqlDatabase::database(connection_name));
+    q.prepare(kUpdateSql.arg(MasterUserContract::TITLE));
+    auto error = DBHelper::BindAndExec(q, {use, cost, user_id, room_id});
+    if (error.type() != QSqlError::NoError)
+    {
+        qDebug() << error.text();
+        qDebug() << q.lastQuery();
+        return false;
+    }
+    return true;
+}
+
 std::pair<bool, std::vector<std::tuple<QString, QString, double, double> > > DBAccess::getUsers()
 {
-    const QString kSelSql = "select room, id, use, cost from table %1;";
-    QSqlQuery q(kSelSql.arg(MasterPowerStatContract::TITLE));
+    const QString kSelSql = "select room, id, use, cost from %1;";
+    QSqlQuery q(QSqlDatabase::database(connection_name));
+    q.prepare(kSelSql.arg(MasterUserContract::TITLE));
     q.exec();
 
     QSqlError error = q.lastError();
     if (error.type() != QSqlError::NoError)
     {
         qDebug() << error.text();
+        qDebug() << q.lastQuery();
         return {false, {}};
     }
 
@@ -127,8 +150,9 @@ std::pair<bool, std::vector<std::tuple<QString, QString, double, double> > > DBA
 
 bool DBAccess::hasManager(const QString &account, const QString &password)
 {
-    QString kCountSql = "select count(*) from table %1 where account = ? and password = ?;";
-    QSqlQuery q(kCountSql.arg(MasterAuthContract::TITLE));
+    QString kCountSql = "select count(*) from %1 where account = ? and password = ?;";
+    QSqlQuery q(QSqlDatabase::database(connection_name));
+    q.prepare(kCountSql.arg(MasterAuthContract::TITLE));
     auto error = DBHelper::BindAndExec(q, {account, password});
     if (error.type() == QSqlError::NoError)
     {
@@ -140,13 +164,16 @@ bool DBAccess::hasManager(const QString &account, const QString &password)
         return q.value(0).toBool();
     }
     qDebug() << error.text();
+    qDebug() << q.lastQuery();
+    qDebug() << q.executedQuery();
     return false;
 }
 
 bool DBAccess::addRoomPowerStat(const QString &room_id, bool is_starting_up)
 {
     QString insert_sql = DBHelper::getInsertSQL(MasterPowerStatContract::TITLE, MasterPowerStatContract::COL_INFO);
-    QSqlQuery q(insert_sql);
+    QSqlQuery q(QSqlDatabase::database(connection_name));
+    q.prepare(insert_sql);
     QSqlError error = DBHelper::BindAndExec(q, {room_id, is_starting_up, QDateTime::currentSecsSinceEpoch()});
     if (error.type() != QSqlError::NoError)
     {
@@ -158,8 +185,9 @@ bool DBAccess::addRoomPowerStat(const QString &room_id, bool is_starting_up)
 
 std::pair<bool, std::vector<std::tuple<QString, bool, QDateTime>>> DBAccess::getRoomPowerStats(const QDateTime &from, const QDateTime &to)
 {
-    const QString kSelSql = "select room, is_start_up, time from table %1 where time between ? and ?;";
-    QSqlQuery q(kSelSql.arg(MasterPowerStatContract::TITLE));
+    const QString kSelSql = "select room, is_start_up, time from %1 where time between ? and ?;";
+    QSqlQuery q(QSqlDatabase::database(connection_name));
+    q.prepare(kSelSql.arg(MasterPowerStatContract::TITLE));
     QSqlError error = DBHelper::BindAndExec(q, {from.toSecsSinceEpoch(), to.toSecsSinceEpoch()});
     if (error.type() != QSqlError::NoError)
     {
@@ -181,7 +209,8 @@ std::pair<bool, std::vector<std::tuple<QString, bool, QDateTime>>> DBAccess::get
 bool DBAccess::addRoomRequestStat(const StatPayload &payload)
 {
     QString insert_sql = DBHelper::getInsertSQL(MasterRequestStatContract::TITLE, MasterRequestStatContract::COL_INFO);
-    QSqlQuery q(insert_sql);
+    QSqlQuery q(QSqlDatabase::database(connection_name));
+    q.prepare(insert_sql);
     QSqlError error = DBHelper::BindAndExec(q, {payload.room_id,
                                             payload.init_temperature,
                                             payload.end_temperature,
@@ -199,12 +228,16 @@ bool DBAccess::addRoomRequestStat(const StatPayload &payload)
 
 std::pair<bool, std::vector<StatPayload> > DBAccess::getRoomRequestStats(const QDateTime &from, const QDateTime &to)
 {
-    const QString kSelSql = "select * from table %1 where time between ? and ?;";
-    QSqlQuery q(kSelSql.arg(MasterRequestStatContract::TITLE));
+    const QString kSelSql = "select * from %1 where start_time between ? and ?;";
+    QSqlQuery q(QSqlDatabase::database(connection_name));
+    q.prepare(kSelSql.arg(MasterRequestStatContract::TITLE));
+    // qDebug() << from.toSecsSinceEpoch() << ", " << to.toSecsSinceEpoch();
     QSqlError error = DBHelper::BindAndExec(q, {from.toSecsSinceEpoch(), to.toSecsSinceEpoch()});
     if (error.type() != QSqlError::NoError)
     {
-        qDebug() << error.text();
+//        qDebug() << error.text();
+//        qDebug() << q.lastQuery();
+//        qDebug() << q.executedQuery();
         return {false, {}};
     }
 
@@ -214,8 +247,11 @@ std::pair<bool, std::vector<StatPayload> > DBAccess::getRoomRequestStats(const Q
         QString room_id = q.value(0).toString();
         double init_temperature = q.value(1).toDouble();
         double end_temperature = q.value(2).toDouble();
-        QDateTime start_time = q.value(3).toDateTime();
-        QDateTime end_time = q.value(4).toDateTime();
+//        QDateTime start_time = q.value(3).toDateTime();
+//        QDateTime end_time = q.value(4).toDateTime();
+        QDateTime start_time = QDateTime::fromTime_t(q.value(3).toInt());
+        QDateTime end_time = QDateTime::fromTime_t(q.value(4).toInt());
+//        qDebug() << start_time << end_time;
         SpeedLevel speed_level = static_cast<SpeedLevel>(q.value(5).toInt());
         double cost = q.value(6).toDouble();
         res.push_back({room_id, init_temperature, end_temperature, start_time, end_time, speed_level, cost});
@@ -246,7 +282,11 @@ QSqlError DBAccess::init() const
             init_sqls.push_back(MasterRequestStatContract::getCreateSql());
     }
 
-    error = DBHelper::ExecSQLs(init_sqls);
+    error = DBHelper::ExecSQLs(init_sqls, connection_name);
+
+    QSqlQuery q(db);
+    q.exec("insert or replace into auth values ('test', '12345')");
+
     return error;
 }
 

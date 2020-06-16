@@ -7,6 +7,8 @@
 
 #include <QString>
 #include <QObject>
+#include <QDebug>
+
 
 namespace Config
 {
@@ -17,7 +19,7 @@ namespace Config
     static std::map<MasterControllerType, QObject *> master_ctrller_ptr{};
     static constexpr auto kMasterDBPath = "./master.db";
     static constexpr auto kSlaveDBPath = "./slave.db";
-    static int timeout_msec = 4000;
+    static int timeout_msec = 1000;
     // 确保线程安全
     static std::shared_mutex slave_port_rw_mutex;
     static std::shared_mutex roomid_to_addr_rw_mutex;
@@ -94,7 +96,7 @@ namespace Config
     void setSlaveControllerPointer(SlaveControllerType type, QObject *controller)
     {
         std::unique_lock lock(slave_ctrller_ptr_rw_mutex);
-        // slave_ctrller_ptr.at(type) = controller;
+        qDebug() << "Config::setSlaveControllerPointer() set type: " << EnumToInt(type);
         slave_ctrller_ptr[type] = controller;
     }
 
@@ -104,6 +106,7 @@ namespace Config
         if (auto i = slave_ctrller_ptr.find(ctrller_type);
                 i != slave_ctrller_ptr.end())
             return (*i).second;
+        // qDebug() << "Config::getSlaveControllerPointer() of type: " << EnumToInt(ctrller_type) << " not set.";
         return nullptr;
     }
 
@@ -111,6 +114,7 @@ namespace Config
     {
         std::unique_lock lock(master_ctrller_ptr_rw_mutex);
         // slave_ctrller_ptr.at(type) = controller;
+        qDebug() << "Config::setMasterControllerPointer() set type: " << EnumToInt(type);
         master_ctrller_ptr[type] = controller;
     }
 
@@ -120,6 +124,7 @@ namespace Config
         if (auto i = master_ctrller_ptr.find(ctrller_type);
                 i != master_ctrller_ptr.end())
             return (*i).second;
+        // qDebug() << "Config::getMasterControllerPointer() of type: " << EnumToInt(ctrller_type) << " not set.";
         return nullptr;
     }
 
@@ -133,5 +138,25 @@ namespace Config
     {
         std::shared_lock lock(timeout_ms_rw_mutex);
         return timeout_msec;
+    }
+
+    static std::map<QString, quint16> room_to_port{};
+    void addSlavePort(const QString &room_id, quint16 port)
+    {
+        room_to_port[room_id] = port;
+        // qDebug() << "Config::addSlavePort(): room: " << room_id << ", port: " << port;
+    }
+
+    quint16 getSlavePort(const QString &room_id)
+    {
+        if (room_to_port.count(room_id))
+            return room_to_port[room_id];
+        return {};
+    }
+
+    void delSlavePort(const QString &room_id)
+    {
+        if (auto iter = room_to_port.find(room_id); iter != room_to_port.end())
+            room_to_port.erase(iter);
     }
 } // namespace Config

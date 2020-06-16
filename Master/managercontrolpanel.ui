@@ -6,123 +6,409 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>311</width>
-    <height>292</height>
+    <width>355</width>
+    <height>343</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QWidget" name="gridLayoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>30</y>
-     <width>251</width>
-     <height>241</height>
-    </rect>
-   </property>
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="6" column="0">
-     <widget class="QPushButton" name="pushButton_user">
-      <property name="text">
-       <string>用户管理</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="0">
-     <widget class="QPushButton" name="pushButton_log">
-      <property name="text">
-       <string>运行日志</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="1">
-     <widget class="QPushButton" name="pushButton_monitor">
-      <property name="text">
-       <string>监控信息</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="label_3">
-      <property name="text">
-       <string>管理员：</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="1">
-     <widget class="QPushButton" name="pushButton_parameter">
-      <property name="text">
-       <string>参数设置</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string>工作模式：</string>
-      </property>
-     </widget>
-    </item>
-    <item row="4" column="0">
-     <widget class="QPushButton" name="pushButton_power">
-      <property name="text">
-       <string>电源控制</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>电源状态：</string>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="1">
-     <widget class="QPushButton" name="pushButton_logout">
-      <property name="text">
-       <string>管理员登出</string>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="QLabel" name="label_manager">
-      <property name="text">
-       <string>TextLabel</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLabel" name="label_power">
-      <property name="text">
-       <string>TextLabel</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QLabel" name="label_mode">
-      <property name="text">
-       <string>TextLabel</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="0">
-     <widget class="QLabel" name="label_4">
-      <property name="text">
-       <string>刷新频率：</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="1">
-     <widget class="QLabel" name="label_rate">
-      <property name="text">
-       <string>TextLabel</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
+  <property name="styleSheet">
+   <string notr="true">QPushButton {
+color: white;
+background-color: QLinearGradient( x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #88d, stop: 0.1 #99e, stop: 0.49 #77c, stop: 0.5 #66b, stop: 1 #77c);
+border-width: 1px;
+border-color: #339;
+border-style: solid;
+border-radius: 7;
+padding:8px;
+font-size: 12px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#ManagerControlPanel
+{
+
+border: 3px solid gray;
+border-radius: 40px;
+background: white;
+}
+QLabel {
+font-weight：bold;
+font-size：15px;
+}
+QPushButton:hover {
+    font-size: 18px;
+    color: white;
+    background: #d5d5d5; /* 悬停颜色 */
+}
+
+QPushButton:pressed {
+    background: #f2f2f2 /* 按下颜色 */
+}</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="6" column="0">
+    <widget class="QPushButton" name="pushButton_user">
+     <property name="text">
+      <string>用户管理</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>电源状态：</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QPushButton" name="pushButton_detail">
+     <property name="text">
+      <string>查看详单</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLabel" name="label_mode">
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0" colspan="3">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_logout">
+       <property name="text">
+        <string>管理员登出</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLabel" name="label_manager">
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>管理员：</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0" colspan="3">
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,0,0">
+       <item>
+        <widget class="QPushButton" name="pushButton_degree_down">
+         <property name="maximumSize">
+          <size>
+           <width>22</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    min-width: 10px;
+    max-width: 10px;
+    max-height: 10px;
+    min-height: 10px;
+    border-radius: 10px;
+    font-size: 15px;
+    color: white;
+    background: #008cba ; /* 默认颜色 */
+}
+
+QPushButton:hover {
+    font-size: 18px;
+    color: white;
+    background: #d5d5d5; /* 悬停颜色 */
+}
+
+QPushButton:pressed {
+    background: #f2f2f2 /* 按下颜色 */
+}</string>
+         </property>
+         <property name="text">
+          <string>&lt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_6">
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>默认温度调整</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_degree_up">
+         <property name="maximumSize">
+          <size>
+           <width>22</width>
+           <height>28</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    min-width: 10px;
+    max-width: 10px;
+    max-height: 10px;
+    min-height: 10px;
+    border-radius: 10px;
+    font-size: 15px;
+    color: white;
+    background: #f44336 ; /* 默认颜色 */
+}
+
+QPushButton:hover {
+    font-size: 18px;
+    color: white;
+    background: #d5d5d5; /* 悬停颜色 */
+}
+
+QPushButton:pressed {
+    background: #f2f2f2 /* 按下颜色 */
+}</string>
+         </property>
+         <property name="text">
+          <string>&gt;</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="0,0,0">
+       <item>
+        <widget class="QPushButton" name="pushButton_rate_down">
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    min-width: 10px;
+    max-width: 10px;
+    max-height: 10px;
+    min-height: 10px;
+    border-radius: 10px;
+    font-size: 15px;
+    color: white;
+    background: #008cba ; /* 默认颜色 */
+}
+
+QPushButton:hover {
+    font-size: 18px;
+    color: white;
+    background: #d5d5d5; /* 悬停颜色 */
+}
+
+QPushButton:pressed {
+    background: #f2f2f2 /* 按下颜色 */
+}</string>
+         </property>
+         <property name="text">
+          <string>&lt;</string>
+         </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_5">
+         <property name="maximumSize">
+          <size>
+           <width>80</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>频率调整</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_rate_up">
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    min-width: 10px;
+    max-width: 10px;
+    max-height: 10px;
+    min-height: 10px;
+    border-radius: 10px;
+    font-size: 15px;
+    color: white;
+    background: #f44336 ; /* 默认颜色 */
+}
+
+QPushButton:hover {
+    font-size: 18px;
+    color: white;
+    background: #d5d5d5; /* 悬停颜色 */
+}
+
+QPushButton:pressed {
+    background: #f2f2f2 /* 按下颜色 */
+}</string>
+         </property>
+         <property name="text">
+          <string>&gt;</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item row="5" column="2">
+    <widget class="QPushButton" name="pushButton_power">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>电源控制</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLabel" name="label_power">
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="2">
+    <widget class="QPushButton" name="pushButton_mode">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>改变工作模式</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QPushButton" name="pushButton_report">
+     <property name="text">
+      <string>查看报表</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="3">
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_8">
+       <item>
+        <widget class="QLabel" name="label_7">
+         <property name="text">
+          <string>默认温度：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_default_degree">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_9">
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>刷新频率：</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_rate">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item row="6" column="1">
+    <widget class="QPushButton" name="pushButton_monitor">
+     <property name="text">
+      <string>监控信息</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>工作模式：</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0" colspan="3">
+    <widget class="QLabel" name="label_error_info">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <resources/>
  <connections/>

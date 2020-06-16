@@ -46,7 +46,7 @@ namespace Log
             log_level = level;
             QDir dir(kLogPath);
             if (!dir.exists())
-                if (!dir.mkdir(kLogPath))
+                if (!dir.mkpath(kLogPath))
                     return false;
             QDateTime time = QDateTime::currentDateTime();
             log_file = std::make_shared<QFile>(QString("./%1/%2%3%4")
@@ -57,6 +57,7 @@ namespace Log
 
             if (!log_file->open(QIODevice::ReadWrite))
                 return false;
+            is_inited = true;
         }
         return true;
     }
@@ -72,7 +73,7 @@ namespace Log
             stream << temp.arg(time.toString("yy/MM/dd hh:mm:ss"))
                           .arg(getLogLevelStr(level))
                           .arg(getThreadIdStr())
-                          .arg(log) << Qt::endl;
+                          .arg(log) << endl;
         }
         else
         {

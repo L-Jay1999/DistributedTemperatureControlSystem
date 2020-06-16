@@ -1,6 +1,8 @@
 #include "usermanagementwidget.h"
 #include "ui_usermanagementwidget.h"
 
+#include <QMessageBox>
+
 UserManagementWidget::UserManagementWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::UserManagementWidget)
@@ -8,14 +10,13 @@ UserManagementWidget::UserManagementWidget(QWidget *parent) :
     ui->setupUi(this);
     setWindowTitle("用户管理");
     setFixedSize(this->width(),this->height());
-    ui->textEdit->setReadOnly(true);
     connect(ui->pushButton_add,&QPushButton::clicked,this,&UserManagementWidget::Add);
     connect(ui->pushButton_delete,&QPushButton::clicked,this,&UserManagementWidget::Delete);
-    connect(ui->pushButton_refresh,&QPushButton::clicked,this,&UserManagementWidget::Refresh);
     connect(ui->pushButton_close,&QPushButton::clicked,this,&UserManagementWidget::Close);
     connect(ui->pushButton_clear,&QPushButton::clicked,this,&UserManagementWidget::Clear);
-    ui->textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-
+    ui->user_table->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+    ui->pushButton_add->setShortcut(Qt::Key_Return);//绑定字母区回车键与添加按钮
+    Refresh();
 }
 
 UserManagementWidget::~UserManagementWidget()
@@ -27,34 +28,55 @@ void UserManagementWidget::Add()
 {
     _RoomID = ui->lineEdit_roomid->text();
     _UserID = ui->lineEdit_userid->text();
-    //调用UserInfoControl::AddUser()，并根据response设置提示信息
-    //_response = UserInfoControl::AddUser(_RoomID,_UserID);
-    _response = (std::tuple<bool,QString>){true,"添加成功"};
-    pd = new PromptDialog;
-    pd->setText(std::get<1>(_response));
-    pd->exec();
-    Refresh();
+    if (!CheckArgs())
+    {
+        QMessageBox::warning(this, "用户添加", "身份证格式不正确", QMessageBox::Ok);
+    }
+    else
+    {
+        auto [is_suc, response] = user_info.AddUser(_RoomID,_UserID);
+        QMessageBox::information(this, "用户添加", response, QMessageBox::Ok);
+        Refresh();
+    }
 }
 
 void UserManagementWidget::Delete()
 {
     _RoomID = ui->lineEdit_roomid->text();
     _UserID = ui->lineEdit_userid->text();
-    //调用UserInfoControl::DeleteUser()，并根据response设置提示信息
-    //_response = UserInfoControl::DeleteUser(_RoomID,_UserID);
-    _response = (std::tuple<bool,QString>){true,"删除失败"};
-    pd = new PromptDialog;
-    pd->setText(std::get<1>(_response));
-    pd->exec();
-    Refresh();
+    if (!CheckArgs())
+    {
+        QMessageBox::warning(this, "用户添加", "身份证格式不正确", QMessageBox::Ok);
+    }
+    else
+    {
+        auto [is_suc, response] = user_info.DeleteUser(_RoomID,_UserID);
+        QMessageBox::information(this, "用户删除", response, QMessageBox::Ok);
+        Refresh();
+    }
 }
 
 void UserManagementWidget::Refresh()
 {
-    //调用UserInfoControl::GetUserList()获得当前房客信息
-    //_UserList = UserInfoControl::GetUserList();
-    //_UserList
-    ui->textEdit->setText(_UserList);
+    ui->user_table->clearContents();
+    auto [is_suc, rooms_and_ids] = user_info.GetUser();
+    ui->user_table->setRowCount(rooms_and_ids.size());
+    int i = 0;
+    for (const auto [room_id, user_id] : rooms_and_ids)
+    {
+        QTableWidgetItem *room_id_item, *user_id_item;
+        room_id_item = new QTableWidgetItem;
+        user_id_item = new QTableWidgetItem;
+
+        room_id_item->setText(room_id);
+        room_id_item->setTextAlignment(Qt::AlignCenter);
+        user_id_item->setText(user_id);
+        user_id_item->setTextAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+
+        ui->user_table->setItem(i, 0, room_id_item);
+        ui->user_table->setItem(i, 1, user_id_item);
+        i++;
+    }
 }
 
 void UserManagementWidget::Clear()
@@ -67,4 +89,14 @@ void UserManagementWidget::Close()
 {
     emit cancel_signal();
     this->hide();
+}
+
+bool UserManagementWidget::CheckArgs()
+{
+#ifdef ENABLE_ARG_CHECK
+    QRegExp re("[0-9]{17}[0-9xX]");
+    return re.exactMatch(_UserID) && _RoomID.length();
+#else
+    return true;
+#endif
 }

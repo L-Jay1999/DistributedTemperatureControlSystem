@@ -17,7 +17,6 @@ public:
 
     void setIsWindWithoutUpdate(bool is_wind);
 
-
     void setTargetDegreeWithoutUpdate(double target_degree);
 
     void setTargetDegree(double target_degree);
@@ -27,6 +26,8 @@ public:
     void setIsWind(bool is_wind);
 
     void setWorkingMode(WorkingMode mode);
+
+    void setHasPower(bool has_power);
 
 private:
     void StartTimer();
@@ -44,6 +45,7 @@ private:
     SpeedLevel _speed{};
     WorkingMode _mode{WorkingMode::COLD};
     bool _is_wind{false};
+    bool _has_power{false};
 
     QTimer _timer{};
     qint64 _last_update_time{};

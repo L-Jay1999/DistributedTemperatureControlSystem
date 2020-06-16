@@ -1,6 +1,8 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+// #define ENABLE_ARG_CHECK
+
 #include <QtGlobal>
 #include <QtCore>
 
@@ -10,6 +12,7 @@
 #include <type_traits>
 #include <thread>
 #include <sstream>
+#include <cstdlib>
 
 enum class WorkingMode
 {
@@ -23,24 +26,6 @@ enum class SpeedLevel
     MID,
     HIGH,
 };
-
-/**
- * @brief 获取位于区间 [a, b] 内的随机整数
- * 
- * @tparam T 整数类型，不须填入，自动推导即可
- * @param a 区间下界
- * @param b 区间上界
- * @return T 生成的随机整数
- */
-template<typename T>
-inline T getRandomInt(T a, T b)
-{
-    static_assert(std::is_integral<T>::value, "getRandomInt 的参数类型必须是整数类型");
-    static std::random_device rd;
-    static std::mt19937 rng(rd());
-    std::uniform_int_distribution gen(a, b);
-    return gen(rng);
-}
 
 /**
  * @brief 将枚举类型转换为对应的整形值
@@ -77,6 +62,29 @@ inline QString getThreadIdStr()
 }
 
 /**
+ * @brief 获取位于区间 [a, b] 内的随机整数
+ *
+ * @tparam T 整数类型，不须填入，自动推导即可
+ * @param a 区间下界
+ * @param b 区间上界
+ * @return T 生成的随机整数
+ */
+template<typename T>
+inline T getRandomInt(T a, T b)
+{
+    static_assert(std::is_integral<T>::value, "getRandomInt 的参数类型必须是整数类型");
+#ifdef __MINGW32__
+    std::srand(getHashedThreadId());
+    return a + std::rand() % (b - a);
+#else
+    static std::random_device rd;
+    static std::mt19937 rng(rd());
+    std::uniform_int_distribution gen(a, b);
+    return gen(rng);
+#endif
+}
+
+/**
  * @brief 获取指定长度的随机字符串(a-z范围内)
  * @param length 随机字符串的长度
  * @return 随机字符串
@@ -84,9 +92,8 @@ inline QString getThreadIdStr()
 QString getRandomString(int length);
 
 namespace Config {
-
     // 标记主机的地址和端口，用于从控机发送请求给中央空调
-    static constexpr auto kMasterHostAddr = "localhost";
+    static constexpr auto kMasterHostAddr = "127.0.0.1";
     static constexpr quint16 kMasterListenPort = 12345;
 
     // 设定传输失败时重传次数
@@ -199,5 +206,10 @@ namespace Config {
 
     int getTimeOutMSec();
 
+    void addSlavePort(const QString &room_id, quint16 port);
+
+    quint16 getSlavePort(const QString &room_id);
+
+    void delSlavePort(const QString &room_id);
 };
 #endif // COMMON_H

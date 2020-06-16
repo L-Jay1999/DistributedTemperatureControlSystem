@@ -15,15 +15,12 @@ class SetSpeedController : public QObject
 
 public:
     SetSpeedController() = delete;
-    explicit SetSpeedController(QObject *parent = nullptr, const QString &RoomID = "", const SpeedLevel level = SpeedLevel::LOW);
-    bool Set();
-
-private:
-    QString _RoomID;
-    SpeedLevel _level;
+    explicit SetSpeedController(QObject *parent = nullptr);
+    bool Set(const QString &RoomID, const SpeedLevel level);
 
 signals:
     void AddTextSpeed(QString s);
+    void ShutDown();
 };
 
 #endif // SETSPEEDCONTROLLER_H

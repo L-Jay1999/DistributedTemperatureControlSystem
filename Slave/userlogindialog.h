@@ -11,7 +11,7 @@
 #include "user.h"
 
 #include "common.h"
-#include "listener.h"
+#include "./listener.h"
 
 namespace Ui {
 class UserLoginDialog;
@@ -27,13 +27,15 @@ public:
 
 signals:
     void LoginSuccess(const QString &room_id, const QString &_id, WorkingMode mode, double init_temp);
-
+    void StartListen();
+    void StopListen();
 private slots:
     void on_quitbutton_clicked();
 
     void on_confirmbutton_clicked();
 
 private:
+    QThread *_thread;
     Ui::UserLoginDialog *ui;
     Listener * _listener;
     QLineEdit *_id_input;

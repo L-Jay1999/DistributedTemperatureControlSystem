@@ -15,15 +15,12 @@ class WindController : public QObject
 
 public:
     WindController() = delete;
-    explicit WindController(QObject *parent = nullptr, const bool open = false, const QString &RoomID = "");
-    bool Send();
-
-private:
-    bool _open;
-    QString _RoomID;
+    explicit WindController(QObject *parent = nullptr);
+    bool Send(const QString &RoomID, const bool open);
 
 signals:
     void AddTextWind(QString s);
+    void ShutDown();
 };
 
 #endif // WINDCONTROLLER_H

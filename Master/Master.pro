@@ -20,9 +20,6 @@ else {
     CONFIG += c++17
 }
 
-TARGET = DistributedTemperatureControlSystem
-TEMPLATE = app
-
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -36,41 +33,77 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        main.cpp \
+    getroomtemperaturecontroller.cpp \
+    global.cpp \
+    main.cpp \
     managerlogincontroller.cpp \
     managerloginwidget.cpp \
+    master_request_controller.cpp \
+    monitordialog.cpp \
+    scheduleinfocontroller.cpp \
+    setmodecontroller.cpp \
     standbywidget.cpp \
     managercontrolpanel.cpp \
     manager.cpp \
-    powersupplywidget.cpp \
-    operationconfirmationdialog.cpp \
+    useandcost.cpp \
+    useandcostcontrollermaster.cpp \
+    userlogincontroller.cpp \
     usermanagementwidget.cpp \
-    promptdialog.cpp \
-    requestcontroller.cpp \
     userinfocontroller.cpp \
     airsupplycontroller.cpp \
-    schedule.cpp
+    schedule.cpp \
+    report.cpp \
+    usersetspeedcontroller.cpp \
+    usersettemperaturecontroller.cpp \
+    usershutdowncontroller.cpp \
+    reportwidget.cpp\
+    detailwidget.cpp
 
 HEADERS += \
+    getroomtemperaturecontroller.h \
+    global.h \
+    listener.h \
     managerlogincontroller.h \
     managerloginwidget.h \
+    master_request_controller.h \
+    monitordialog.h \
+    scheduleinfocontroller.h \
+    setmodecontroller.h \
     standbywidget.h \
     managercontrolpanel.h \
     manager.h \
-    powersupplywidget.h \
-    operationconfirmationdialog.h \
+    useandcost.h \
+    useandcostcontrollermaster.h \
+    userlogincontroller.h \
     usermanagementwidget.h \
-    promptdialog.h \
-    requestcontroller.h \
     userinfocontroller.h \
     airsupplycontroller.h \
-    schedule.h
+    schedule.h \
+    report.h \
+    usersetspeedcontroller.h \
+    usersettemperaturecontroller.h \
+    usershutdowncontroller.h \
+    reportwidget.h\
+    detailwidget.h
 
 FORMS += \
     managerloginwidget.ui \
+    monitordialog.ui \
     standbywidget.ui \
     managercontrolpanel.ui \
-    powersupplywidget.ui \
-    operationconfirmationdialog.ui \
     usermanagementwidget.ui \
-    promptdialog.ui
+    reportwidget.ui\
+    detailwidget.ui
+
+win32:CONFIG(release, debug|release): LIBS += -L$$OUT_PWD/../CommonLib/release/ -lCommonLib
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$OUT_PWD/../CommonLib/debug/ -lCommonLib
+else:unix: LIBS += -L$$OUT_PWD/../CommonLib/ -lCommonLib
+
+INCLUDEPATH += $$PWD/../CommonLib
+DEPENDPATH += $$PWD/../CommonLib
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../CommonLib/release/libCommonLib.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../CommonLib/debug/libCommonLib.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../CommonLib/release/CommonLib.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$OUT_PWD/../CommonLib/debug/CommonLib.lib
+else:unix: PRE_TARGETDEPS += $$OUT_PWD/../CommonLib/libCommonLib.a

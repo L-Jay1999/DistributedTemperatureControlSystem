@@ -18,16 +18,14 @@ public:
     ~ManagerLoginWidget();
 private:
     Ui::ManagerLoginWidget *ui;
-    ManagerLoginController *mlc;
     ManagerControlPanel *mcp;
-    std::tuple<bool,QString> login_res;//认证回复与错误提示信息
-    void Login();//进行认证
+    std::tuple<bool,QString> Login();//进行认证
 private slots:
     void confirm();//点击确认
     void cancel();//点击退出
 signals:
     void cancel_signal();//退出信号
-    void certified_signal();//通过认证信号
+    void certified_signal(const QString &manager_account);//通过认证信号
 };
 
 #endif // MANAGERLOGINWIDGET_H

@@ -1,16 +1,20 @@
-#include "request_controller.h"
+#include "slave_request_controller.h"
 
 #include "../Slave/gettemperaturecontroller.h"
 #include "../Slave/modealtercontroller.h"
 #include "../Slave/useandcostcontroller.h"
+#include "../Slave/windcontrollerfromm.h"
 
-namespace RequestController
+#include <optional>
+
+namespace SlaveRequestController
 {
     QByteArray HandleRequest(const QByteArray &request, const QString &host_addr, const quint16 host_port)
     {
         RequestPayload response;
 
         auto [is_parsing_suc, request_parsed] = RequestParser::Parse(request);
+        Log::addLog(Log::LogLevel::ERROR, QString("REQUEST: ") + request_parsed.toString());
         if (!is_parsing_suc)
         {
             auto fail_response = getAckResponse(false);
@@ -28,17 +32,6 @@ namespace RequestController
             response.source_port = request_parsed.target_port;
             switch (request_parsed.type)
             {
-            // Slave to Master
-            case RequestType::LOGIN:
-                break;
-            case RequestType::SET_SPEED:
-                break;
-            case RequestType::SET_TEMP:
-                break;
-            case RequestType::SHUTDOWN:
-                break;
-            case RequestType::WIND:
-                break;
             // Master to Slave
             case RequestType::FORCE_SHUTDOWN:
             {
@@ -58,7 +51,7 @@ namespace RequestController
                 response.type = RequestType::ACK;
                 ModeAlterController *controller =
                         dynamic_cast<ModeAlterController *>(Config::getSlaveControllerPointer(Config::SlaveControllerType::MODE_ALTER));
-                controller->SetMode(request_parsed.mode.value());
+                controller->SetMode(request_parsed.mode.value(), request_parsed.temperature.value());
                 response.result = true;
                 break;
             }
@@ -73,7 +66,11 @@ namespace RequestController
             }
             case RequestType::SCHEDULE:
             {
-                // TODO
+                response.type = RequestType::ACK;
+                WindControllerFromM *controller =
+                         dynamic_cast<WindControllerFromM *>(Config::getSlaveControllerPointer(Config::SlaveControllerType::WIND_SCHEDULE));
+                controller->Set(request_parsed.is_in_queue.value());
+                response.result = true;
                 break;
             }
             default:
@@ -82,7 +79,7 @@ namespace RequestController
                 throw getTypeStr(request_parsed.type);
             }
         }
-
+        Log::addLog(Log::LogLevel::ERROR, QString("RESPONSE: ") + response.toBase64ByteArray());
         return response.toBase64ByteArray();
     }
 } // namespace RequestController

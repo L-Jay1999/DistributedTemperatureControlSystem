@@ -18,6 +18,7 @@
 #include "modealtercontroller.h"
 #include "userlogindialog.h"
 #include "gettemperaturecontroller.h"
+#include "windcontrollerfromm.h"
 #include "common.h"
 
 namespace Ui {
@@ -46,12 +47,13 @@ private slots:
 public slots:
     void GetUseandCost();
     void GetRoomTemperature();
-    void GetMode(WorkingMode mode);
+    void GetMode(int mode, double default_degree);
     void reachTargetDegree();
     void higherThanTargetDegreePlusOne();
     void SetLoginUser(const QString &room_id, const QString &_id, WorkingMode mode, double init_temp);
     void WindControlFromM(bool is_in_queue);
     void TextAppend(QString s);
+    void ForceShutDown();
 
 private:
     Ui::SlaveControlWindow *ui;
@@ -61,6 +63,7 @@ private:
     UseAndCostController *_useandcostcontroller;
     ModeAlterController *_modealtercontroller;
     GetTemperatureController *_gettemperaturecontroller;
+    WindControllerFromM *_windcontrollerfromm;
 
     QLCDNumber *_temperature_lcd;
     QLCDNumber *_windspeed_lcd;

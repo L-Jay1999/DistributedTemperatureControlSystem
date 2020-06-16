@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/DC.iml" filepath="$PROJECT_DIR$/.idea/DC.iml" />
+      <module fileurl="file://$PROJECT_DIR$/DistributedTemperatureControlSystem-master.iml" filepath="$PROJECT_DIR$/DistributedTemperatureControlSystem-master.iml" />
     </modules>
   </component>
 </project>

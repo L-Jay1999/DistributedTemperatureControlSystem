@@ -11,6 +11,7 @@
 #include "request_base.h"
 #include "request_payload.h"
 #include "common.h"
+#include "log.h"
 
 class LoginRequest : Request
 {
@@ -25,6 +26,7 @@ public:
         auto payload = BuildPayload();
 
         auto [errs, response] = SendRequest(payload);
+
         if (errs.hasError())
         {
             return {errs, {}, {}, {}};
@@ -33,7 +35,8 @@ public:
         {
             if (response.type == RequestType::LOGIN_RESPONSE)
             {
-                if (response.result)
+                // qDebug() << "RESULT_VALUE: " << response.result.value();
+                if (response.result.value())
                     return {errs, true, std::get<0>(response.config.value()), std::get<1>(response.config.value())};
                 else
                     return {errs, false, {}, {}};
@@ -241,8 +244,8 @@ private:
 class UseAndCostRequest : Request
 {
 public:
-    UseAndCostRequest(const double use, const double cost)
-        : use_(use), cost_(cost)
+    UseAndCostRequest(const double use, const double cost, const QString &room_id)
+        : use_(use), cost_(cost), room_id_(room_id)
     {}
 
     std::pair<ErrorPack, bool> Send()
@@ -273,17 +276,22 @@ protected:
         payload.type = RequestType::USE_AND_COST;
         payload.use = use_;
         payload.cost = cost_;
+        payload.target_host = Config::kMasterHostAddr; // localhost
+        payload.target_port = Config::getSlavePort(room_id_);
         return payload;
     }
 private:
     double use_{};
     double cost_{};
+    QString room_id_{};
 };
 
 class SetModeRequest : Request
 {
 public:
-    SetModeRequest(const WorkingMode mode) : mode_(mode) {}
+    SetModeRequest(const WorkingMode mode, const QString &room_id, const double default_temperature)
+        : mode_(mode), room_id_(room_id), default_temperature_(default_temperature)
+    {}
 
     std::pair<ErrorPack, bool> Send()
     {
@@ -312,16 +320,21 @@ protected:
         RequestPayload payload{};
         payload.type = RequestType::SET_MODE;
         payload.mode = mode_;
+        payload.temperature = default_temperature_;
+        payload.target_host = Config::kMasterHostAddr; // localhost
+        payload.target_port = Config::getSlavePort(room_id_);
         return payload;
     }
 private:
     WorkingMode mode_{};
+    QString room_id_{};
+    double default_temperature_{};
 };
 
 class ForceShutDownRequest : Request
 {
 public:
-    ForceShutDownRequest(){}
+    ForceShutDownRequest(QString &room_id) : room_id_(room_id) {}
 
     std::pair<ErrorPack, bool> Send()
     {
@@ -349,15 +362,18 @@ protected:
     {
         RequestPayload payload{};
         payload.type = RequestType::FORCE_SHUTDOWN;
+        payload.target_host = Config::kMasterHostAddr; // localhost
+        payload.target_port = Config::getSlavePort(room_id_);
         return payload;
     }
 private:
+    QString room_id_{};
 };
 
 class GetRoomTemperatureRequest : Request
 {
 public:
-    GetRoomTemperatureRequest(){}
+    GetRoomTemperatureRequest(const QString &room_id) : room_id_(room_id) {}
 
     std::pair<ErrorPack, double> Send()
     {
@@ -385,15 +401,20 @@ protected:
     {
         RequestPayload payload{};
         payload.type = RequestType::GET_ROOM_TEMP;
+        payload.target_host = Config::kMasterHostAddr; // localhost
+        payload.target_port = Config::getSlavePort(room_id_);
+        // qDebug() << "GetRoomTemperatureRequest::BuildPayload(): port: " << payload.target_port;
         return payload;
     }
 private:
+    QString room_id_{};
 };
 
 class ScheduleInfoRequest : Request
 {
 public:
-    ScheduleInfoRequest(bool is_in_queue) : is_in_queue_(is_in_queue) {}
+    ScheduleInfoRequest(bool is_in_queue, const QString &room_id)
+        : is_in_queue_(is_in_queue), room_id_(room_id) {}
 
     std::pair<ErrorPack, bool> Send()
     {
@@ -422,10 +443,13 @@ protected:
         RequestPayload payload{};
         payload.type = RequestType::SCHEDULE;
         payload.is_in_queue = is_in_queue_;
+        payload.target_host = Config::kMasterHostAddr; // localhost
+        payload.target_port = Config::getSlavePort(room_id_);
         return payload;
     }
 private:
     bool is_in_queue_{};
+    QString room_id_{};
 };
 
 static inline RequestPayload getAckResponse(const bool result = true)

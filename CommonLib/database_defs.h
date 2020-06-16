@@ -30,7 +30,7 @@ struct MasterPowerStatContract
 
 struct MasterRequestStatContract
 {
-    static constexpr auto TITLE = "room_power_stat";
+    static constexpr auto TITLE = "room_request_stat";
     static const std::vector<DBHelper::ColPayload> COL_INFO;
     static QString getCreateSql() { return DBHelper::getCreateSQL(TITLE, COL_INFO); }
 };

@@ -9,6 +9,7 @@
 
 #include "request_payload.h"
 #include "common.h"
+#include "log.h"
 
 enum class ParsingErrType
 {
@@ -35,6 +36,7 @@ struct ErrorPack
     void setParsingError(ParsingErrType parsing_err_type)
     {
         this->parsing_err_type = parsing_err_type;
+        has_parsing_error = true;
     }
 };
 
@@ -62,6 +64,7 @@ protected:
         QByteArray response_base64;
         QByteArray send_data = payload.toBase64ByteArray();
         RequestSendReturnPack res;
+        Log::addLog(Log::LogLevel::ERROR, QString("SEND: ") + payload.toString());
         socket.connectToHost(payload.target_host, payload.target_port);
         if (!socket.waitForConnected(Config::getTimeOutMSec()))
         {
@@ -85,13 +88,13 @@ protected:
         }
         response_base64 = socket.readAll();
         socket.disconnectFromHost();
-
         auto [is_parsed, response_payload] = RequestParser::ParseBase64(response_base64);
         if (!is_parsed)
         {
             res.err.setParsingError(ParsingErrType::FAILED_TO_PARSE);
             return res;
         }
+        Log::addLog(Log::LogLevel::ERROR, QString("RECEIVE: ") + response_payload.toString());
 
         // add source host addr and port
         response_payload.source_host = payload.target_host;
