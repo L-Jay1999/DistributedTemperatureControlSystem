@@ -53,6 +53,7 @@ public slots:
     void SetLoginUser(const QString &room_id, const QString &_id, WorkingMode mode, double init_temp);
     void WindControlFromM(bool is_in_queue);
     void TextAppend(QString s);
+    void ForceShutDown();
 
 private:
     Ui::SlaveControlWindow *ui;

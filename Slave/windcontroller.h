@@ -20,6 +20,7 @@ public:
 
 signals:
     void AddTextWind(QString s);
+    void ShutDown();
 };
 
 #endif // WINDCONTROLLER_H

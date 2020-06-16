@@ -4,6 +4,7 @@ ShutDownController::ShutDownController(QObject *parent)
     : QObject(parent)
 {
     connect(this, SIGNAL(AddTextShutDown(QString)), parent, SLOT(TextAppend(QString)));
+    connect(this, SIGNAL(ShutDown()), parent, SLOT(ForceShutDown()));
 }
 
 bool ShutDownController::ShutDown(const QString &RoomID)
@@ -19,7 +20,9 @@ bool ShutDownController::ShutDown(const QString &RoomID)
         std::this_thread::sleep_for(3000ms);
         auto [error, result] = shutdownrequest.Send();
         if(error.hasError()){
-            emit AddTextShutDown("重试失败...");
+            emit AddTextShutDown(error.err_str);
+            emit AddTextShutDown("发送关机请求失败...");
+            emit ShutDown();
         }
     }
     return result;

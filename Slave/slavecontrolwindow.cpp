@@ -123,7 +123,7 @@ void SlaveControlWindow::ShutDownDisplays()
     _usage_lcd->display(88.88);
     _cost_lcd->display(88.88);
     _wind_text->clear();
-    _textbrowser->clear();
+//    _textbrowser->clear();
 }
 
 void SlaveControlWindow::setUser(User *value)
@@ -144,13 +144,15 @@ void SlaveControlWindow::on_shutdownbtn_clicked()
             // TODO handle connection fails
             qDebug() << "shut down fail!";
         }
-        _timer->stop();
-        ShutDownDisplays();
-        _is_open = false;
-        _sensor->setIsWind(false);
+//        _timer->stop();
+//        ShutDownDisplays();
+//        _is_open = false;
+//        _sensor->setIsWind(false);
+        ForceShutDown();
     }
     else
     {
+        _textbrowser->clear();
         qDebug() << "login window";
         UserLoginDialog *log_in_dialog = new UserLoginDialog(this);
         if (log_in_dialog->exec() == QDialog::Accepted)
@@ -307,11 +309,15 @@ bool SlaveControlWindow::SendWind()
     if(_temperature < _roomtemperature && _mode == WorkingMode::HOT){
         TextAppend("加热状态温度小于室温，阻止送风");
         qDebug() << "SendWind Fail!";
+        WindController windcontroller(this);
+        windcontroller.Send(_user->getRoomID(), false);
         return false;
     }
     else if(_temperature > _roomtemperature && _mode == WorkingMode::COLD){
         TextAppend("制冷状态温度高于室温，阻止送风");
         qDebug() << "SendWind Fail!";
+        WindController windcontroller(this);
+        windcontroller.Send(_user->getRoomID(), false);
         return false;
     }
 
@@ -392,6 +398,14 @@ void SlaveControlWindow::WindControlFromM(bool is_in_queue)
 void SlaveControlWindow::TextAppend(QString s)
 {
     _textbrowser->append(s);
+}
+
+void SlaveControlWindow::ForceShutDown()
+{
+    _timer->stop();
+    ShutDownDisplays();
+    _is_open = false;
+    _sensor->setIsWind(false);
 }
 
 void SlaveControlWindow::GetUseandCost()

@@ -4,6 +4,7 @@ SetTemperatureController::SetTemperatureController(QObject *parent)
     :  QObject(parent)
 {
     connect(this, SIGNAL(AddTextTemp(QString)), parent, SLOT(TextAppend(QString)));
+    connect(this, SIGNAL(ShutDown()), parent, SLOT(ForceShutDown()));
 }
 
 bool SetTemperatureController::Set(const QString &RoomID, const double degree)
@@ -19,7 +20,9 @@ bool SetTemperatureController::Set(const QString &RoomID, const double degree)
         std::this_thread::sleep_for(3000ms);
         auto [error, result] = settemperaturerequest.Send();
         if(error.hasError()){
-            emit AddTextTemp("重试失败...");
+            emit AddTextTemp(error.err_str);
+            emit AddTextTemp("设定温度失败...");
+            emit ShutDown();
         }
     }
     return result;
