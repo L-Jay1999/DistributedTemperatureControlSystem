@@ -8,11 +8,18 @@ Schedule::Schedule(std::map<QString, std::shared_ptr<UseAndCost>> &u, QObject *p
 
 void Schedule::addRoom(const QString& RoomID)
 {
-    waiting_slave.push_back(RoomID);
-    qDebug() << RoomID << " is pushed to waiting slave";
-    checkIdle();
-    if (!getRooms().getRoom(RoomID).has_wind)
+    if (std::find(working_slave.begin(), working_slave.end(), RoomID) != working_slave.end())
+        sic->Send(true, RoomID);
+    else if (std::find(waiting_slave.begin(), waiting_slave.end(), RoomID) != waiting_slave.end())
         sic->Send(false, RoomID);
+    else
+    {
+        waiting_slave.push_back(RoomID);
+        qDebug() << RoomID << " is pushed to waiting slave";
+        checkIdle();
+        if (!getRooms().getRoom(RoomID).has_wind)
+            sic->Send(false, RoomID);
+    }
 }
 
 void Schedule::delRoom(const QString &RoomID)
