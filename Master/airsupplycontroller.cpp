@@ -24,17 +24,18 @@ void AirSupplyController::updateSupplyDelayed()
     _timer.stop();
     auto [OpenorClose, RoomID] = _delayed_data.front();
     _delayed_data.pop_front();
-    if(OpenorClose)
+    if (getRooms().hasRoom(RoomID))
     {
-        _schedule.addRoom(RoomID);
+        if(OpenorClose)
+            _schedule.addRoom(RoomID);
+        else
+            _schedule.delRoom(RoomID);
+        if(_rooms.hasRoom(RoomID))
+            _rooms.getRoom(RoomID).has_wind = OpenorClose;
     }
     else
     {
-        _schedule.delRoom(RoomID);
-    }
-    if(_rooms.hasRoom(RoomID))
-    {
-	    _rooms.getRoom(RoomID).has_wind = OpenorClose;
+        // ERROR HANDLING
     }
     if (_delayed_data.size())
         _timer.start(kDelayMs);

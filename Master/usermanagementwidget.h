@@ -25,6 +25,7 @@ public:
     void Close();   //关闭界面
 
 private:
+    bool CheckArgs();
     Ui::UserManagementWidget *ui;
     UserInfoController user_info;
     QString _UserList;          //房客信息
