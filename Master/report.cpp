@@ -24,9 +24,7 @@ bool Report::getDateReport(const QDate &date)
         return false;
     _details.clear();
     for(auto it = res_detail.second.begin(); it != res_detail.second.end(); it++)//将报表按照房间号拆分
-    {
         _details[it->room_id].push_back(*it);
-    }
     _power_supply.clear();
     for(auto it = res_power.second.begin(); it != res_power.second.end(); it++)//统计各房间开关机次数
     {

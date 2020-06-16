@@ -14,7 +14,7 @@ bool UseAndCostControllerMaster::Send(const double use, const double cost, const
     if(error.hasError()){
         qDebug() << "UseandCostControllerMaster error, retransmission";
         qDebug() << error.err_str;
-        std::this_thread::sleep_for(1000ms);
+//        std::this_thread::sleep_for(1000ms);
         auto [re_error, re_res] = useandcostrequest.Send();
         if (error.hasError())
         {

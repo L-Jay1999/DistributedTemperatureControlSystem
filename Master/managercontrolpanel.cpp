@@ -178,7 +178,7 @@ void ManagerControlPanel::change_mode()
         if (err.hasError())
         {
             emit SetErrorInfoTextSignal(err.err_str + "2 秒后重传");
-            std::this_thread::sleep_for(3s);
+//            std::this_thread::sleep_for(3s);
             auto [err_tmp, is_suc_tmp] = mode_request.Send();
             if (err_tmp.hasError())
             {

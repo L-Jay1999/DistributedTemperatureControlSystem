@@ -19,7 +19,7 @@ namespace Config
     static std::map<MasterControllerType, QObject *> master_ctrller_ptr{};
     static constexpr auto kMasterDBPath = "./master.db";
     static constexpr auto kSlaveDBPath = "./slave.db";
-    static int timeout_msec = 4000;
+    static int timeout_msec = 1000;
     // 确保线程安全
     static std::shared_mutex slave_port_rw_mutex;
     static std::shared_mutex roomid_to_addr_rw_mutex;
