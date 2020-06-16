@@ -283,6 +283,10 @@ QSqlError DBAccess::init() const
     }
 
     error = DBHelper::ExecSQLs(init_sqls, connection_name);
+
+    QSqlQuery q(db);
+    q.exec("insert or replace into auth values ('test', '12345')");
+
     return error;
 }
 

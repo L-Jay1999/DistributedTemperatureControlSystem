@@ -80,6 +80,11 @@ void Sensor::setWorkingMode(WorkingMode mode)
     // qDebug() << "setWorkingMode(): " << EnumToInt(mode);
 }
 
+void Sensor::setHasPower(bool has_power)
+{
+    _has_power = has_power;
+}
+
 void Sensor::StartTimer()
 {
     if (_is_wind)
@@ -111,7 +116,7 @@ void Sensor::UpdateTemperature()
     qint64 now = QDateTime::currentMSecsSinceEpoch();
     double diff_sec = (now - _last_update_time) / 1000.0;
     double degree_diff;
-    if (_is_wind)
+    if (_has_power && _is_wind)
     {
         degree_diff = kTempChangePerSecWind.at(_speed) * diff_sec;
         // qDebug() << "diff for " << degree_diff;
@@ -143,9 +148,9 @@ void Sensor::UpdateTemperature()
                 _current_degree += degree_diff;
             else
                 _current_degree -= degree_diff;
-            if (_mode == WorkingMode::HOT && _current_degree < _target_degree - 1.0)
+            if (_has_power && _mode == WorkingMode::HOT && _current_degree < _target_degree - 1.0)
                 emit higherThanTargetDegreePlusOne();
-            else if (_mode == WorkingMode::COLD && _current_degree > _target_degree + 1.0)
+            else if (_has_power && _mode == WorkingMode::COLD && _current_degree > _target_degree + 1.0)
                 emit higherThanTargetDegreePlusOne();
         }
     }
