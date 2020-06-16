@@ -20,6 +20,7 @@ SlaveControlWindow::SlaveControlWindow(QWidget *parent) :
     ShutDownDisplays();
 
     _sensor = new Sensor(this);
+    _sensor->setHasPower(false);
     _gettemperaturecontroller = new GetTemperatureController(this, _sensor);
 
     _timer = new QTimer(this);
@@ -148,6 +149,7 @@ void SlaveControlWindow::on_shutdownbtn_clicked()
         ShutDownDisplays();
         _is_open = false;
         _sensor->setIsWind(false);
+        _sensor->setHasPower(false);
     }
     else
     {
@@ -160,6 +162,7 @@ void SlaveControlWindow::on_shutdownbtn_clicked()
             _sensor->setTargetDegreeWithoutUpdate(_temperature);
             _sensor->setWindSpeed(WindSpeed(_windspeed));
             _sensor->setWorkingMode(_mode);
+            _sensor->setHasPower(true);
             GetRoomTemperature();
 
             _timer->start(1000);
